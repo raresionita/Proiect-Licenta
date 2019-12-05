@@ -1,0 +1,7 @@
+canvas {
+    position: absolute;
+    top: auto;
+    left: auto;
+    transform: translate(0, 0);
+    border-style: solid;
+}
