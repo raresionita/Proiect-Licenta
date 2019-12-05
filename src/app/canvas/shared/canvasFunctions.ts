@@ -1,4 +1,5 @@
 import 'fabric';
+import {canvas} from '../component/canvasObj.component'
 declare const fabric: any;
 
 export function makeCircle(left:any, top:any, line1:any, line2:any, line3:any, line4:any){
@@ -32,5 +33,22 @@ export function makeLine(coords){
 }
 
 /*Important*/
+const drawCircle = (event)=>{
+  var pointer = canvas.getPointer(event.e);
+  const mousePos = {
+    x: pointer.x,
+    y: pointer.y
+  };
+  console.log(mousePos);
+  var circle = new fabric.Circle({
+    left: mousePos.x - 20,
+    top: mousePos.y - 20,
+    radius: 20,
+    fill: 'red',
+    fillText: "test"
+  });
 
+  canvas.add(circle);
+}
 
+export {drawCircle}
