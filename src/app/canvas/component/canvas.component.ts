@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { drawCircle } from '../shared/canvasFunctions';
-import {canvas,setCanvas} from './canvasObj.component'
+import {canvas,setCanvas} from '../shared/init-canvas'
 import 'fabric';
 declare const fabric: any;
 
@@ -21,14 +21,13 @@ export class CanvasComponent implements OnInit{
       //      selection:updated
       //selection:created
 
-      canvas.on('selection:created', (event) => {
+      canvas.on('selection:created', () => {
         this.objectSelected = true
       })
-      canvas.on('selection:cleared',(event)=>{
+      canvas.on('selection:cleared',()=>{
         this.objectSelected = false
       })
-      canvas.on('mouse:down', (event) => {
-        console.log(event)
+      canvas.on('mouse:down', (event:any) => {
         if(!this.objectSelected)
           drawCircle(event);
       });

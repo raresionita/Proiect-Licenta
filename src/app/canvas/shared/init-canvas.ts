@@ -1,9 +1,7 @@
-
 var canvas:any;
 
-const setCanvas = (newCanvas) => {
+const setCanvas = (newCanvas:any) => {
   canvas = newCanvas
 }
-
 
 export {canvas,setCanvas}

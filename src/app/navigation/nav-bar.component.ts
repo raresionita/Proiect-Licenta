@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { canvas } from '../canvas/shared/init-canvas';
 
 
 @Component({
@@ -7,4 +8,9 @@ import { Component } from "@angular/core";
 })
 
 export class NavBarComponent{
+  confirmClear() {
+    if (confirm('Are you sure?')) {
+      canvas.clear();
+    }
+  }
 }
