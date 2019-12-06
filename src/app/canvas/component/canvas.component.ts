@@ -16,10 +16,7 @@ export class CanvasComponent implements OnInit{
     objectSelected = false
     ngOnInit(){
       setCanvas(new fabric.Canvas('canvas'))
-     // this.canvas = new fabric.Canvas('canvas');
-      //IF NOTHING ON MOUSE DOWN
-      //      selection:updated
-      //selection:created
+      
 
       canvas.on('selection:created', () => {
         this.objectSelected = true
@@ -28,6 +25,7 @@ export class CanvasComponent implements OnInit{
         this.objectSelected = false
       })
       canvas.on('mouse:down', (event:any) => {
+        console.log(event)
         if(!this.objectSelected)
           drawCircle(event);
       });

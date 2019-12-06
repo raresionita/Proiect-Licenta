@@ -39,15 +39,14 @@ const drawCircle = (event)=>{
     x: pointer.x,
     y: pointer.y
   };
-  console.log(mousePos);
+  console.log(event);
   var circle = new fabric.Circle({
     left: mousePos.x - 20,
     top: mousePos.y - 20,
     radius: 20,
     fill: 'red',
-    fillText: "test"
   });
-
+  circle.hasControls = circle.hasBorders = false;
   canvas.add(circle);
 }
 
