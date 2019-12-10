@@ -12,18 +12,29 @@ const getMousePos = (event) =>{
   return mousePos;
 }
 
-const newCircle = (event) => {
+const newCircle = (event,id) => {
   var circle = new fabric.Circle({
-    left: getMousePos(event).x - 12,
-    top: getMousePos(event).y - 12,
     strokeWidth: 5,
-    radius: 12,
+    radius: 15,
     fill: '#fff',
     stroke: '#666',
+    originX: 'center',
+    originY: 'center'
   });
-  circle.hasControls = circle.hasBorders = false;
-  canvas.add(circle);
+  var text = new fabric.Text(id.toString(),{
+    fontSize: 15,
+    originX: 'center',
+    originY: 'center'
+  })
+  var group = new fabric.Group([circle,text], {
+    left: getMousePos(event).x-15,
+    top: getMousePos(event).y-15,
+  })
+  group.hasControls = group.hasBorders = false;
+  canvas.add(group);
+  //console.log(id);
 }
+
 
 
 export {newCircle}
