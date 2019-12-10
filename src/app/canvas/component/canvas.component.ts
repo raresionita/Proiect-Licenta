@@ -27,7 +27,17 @@ export class CanvasComponent implements OnInit{
         if(!this.objectSelected)
           newCircle(event,this.id++);
       });
+
+      canvas.on('object:selected',() => {
+        console.log('selected');
+        canvas.getObjects().forEach( (obj) => {
+            canvas.setActiveObject(obj);
+            console.log(obj.id);
+        })
+      });
+      
     }
+
   }
 
 //   canvas.getObjects().forEach(function(o) {
@@ -38,17 +48,5 @@ export class CanvasComponent implements OnInit{
     
 // })
 
-
-// canvas.add(new fabric.Rect({
-//   id:'rekt',
-//   left: 100,
-//   top: 100,
-//   width: 75,
-//   height: 50,
-//   fill: 'green',
-//   stroke: 'black',
-//   strokeWidth: 3,
-//   padding: 10
-// }));
 
 
