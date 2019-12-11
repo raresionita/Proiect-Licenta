@@ -2,15 +2,8 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
 
-/* div.card-header {
- font-size: large;
-} */
 
-div {
-  margin-top: 10px;
-  position: relative;
+.card {
+  background-color: green;
+  height: 70vh;
 }
-
-/* .table {
-  margin-top: 10px
-} */

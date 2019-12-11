@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {canvas,setCanvas} from '../shared/init-canvas'
 import 'fabric';
-import { newCircle} from '../shared/canvasFunctions';
+import { newCircle,circles} from '../shared/canvasFunctions';
 declare const fabric: any;
 
 @Component({
@@ -16,7 +16,7 @@ export class CanvasComponent implements OnInit{
     id = 0;
     ngOnInit(){
       setCanvas(new fabric.Canvas('canvas'))
-      
+
       canvas.on('selection:created', () => {
         this.objectSelected = true
       })
@@ -24,18 +24,18 @@ export class CanvasComponent implements OnInit{
         this.objectSelected = false
       })
       canvas.on('mouse:down', (event:any) => {
+        console.log(this.objectSelected)
         if(!this.objectSelected)
           newCircle(event,this.id++);
+        else
+          canvas.discardActiveObject();
       });
 
-      canvas.on('object:selected',() => {
-        console.log('selected');
-        canvas.getObjects().forEach( (obj) => {
-            canvas.setActiveObject(obj);
-            console.log(obj.id);
-        })
+      canvas.on('object:selected',(event) => {
+        const obj = circles[event.target.id]
+        obj.showPussy()
       });
-      
+
     }
 
   }
@@ -45,8 +45,5 @@ export class CanvasComponent implements OnInit{
 //         canvas.setActiveObject(o);
 //         console.log(o.id)
 //     }
-    
+
 // })
-
-
-
