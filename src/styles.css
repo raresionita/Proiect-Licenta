@@ -4,6 +4,9 @@
 
 
 .card {
-  background-color: green;
   height: 70vh;
+}
+
+body{
+  background-color: rgb(230, 230, 230);
 }
