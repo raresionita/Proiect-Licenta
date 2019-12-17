@@ -1,10 +1,7 @@
 import 'fabric';
 import { getMousePos } from './canvas.functions';
-import { canvas } from './init-canvas';
 
 declare const fabric: any;
-
-var circles = []
 
 class CircleCustom{
   circle = null
@@ -40,10 +37,4 @@ class CircleCustom{
   }
 }
 
-const newCircle = (event,id) => {
-    var circleCustom = new CircleCustom(event,id)
-    circles[id] = circleCustom
-    canvas.add(circleCustom.group)
-  }
-
-export {circles,newCircle}
+export default CircleCustom

@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import {canvas,setCanvas} from '../shared/init-canvas'
-import { circles, newCircle } from '../shared/circle';
 
 import 'fabric';
+import Graph from '../shared/graph';
 
 declare const fabric: any;
 
@@ -30,15 +30,14 @@ export class CanvasComponent implements OnInit{
       //on mouse click create new circle
       canvas.on('mouse:down', (event:any) => {
         if(!this.objectSelected)
-          newCircle(event,this.id++);
+          Graph.addCircle(event,this.id++);
         else
           canvas.discardActiveObject();
       });
-      
+
       //On circle selected, change color
       canvas.on('object:selected',(event) => {
-        console.log(event.target)
-        const obj = circles[event.target.id]
+        const obj = Graph.circles[event.target.id]
          obj.colorSelected();
       });
 
