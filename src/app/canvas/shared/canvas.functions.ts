@@ -1,4 +1,4 @@
-import {canvas} from '../shared/init-canvas'
+import {canvas} from './init-canvas'
 
 const getMousePos = (event) =>{
   var pointer = canvas.getPointer(event.e)

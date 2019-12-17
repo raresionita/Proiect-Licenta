@@ -1,5 +1,5 @@
 import 'fabric';
-import { getMousePos } from './canvasFunctions';
+import { getMousePos } from './canvas.functions';
 import { canvas } from './init-canvas';
 
 declare const fabric: any;
