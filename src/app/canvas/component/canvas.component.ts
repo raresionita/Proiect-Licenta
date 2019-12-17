@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import {canvas,setCanvas} from '../shared/init-canvas'
+import { circles, newCircle } from '../shared/circle';
+
 import 'fabric';
-import { newCircle,circles} from '../shared/canvasFunctions';
+
 declare const fabric: any;
 
 @Component({
@@ -13,8 +15,8 @@ declare const fabric: any;
 
 export class CanvasComponent implements OnInit{
     objectSelected = false
-    colored = false
-    id = 0;
+    id = 0
+
     ngOnInit(){
       setCanvas(new fabric.Canvas('canvas'))
 
@@ -35,11 +37,9 @@ export class CanvasComponent implements OnInit{
       
       //On circle selected, change color
       canvas.on('object:selected',(event) => {
+        console.log(event.target)
         const obj = circles[event.target.id]
-        obj.colorSelected()
-
-        //TODO on another circle selected
-        //open custom layout
+         obj.colorSelected();
       });
 
     }

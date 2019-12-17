@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { canvas } from '../canvas/shared/init-canvas';
 
 @Component({
@@ -12,10 +12,6 @@ export class NavBarComponent{
     if (confirm('Are you sure?')) {
       canvas.clear();
     }
-  }
-
-  addGraph(){
-    
   }
 
 }
