@@ -15,6 +15,7 @@ declare const fabric: any;
 
 export class CanvasComponent implements OnInit{
     objectSelected = false
+    selected = false
     id = 0
 
     ngOnInit(){
@@ -37,11 +38,13 @@ export class CanvasComponent implements OnInit{
 
       //On circle selected, change color
       canvas.on('object:selected',(event) => {
-        const obj = Graph.circles[event.target.id]
-         obj.colorSelected();
+        var nrSelected = 0;
+        const obj1Selected = Graph.circles.get(event.target.id)
+        //console.log(obj1Selected.group.id)
+        obj1Selected.colorSelected();
+        
+
       });
 
     }
-
-  }
-
+}

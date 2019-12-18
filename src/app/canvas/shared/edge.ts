@@ -20,4 +20,4 @@ class EdgeCustom{
     }
 }
 
-export {EdgeCustom}
+export default EdgeCustom
