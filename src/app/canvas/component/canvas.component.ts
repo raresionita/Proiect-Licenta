@@ -15,7 +15,7 @@ declare const fabric: any;
 
 export class CanvasComponent implements OnInit{
     objectSelected = false
-    selected = false
+    nrSelected = 0
     id = 0
 
     ngOnInit(){
@@ -30,20 +30,25 @@ export class CanvasComponent implements OnInit{
 
       //on mouse click create new circle
       canvas.on('mouse:down', (event:any) => {
-        if(!this.objectSelected)
+        if(!this.objectSelected){
           Graph.addCircle(event,this.id++);
-        else
+        }
+        else{
           canvas.discardActiveObject();
+        }
       });
 
       //On circle selected, change color
       canvas.on('object:selected',(event) => {
-        var nrSelected = 0;
-        const obj1Selected = Graph.circles.get(event.target.id)
-        //console.log(obj1Selected.group.id)
-        obj1Selected.colorSelected();
+        if(!this.objectSelected && this.nrSelected <2){
+          const objSelected = Graph.circles.get(event.target.id)
+          objSelected.colorSelected();
+          this.nrSelected++;
+          console.log(objSelected.group.id)
+        }
         
-
+        
+        
       });
 
     }
