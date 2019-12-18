@@ -40,15 +40,20 @@ export class CanvasComponent implements OnInit{
 
       //On circle selected, change color
       canvas.on('object:selected',(event) => {
+
+        //console.log(Graph.circles)
+
         if(!this.objectSelected && this.nrSelected <2){
           const objSelected = Graph.circles.get(event.target.id)
-          objSelected.colorSelected();
-          this.nrSelected++;
-          console.log(objSelected.group.id)
+          if(!objSelected.selected){
+            objSelected.colorSelected();
+            this.nrSelected++;
+            console.log(objSelected.group.id)
+          }
         }
-        
-        
-        
+
+
+
       });
 
     }
