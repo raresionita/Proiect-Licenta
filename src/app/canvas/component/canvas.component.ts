@@ -43,14 +43,8 @@ export class CanvasComponent implements OnInit{
 
         //console.log(Graph.circles)
 
-        if(!this.objectSelected && this.nrSelected <2){
-          const objSelected = Graph.circles.get(event.target.id)
-          if(!objSelected.selected){
-            objSelected.colorSelected();
-            this.nrSelected++;
-            console.log(objSelected.group.id)
-          }
-        }
+        Graph.selectCircle(event.target.id)
+
 
 
 

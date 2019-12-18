@@ -7,7 +7,6 @@ class CircleCustom{
   circle = null
   text = null
   group = null
-  selected = false
 
   constructor(event,id){
     this.createVertex(event,id)
@@ -35,7 +34,6 @@ class CircleCustom{
     this.circle.set({
       fill: '#FF0000'
     })
-    this.selected = true
   }
 }
 
