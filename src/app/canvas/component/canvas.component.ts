@@ -5,6 +5,7 @@ import 'fabric';
 import Graph from '../shared/graph';
 
 declare const fabric: any;
+var id = 0;
 
 @Component({
     selector:'app-canvas',
@@ -16,7 +17,6 @@ declare const fabric: any;
 export class CanvasComponent implements OnInit{
     objectSelected = false
     nrSelected = 0
-    id = 0
 
     ngOnInit(){
       setCanvas(new fabric.Canvas('canvas'))
@@ -31,7 +31,7 @@ export class CanvasComponent implements OnInit{
       //on mouse click create new circle
       canvas.on('mouse:down', (event:any) => {
         if(!this.objectSelected){
-          Graph.addCircle(event,this.id++);
+          Graph.addCircle(event,id++);
         }
         else{
           canvas.discardActiveObject();
@@ -40,15 +40,17 @@ export class CanvasComponent implements OnInit{
 
       //On circle selected, change color
       canvas.on('object:selected',(event) => {
-
-        //console.log(Graph.circles)
-
         Graph.selectCircle(event.target.id)
-
-
-
 
       });
 
     }
 }
+
+const resetCanvas = () => {
+  Graph.selected = []
+  id = 0;
+}
+
+export default CanvasComponent;
+export {resetCanvas}

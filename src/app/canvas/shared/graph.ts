@@ -6,6 +6,7 @@ class Graph {
   //Map pentru cercuri pentru a putea sterge din el de oriunde
   circles = new Map<number,CircleCustom>()
   selected = []
+  
   addCircle = (event,id) => {
     var circleCustom = new CircleCustom(event,id)
     this.circles.set(id,circleCustom)
