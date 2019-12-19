@@ -5,12 +5,12 @@ declare const fabric: any;
 class EdgeCustom{
     line = null
   
-    constructor(event,cds){
-      this.createLine(cds)
+    constructor(id1,id2){
+      this.createLine(id1,id2)
     }
   
-    createLine = (cds) => {
-      this.line = new fabric.Line(cds, {
+    createLine = (id1,id2) => {
+      this.line = new fabric.Line(id1,id2, {
         fill: 'blue',
         stroke: 'blue',
         strokeWidth: 3,

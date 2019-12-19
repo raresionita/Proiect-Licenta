@@ -41,7 +41,6 @@ export class CanvasComponent implements OnInit{
       //On circle selected, change color
       canvas.on('object:selected',(event) => {
         Graph.selectCircle(event.target.id)
-
       });
 
     }
