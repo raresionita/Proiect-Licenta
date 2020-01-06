@@ -2,13 +2,21 @@
     <div class="col-xl-12 main-title">
             <h4>Github: <a href="https://github.com/raresionita/Licenta">Licenta Traversal Algorithms</a></h4>
     </div>
-    <div class="col-xl-12">
+    <div class="col-md-12">
         <div class="row">
-            <div class="col-xl-12 text-right">
-                    <button type="button" class="btn btn-primary" (click)="addGraph()">Random</button>
-                    <button type="button" class="btn btn-primary" (click)="addVertex()">Add Vertex</button>
-                    <button data-toggle="tooltip" data-placement="bottom" title="Clean Canvas" type="button" class="btn btn-danger" (click)="confirmClear();" >
-                        <i class="fa fa-ban" aria-hidden="true"></i> Clean</button>
+            <div class="col-md-12 text-right">
+                  <button type="button" class="btn btn-primary" (click)="addGraph()">Random</button>
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Algorithms
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item" (click)="algorithm()">Algorithm1</button>
+                    <button class="dropdown-item" (click)="algorithm2()">Algorithm2</button>
+                    <button class="dropdown-item" (click)="algorithm3()">Algorithm3</button>
+                  </div>
+                  <button type="button" class="btn btn-primary" (click)="addVertex()">Add Vertex</button>
+                  <button data-toggle="tooltip" data-placement="bottom" title="Clean Canvas" type="button" class="btn btn-danger" (click)="confirmClear();" >
+                      <i class="fa fa-ban" aria-hidden="true"></i> Clean</button>
             </div>
         </div>
     </div>

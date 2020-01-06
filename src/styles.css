@@ -10,3 +10,8 @@
 body{
   background-color: rgb(230, 230, 230);
 }
+
+button {
+  margin-right: 5px;
+  background-color: #008CBA;
+}
