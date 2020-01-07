@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { canvas } from '../canvas/shared/init-canvas';
 import 'fabric';
-import { resetCanvas, CanvasComponent } from '../canvas/component/canvas.component';
+import CanvasComponent, { resetCanvas } from '../canvas/component/canvas.component';
+import { setAction } from '../canvas/shared/variables';
+import Graph from '../canvas/shared/graph';
 
 declare const fabric: any;
 
@@ -11,7 +13,7 @@ declare const fabric: any;
 })
 
 export class NavBarComponent{
-  
+
   confirmClear() {
     if (confirm('Are you sure?')) {
       canvas.clear();
@@ -19,8 +21,17 @@ export class NavBarComponent{
     resetCanvas()
   }
 
-  addGraph() {
-    //TODO
+  addVertex(){
+    setAction(0)
+  }
+
+  connectVertex(){
+    setAction(1)
+    Graph.connectIfTwo()
+  }
+
+  defaultSelected(){
+    setAction(2)
   }
 
 }

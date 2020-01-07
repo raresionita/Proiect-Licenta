@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import {canvas,setCanvas} from '../shared/init-canvas'
-
 import 'fabric';
 import Graph from '../shared/graph';
+import { actionType } from '../shared/variables';
 
 declare const fabric: any;
 var id = 0;
@@ -34,36 +34,57 @@ export class CanvasComponent implements OnInit{
         //on mouse click create new circle
         'mouse:down': this.onMouseDown,
 
-        // 'mouse:over': onMouseOver,
+        // 'mouse:enter': this.onMouseOver,
 
-        // 'mouse:out' : onMouseOut
+        // 'mouse:leave' : this.onMouseOut,
       });
     }
 
     onMouseDown = (event) => {
-      if(!this.objectSelected){
-        Graph.addCircle(event,id++);
-      }
-      else{
-        canvas.discardActiveObject();
-      }
+      switch(actionType){
+        case 0:
+          if(!this.objectSelected){
+            Graph.addCircle(event,id++);
+          }
+          else{
+            canvas.discardActiveObject();
+          }
+          break
+        case 1:
+          Graph.connectIfTwo()
+          break
+
+        case 2:
+
+          break
+        }
     }
 
     onObjectSelected = (event) => {
-      Graph.selectCircle(event.target.id)
+      if(actionType == 1)
+        Graph.selectCircle(event.target.id)
     }
 
     onObjectMoving = (event) => {
       //TODO
+      Graph.updateEdges()
     }
 
     onSelectionCreated = () => {
       this.objectSelected = true
     }
-    
+
     onSelectionCleared = () => {
       this.objectSelected = false
     }
+
+    // onMouseOver = (event) => {
+    //   event.target.set('fill','green');
+    // }
+
+    // onMouseOut = (event) => {
+
+    // }
 }
 
 
