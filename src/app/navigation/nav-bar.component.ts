@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { canvas } from '../canvas/shared/init-canvas';
 import 'fabric';
-import { resetCanvas } from '../canvas/component/canvas.component';
+import { resetCanvas, CanvasComponent } from '../canvas/component/canvas.component';
 
 declare const fabric: any;
 
@@ -19,4 +19,10 @@ export class NavBarComponent{
     resetCanvas()
   }
 
+  addGraph() {
+    //TODO
+  }
+
 }
+
+export default NavBarComponent

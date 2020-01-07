@@ -26,10 +26,6 @@ class Graph {
     console.log(this.selected.length)
   }
 
-  addEdge = (id1,id2) =>{
-    const edge = new EdgeCustom(id1,id2)
-    canvas.add(edge)
-  }
 }
 
 const GraphVar = new Graph()

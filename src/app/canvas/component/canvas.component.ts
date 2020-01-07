@@ -16,40 +16,63 @@ var id = 0;
 
 export class CanvasComponent implements OnInit{
     objectSelected = false
-    nrSelected = 0
 
     ngOnInit(){
+
       setCanvas(new fabric.Canvas('canvas'))
 
-      canvas.on('selection:created', () => {
-        this.objectSelected = true
-      })
-      canvas.on('selection:cleared',()=>{
-        this.objectSelected = false
-      })
+      canvas.on({
+        //On circle selected, change color
+        'object:selected': this.onObjectSelected,
 
-      //on mouse click create new circle
-      canvas.on('mouse:down', (event:any) => {
-        if(!this.objectSelected){
-          Graph.addCircle(event,id++);
-        }
-        else{
-          canvas.discardActiveObject();
-        }
+        'object:moving': this.onObjectMoving,
+
+        'selection:created': this.onSelectionCreated,
+
+        'selection:cleared': this.onSelectionCleared,
+
+        //on mouse click create new circle
+        'mouse:down': this.onMouseDown,
+
+        // 'mouse:over': onMouseOver,
+
+        // 'mouse:out' : onMouseOut
       });
+    }
 
-      //On circle selected, change color
-      canvas.on('object:selected',(event) => {
-        Graph.selectCircle(event.target.id)
-      });
+    onMouseDown = (event) => {
+      if(!this.objectSelected){
+        Graph.addCircle(event,id++);
+      }
+      else{
+        canvas.discardActiveObject();
+      }
+    }
 
+    onObjectSelected = (event) => {
+      Graph.selectCircle(event.target.id)
+    }
+
+    onObjectMoving = (event) => {
+      //TODO
+    }
+
+    onSelectionCreated = () => {
+      this.objectSelected = true
+    }
+    
+    onSelectionCleared = () => {
+      this.objectSelected = false
     }
 }
+
 
 const resetCanvas = () => {
   Graph.selected = []
   id = 0;
 }
 
-export default CanvasComponent;
+const CanvasVar = new CanvasComponent();
+
+export default CanvasVar;
 export {resetCanvas}
