@@ -1,5 +1,7 @@
 import {canvas} from './init-canvas'
 
+var actionType = 0
+
 const getMousePos = (event) =>{
   var pointer = canvas.getPointer(event.e)
   const mousePos = {
@@ -9,4 +11,8 @@ const getMousePos = (event) =>{
   return mousePos;
 }
 
-export {getMousePos}
+const setAction = (value) => {
+  actionType = value
+}
+
+export {actionType,setAction,getMousePos}

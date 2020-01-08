@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { canvas } from '../canvas/shared/init-canvas';
 import 'fabric';
-import CanvasComponent, { resetCanvas } from '../canvas/component/canvas.component';
-import { setAction } from '../canvas/shared/variables';
+import { resetCanvas } from '../canvas/component/canvas.component';
+import { setAction } from '../canvas/shared/canvas.functions';
 import Graph from '../canvas/shared/graph';
 
 declare const fabric: any;

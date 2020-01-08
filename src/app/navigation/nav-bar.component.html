@@ -5,8 +5,8 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12 text-right">
-                  <button type="button" class="btn btn-primary" (click)="addGraph()">Random</button>
-                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button type="button" class="btn btn-outline-primary" (click)="addGraph()">Random</button>
+                  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Algorithms
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -16,17 +16,17 @@
                   </div>
 
                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-primary active" (click)="addVertex()">
-                      <input type="radio"  name="options" id="option1" autocomplete="off" checked> Add Vertex
+                    <label class="btn btn-outline-primary active" (click)="addVertex()">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Add Vertex
                     </label>
-                    <label class="btn btn-primary" (click)="defaultSelected()">
-                      <input type="radio"  name="options" id="option1" autocomplete="off" checked> Default
+                    <label class="btn btn-outline-primary" (click)="defaultSelected()">
+                      <input type="radio" name="options" id="option1" autocomplete="off"> Default
                     </label>
-                    <label class="btn btn-primary" (click)="connectVertex()">
-                      <input type="radio"  name="options" id="option2" autocomplete="off"> Connect Vertex
+                    <label class="btn btn-outline-primary" (click)="connectVertex()">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Connect Vertex
                     </label>
                   </div>
-                  <button data-toggle="tooltip" data-placement="bottom" title="Clean Canvas" type="button" class="btn btn-danger" (click)="confirmClear();" >
+                  <button data-toggle="tooltip" data-placement="bottom" title="Clean Canvas" type="button" class="btn btn-outline-danger" (click)="confirmClear();" >
                       <i class="fa fa-ban" aria-hidden="true"></i> Clean</button>
             </div>
         </div>

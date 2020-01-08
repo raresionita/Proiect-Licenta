@@ -15,3 +15,8 @@ button {
   margin-right: 5px;
   background-color: #008CBA;
 }
+
+label {
+  margin-right: 5px;
+  border-radius: 5%;
+}

@@ -19,7 +19,7 @@ class EdgeCustom{
     update = () => {
       this.line = this.createLine([this.s0.group.left,this.s0.group.top,this.s1.group.left,this.s1.group.top])
     }
-
+    
     createLine = (cds) => {
       return new fabric.Line(cds, {
         fill: 'blue',

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {canvas,setCanvas} from '../shared/init-canvas'
 import 'fabric';
 import Graph from '../shared/graph';
-import { actionType } from '../shared/variables';
+import { actionType } from '../shared/canvas.functions';
 
 declare const fabric: any;
 var id = 0;
@@ -22,40 +22,26 @@ export class CanvasComponent implements OnInit{
       setCanvas(new fabric.Canvas('canvas'))
 
       canvas.on({
-        //On circle selected, change color
         'object:selected': this.onObjectSelected,
-
         'object:moving': this.onObjectMoving,
-
         'selection:created': this.onSelectionCreated,
-
         'selection:cleared': this.onSelectionCleared,
-
-        //on mouse click create new circle
-        'mouse:down': this.onMouseDown,
-
-        // 'mouse:enter': this.onMouseEnter,
-
-        // 'mouse:enter' : this.onMouseLeave
+        'mouse:down': this.onMouseDown
       });
     }
 
     onMouseDown = (event) => {
+
       switch(actionType){
         case 0:
-          if(!this.objectSelected){
-            Graph.addCircle(event,id++);
-          }
-          else{
-            canvas.discardActiveObject();
-          }
+          (!this.objectSelected) ? Graph.addCircle(event,id++) : canvas.discardActiveObject();
           break
         case 1:
-          Graph.connectIfTwo()
+          (!this.objectSelected) ? Graph.connectIfTwo() : canvas.discardActiveObject();
+          //Graph.connectIfTwo()
           break
-
         case 2:
-
+          //ToDo Default
           break
         }
     }
@@ -77,18 +63,6 @@ export class CanvasComponent implements OnInit{
     onSelectionCleared = () => {
       this.objectSelected = false
     }
-
-    // onMouseEnter = (event) => {
-    //   event.target.set({
-    //     fill: 'green'
-    //   });
-    // }
-
-    // onMouseLeave = (event) => {
-    //   event.target.set({
-    //     fill: '#33C7FF'
-    //   });
-    // }
 }
 
 
