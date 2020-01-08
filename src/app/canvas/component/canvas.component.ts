@@ -34,9 +34,9 @@ export class CanvasComponent implements OnInit{
         //on mouse click create new circle
         'mouse:down': this.onMouseDown,
 
-        // 'mouse:enter': this.onMouseOver,
+        // 'mouse:enter': this.onMouseEnter,
 
-        // 'mouse:leave' : this.onMouseOut,
+        // 'mouse:enter' : this.onMouseLeave
       });
     }
 
@@ -78,12 +78,16 @@ export class CanvasComponent implements OnInit{
       this.objectSelected = false
     }
 
-    // onMouseOver = (event) => {
-    //   event.target.set('fill','green');
+    // onMouseEnter = (event) => {
+    //   event.target.set({
+    //     fill: 'green'
+    //   });
     // }
 
-    // onMouseOut = (event) => {
-
+    // onMouseLeave = (event) => {
+    //   event.target.set({
+    //     fill: '#33C7FF'
+    //   });
     // }
 }
 

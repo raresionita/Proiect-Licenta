@@ -35,6 +35,12 @@ class CircleCustom{
       fill: '#FF0000'
     })
   }
+
+  updateColor = () => {
+    this.circle.set({
+      fill: '#33C7FF'
+    });
+  }
 }
 
 export default CircleCustom

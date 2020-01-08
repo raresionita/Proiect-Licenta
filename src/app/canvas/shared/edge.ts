@@ -5,6 +5,8 @@ declare const fabric: any;
 class EdgeCustom{
 
     line = null
+
+    //selected 0/1
     s0 = null
     s1 = null
 
