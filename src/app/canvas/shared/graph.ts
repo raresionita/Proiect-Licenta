@@ -1,5 +1,5 @@
 
-import { canvas } from './init-canvas';
+import { canvas,canvasBack } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 
@@ -12,6 +12,8 @@ class Graph {
     var circleCustom = new CircleCustom(event,id)
     this.circles.set(id,circleCustom)
     canvas.add(circleCustom.group)
+    circleCustom.group.lockMovementX = true
+    circleCustom.group.lockMovementY = true
   }
 
   addEdge = () => {
@@ -19,7 +21,7 @@ class Graph {
     const end = this.circles.get(this.selected[1])
     const edge = new EdgeCustom(start,end)
     this.edges.push(edge)
-    canvas.add(edge.line)
+    canvasBack.add(edge.line)
   }
 
   selectCircle = (id) => {
@@ -36,7 +38,7 @@ class Graph {
   connectIfTwo = () => {
     if (this.selected.length == 2) {
       this.addEdge()
-      this.updateCircles()
+      this.updateCirclesColorDefault()
       this.selected = []
     }
   }
@@ -44,13 +46,13 @@ class Graph {
   updateEdges = () => {
     this.edges.forEach(edge => {
       //if line contains circle
-      canvas.remove(edge.line)
+      canvasBack.remove(edge.line)
       edge.update()
-      canvas.add(edge.line)
+      canvasBack.add(edge.line)
     });
   }
 
-  updateCircles = () => {
+  updateCirclesColorDefault = () => {
     this.circles.forEach(circle => {
       circle.updateColor()
     })
@@ -58,6 +60,4 @@ class Graph {
 }
 
 const GraphVar = new Graph()
-
-
 export default GraphVar

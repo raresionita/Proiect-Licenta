@@ -1,9 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import {canvas,setCanvas} from '../shared/init-canvas'
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {canvas,canvasBack,setCanvas,setCanvasBack} from '../shared/init-canvas'
 import 'fabric';
 import Graph from '../shared/graph';
-import { actionType } from '../shared/canvas.functions';
-import CircleCustom from '../shared/circle';
+import { actionType,objectSelected,setSelected} from '../shared/canvas.functions';
 
 declare const fabric: any;
 var id = 0
@@ -16,66 +15,66 @@ var id = 0
 
 
 export class CanvasComponent implements OnInit{
-    objectSelected = false
+    @ViewChild('container',{static:true}) containerRef: ElementRef;
 
     ngOnInit(){
 
-      setCanvas(new fabric.Canvas('canvas'))
+      setCanvas(new fabric.Canvas('canvas1'))
+      setCanvasBack(new fabric.Canvas('canvas2'))
 
       canvas.on({
         'object:selected': this.onObjectSelected,
         'object:moving': this.onObjectMoving,
-        'selection:created': this.onSelectionCreated,
-        'selection:cleared': this.onSelectionCleared,
-        'mouse:down': this.onMouseDown,
-        'mouse:over': this.onMouseOver,
-        'mouse:out': this.onMouseOut
-      });
+        'mouse:down': this.onMouseDown
+      })
+
+
+      window.addEventListener('resize', this.onResize,false)
+      this.onResize()
+    }
+
+    onResize = () => {
+      const width = this.containerRef.nativeElement.offsetWidth
+      const height = this.containerRef.nativeElement.offsetHeight
+      canvas.setWidth(width)
+      canvas.setHeight(height)
+      canvasBack.setWidth(width)
+      canvasBack.setHeight(height)
     }
 
     onMouseDown = (event) => {
-
       switch(actionType){
         case 0:
-          (!this.objectSelected) ? Graph.addCircle(event,id++) : canvas.discardActiveObject();
+          if(!objectSelected) {
+            Graph.addCircle(event,id++)
+          } else {
+            canvas.discardActiveObject()
+          }
           break
         case 1:
-          (!this.objectSelected) ? Graph.connectIfTwo() : canvas.discardActiveObject();
-          break
-        case 2:
-          //ToDo Default
+          (!objectSelected) ? Graph.connectIfTwo() : canvas.discardActiveObject();
           break
         }
     }
 
-    onMouseOver = (event) => {
-    }
-
-    onMouseOut = (event) => {
-      console.log("OUT")
-    }
 
     onObjectSelected = (event) => {
-      if(actionType == 1)
+      if(actionType != 0){
+        setSelected(event.target)
+      }
+      if(actionType == 1){
         Graph.selectCircle(event.target.id)
+      }
     }
 
     onObjectMoving = (event) => {
         Graph.updateEdges()
     }
-
-    onSelectionCreated = () => {
-      this.objectSelected = true
-    }
-
-    onSelectionCleared = () => {
-      this.objectSelected = false
-    }
 }
-
 
 const resetCanvas = () => {
   Graph.selected = []
+  Graph.edges = []
   id = 0;
 }
 

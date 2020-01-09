@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { canvas } from '../canvas/shared/init-canvas';
+import { canvas, canvasBack } from '../canvas/shared/init-canvas';
 import 'fabric';
 import { resetCanvas } from '../canvas/component/canvas.component';
 import { setAction } from '../canvas/shared/canvas.functions';
@@ -17,6 +17,7 @@ export class NavBarComponent{
   confirmClear() {
     if (confirm('Are you sure?')) {
       canvas.clear();
+      canvasBack.clear();
     }
     resetCanvas()
   }
@@ -32,6 +33,7 @@ export class NavBarComponent{
 
   defaultSelected(){
     setAction(2)
+    //Graph.updateCircles()
   }
 
 }
