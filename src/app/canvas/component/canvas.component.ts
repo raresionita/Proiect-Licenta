@@ -3,9 +3,10 @@ import {canvas,setCanvas} from '../shared/init-canvas'
 import 'fabric';
 import Graph from '../shared/graph';
 import { actionType } from '../shared/canvas.functions';
+import CircleCustom from '../shared/circle';
 
 declare const fabric: any;
-var id = 0;
+var id = 0
 
 @Component({
     selector:'app-canvas',
@@ -26,7 +27,9 @@ export class CanvasComponent implements OnInit{
         'object:moving': this.onObjectMoving,
         'selection:created': this.onSelectionCreated,
         'selection:cleared': this.onSelectionCleared,
-        'mouse:down': this.onMouseDown
+        'mouse:down': this.onMouseDown,
+        'mouse:over': this.onMouseOver,
+        'mouse:out': this.onMouseOut
       });
     }
 
@@ -38,12 +41,18 @@ export class CanvasComponent implements OnInit{
           break
         case 1:
           (!this.objectSelected) ? Graph.connectIfTwo() : canvas.discardActiveObject();
-          //Graph.connectIfTwo()
           break
         case 2:
           //ToDo Default
           break
         }
+    }
+
+    onMouseOver = (event) => {
+    }
+
+    onMouseOut = (event) => {
+      console.log("OUT")
     }
 
     onObjectSelected = (event) => {
@@ -52,8 +61,7 @@ export class CanvasComponent implements OnInit{
     }
 
     onObjectMoving = (event) => {
-      //TODO
-      Graph.updateEdges()
+        Graph.updateEdges()
     }
 
     onSelectionCreated = () => {

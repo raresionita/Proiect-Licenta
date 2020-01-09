@@ -25,8 +25,9 @@ class CircleCustom{
       id: id,
       left: getMousePos(event).x-15,
       top: getMousePos(event).y-15,
+      hasControls: false,
+      hasBorders: false
     })
-    this.group.hasControls = this.group.hasBorders = false;
   }
 
   //color circle RED
@@ -36,6 +37,7 @@ class CircleCustom{
     })
   }
 
+  //color circle default
   updateColor = () => {
     this.circle.set({
       fill: '#33C7FF'

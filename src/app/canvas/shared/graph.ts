@@ -14,6 +14,14 @@ class Graph {
     canvas.add(circleCustom.group)
   }
 
+  addEdge = () => {
+    const start = this.circles.get(this.selected[0])
+    const end = this.circles.get(this.selected[1])
+    const edge = new EdgeCustom(start,end)
+    this.edges.push(edge)
+    canvas.add(edge.line)
+  }
+
   selectCircle = (id) => {
     if(this.selected.length < 2){
       const obj = this.circles.get(id)
@@ -33,14 +41,6 @@ class Graph {
     }
   }
 
-  addEdge = () => {
-    const s0 = this.circles.get(this.selected[0])
-    const s1 = this.circles.get(this.selected[1])
-    const edge = new EdgeCustom(s0,s1)
-    this.edges.push(edge)
-    canvas.add(edge.line)
-  }
-
   updateEdges = () => {
     this.edges.forEach(edge => {
       //if line contains circle
@@ -55,7 +55,6 @@ class Graph {
       circle.updateColor()
     })
   }
-
 }
 
 const GraphVar = new Graph()
