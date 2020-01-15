@@ -6,6 +6,7 @@ import { actionType,objectSelected,setSelected} from '../shared/canvas.functions
 
 declare const fabric: any;
 var id = 0
+var weight = 5
 
 @Component({
     selector:'app-canvas',
@@ -52,7 +53,7 @@ export class CanvasComponent implements OnInit{
           }
           break
         case 1:
-          (!objectSelected) ? Graph.connectIfTwo() : canvas.discardActiveObject();
+          (!objectSelected) ? Graph.connectIfTwo(weight) : canvas.discardActiveObject();
           break
         }
     }
@@ -63,7 +64,7 @@ export class CanvasComponent implements OnInit{
         setSelected(event.target)
       }
       if(actionType == 1){
-        Graph.selectCircle(event.target.id)
+        Graph.selectCircle(event.target.id,weight)
       }
     }
 

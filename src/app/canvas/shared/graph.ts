@@ -16,28 +16,28 @@ class Graph {
     circleCustom.group.lockMovementY = true
   }
 
-  addEdge = () => {
+  addEdge = (weight) => {
     const start = this.circles.get(this.selected[0])
     const end = this.circles.get(this.selected[1])
-    const edge = new EdgeCustom(start,end)
+    const edge = new EdgeCustom(start,end,weight)
     this.edges.push(edge)
     canvasBack.add(edge.line)
   }
 
-  selectCircle = (id) => {
+  selectCircle = (id,weight) => {
     if(this.selected.length < 2){
       const obj = this.circles.get(id)
       if(!this.selected.includes(id)){
         obj.colorSelected();
         this.selected.push(id)
-        this.connectIfTwo()
+        this.connectIfTwo(weight)
       }
     }
   }
 
-  connectIfTwo = () => {
+  connectIfTwo = (weight) => {
     if (this.selected.length == 2) {
-      this.addEdge()
+      this.addEdge(weight)
       this.updateCirclesColorDefault()
       this.selected = []
     }
@@ -48,6 +48,7 @@ class Graph {
       //if line contains circle
       canvasBack.remove(edge.line)
       edge.update()
+      //edge.updateWeighted(weight)
       canvasBack.add(edge.line)
     });
   }

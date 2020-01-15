@@ -5,12 +5,12 @@ import { resetCanvas } from '../canvas/component/canvas.component';
 import { setAction } from '../canvas/shared/canvas.functions';
 import Graph from '../canvas/shared/graph';
 
-declare const fabric: any;
-
+var weight = 5
 @Component({
     selector: 'nav-bar',
     templateUrl: './nav-bar.component.html'
 })
+
 
 export class NavBarComponent{
 
@@ -28,7 +28,7 @@ export class NavBarComponent{
 
   connectVertex(){
     setAction(1)
-    Graph.connectIfTwo()
+    Graph.connectIfTwo(weight)
   }
 
   defaultSelected(){
