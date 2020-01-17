@@ -7,7 +7,8 @@ class Graph {
   circles = new Map<number,CircleCustom>()
   selected = []
   edges = []
-
+  adjacency = new Array()
+  
   addCircle = (event,id) => {
     var circleCustom = new CircleCustom(event,id)
     this.circles.set(id,circleCustom)

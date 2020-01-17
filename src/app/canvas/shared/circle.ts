@@ -12,6 +12,8 @@ class CircleCustom{
     this.createVertex(event,id)
   }
 
+  //To draw directed line, try to group the line with triangle
+
   createVertex = (event,id) => {
     this.circle = new fabric.Circle({
       radius: 15, fill: '#33C7FF',
