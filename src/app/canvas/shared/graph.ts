@@ -4,10 +4,12 @@ import CircleCustom from './circle'
 import EdgeCustom from './edge';
 
 class Graph {
+  
   circles = new Map<number,CircleCustom>()
   selected = []
   edges = []
   adjacency = new Array()
+
   
   addCircle = (event,id) => {
     var circleCustom = new CircleCustom(event,id)
@@ -36,6 +38,7 @@ class Graph {
     }
   }
 
+
   connectIfTwo = (weight) => {
     if (this.selected.length == 2) {
       this.addEdge(weight)
@@ -49,7 +52,6 @@ class Graph {
       //if line contains circle
       canvasBack.remove(edge.line)
       edge.update()
-      //edge.updateWeighted(weight)
       canvasBack.add(edge.line)
     });
   }

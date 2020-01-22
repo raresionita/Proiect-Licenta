@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>Weight: </p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.weight">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.weight" cdkFocusInitial>Ok</button>
+</div>

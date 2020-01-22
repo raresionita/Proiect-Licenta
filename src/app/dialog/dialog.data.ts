@@ -1,4 +1,3 @@
-export interface DialogData{
-    something: string
-    name: string
+export interface DialogData {
+    weight: string
 }

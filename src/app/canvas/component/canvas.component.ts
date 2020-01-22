@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {canvas,canvasBack,setCanvas,setCanvasBack} from '../shared/init-canvas'
 import 'fabric';
-import { actionType,objectSelected,setSelected} from '../shared/canvas.functions';
+import { actionType,objectSelected,setSelected, weight} from '../shared/canvas.functions';
 import Graph from '../shared/graph';
 
 declare const fabric: any;
 var id = 0
-var weight = 5
 
 @Component({
     selector:'app-canvas',
@@ -53,7 +52,11 @@ export class CanvasComponent implements OnInit{
           }
           break
         case 1:
-          (!objectSelected) ? Graph.connectIfTwo(weight) : canvas.discardActiveObject();
+          if(!objectSelected){
+            Graph.connectIfTwo(weight) 
+          }else{
+            canvas.discardActiveObject();
+          }   
           break
         }
     }
@@ -65,10 +68,11 @@ export class CanvasComponent implements OnInit{
       }
       if(actionType == 1){
         Graph.selectCircle(event.target.id,weight)
+        
       }
     }
 
-    onObjectMoving = (event) => {
+    onObjectMoving = () => {
         Graph.updateEdges()
     }
 }
@@ -79,7 +83,4 @@ const resetCanvas = () => {
   id = 0;
 }
 
-const CanvasVar = new CanvasComponent();
-
-export default CanvasVar;
 export {resetCanvas}

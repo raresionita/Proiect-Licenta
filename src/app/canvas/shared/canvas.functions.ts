@@ -2,6 +2,7 @@ import {canvas} from './init-canvas'
 
 var actionType = 0
 var objectSelected = null
+var weight:string
 
 const getMousePos = (event) =>{
   var pointer = canvas.getPointer(event.e)
@@ -29,8 +30,12 @@ const setAction = (value) => {
   canvas.discardActiveObject()
 }
 
-const setSelected = (sel) => {
-  objectSelected = sel
+const setSelected = (val) => {
+  objectSelected = val
 }
 
-export {actionType,setAction,getMousePos,objectSelected,setSelected}
+const setWeight = (val) => {
+  weight = val
+}
+
+export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,setWeight}

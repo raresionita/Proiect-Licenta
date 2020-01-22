@@ -8,12 +8,12 @@ class EdgeCustom{
     start = null
     end = null
 
-    weight = null
+    weight?:any
 
     constructor(s0,s1,weight){
       this.start = s0
       this.end = s1
-      this.weight = weight
+      this.weight=weight
       this.line = this.createLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
     }
 
