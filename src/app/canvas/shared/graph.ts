@@ -2,15 +2,17 @@
 import { canvas,canvasBack } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
+import { dialog } from 'src/app/dialog/dialog.functions';
+import { weight } from './canvas.functions';
 
 class Graph {
-  
+
   circles = new Map<number,CircleCustom>()
   selected = []
   edges = []
   adjacency = new Array()
 
-  
+
   addCircle = (event,id) => {
     var circleCustom = new CircleCustom(event,id)
     this.circles.set(id,circleCustom)
@@ -19,7 +21,7 @@ class Graph {
     circleCustom.group.lockMovementY = true
   }
 
-  addEdge = (weight) => {
+  addEdge = () => {
     const start = this.circles.get(this.selected[0])
     const end = this.circles.get(this.selected[1])
     const edge = new EdgeCustom(start,end,weight)
@@ -27,23 +29,25 @@ class Graph {
     canvasBack.add(edge.line)
   }
 
-  selectCircle = (id,weight) => {
+  selectCircle = (id) => {
     if(this.selected.length < 2){
       const obj = this.circles.get(id)
       if(!this.selected.includes(id)){
         obj.colorSelected();
         this.selected.push(id)
-        this.connectIfTwo(weight)
+        this.connect()
       }
     }
   }
 
-
-  connectIfTwo = (weight) => {
+  connect = () => {
     if (this.selected.length == 2) {
-      this.addEdge(weight)
-      this.updateCirclesColorDefault()
-      this.selected = []
+      dialog.openDialog().then(()=>{
+        this.addEdge()
+        this.selected = []
+        this.updateCirclesColorDefault()
+      })
+
     }
   }
 
@@ -60,6 +64,7 @@ class Graph {
     this.circles.forEach(circle => {
       circle.updateColor()
     })
+    canvas.renderAll()
   }
 }
 

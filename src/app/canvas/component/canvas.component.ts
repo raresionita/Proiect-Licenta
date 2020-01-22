@@ -53,10 +53,10 @@ export class CanvasComponent implements OnInit{
           break
         case 1:
           if(!objectSelected){
-            Graph.connectIfTwo(weight) 
+            Graph.connect()
           }else{
             canvas.discardActiveObject();
-          }   
+          }
           break
         }
     }
@@ -67,8 +67,8 @@ export class CanvasComponent implements OnInit{
         setSelected(event.target)
       }
       if(actionType == 1){
-        Graph.selectCircle(event.target.id,weight)
-        
+        Graph.selectCircle(event.target.id)
+
       }
     }
 

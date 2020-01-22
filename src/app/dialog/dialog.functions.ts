@@ -1,29 +1,31 @@
 import { MatDialog } from '@angular/material';
 import { DialogOverview } from './dialog.component';
+import { setWeight, weight } from '../canvas/shared/canvas.functions';
 
-//var weight: string
+class Dialog{
+  constructor(public dialog:MatDialog){}
 
-// export class Dialog{
+  openDialog = () => {
+    const dialogRef = this.dialog.open(DialogOverview, {
+        width: '250px',
+        height: '250px',
+        data: { weight: weight}
+    });
 
-//     constructor(public dialog: MatDialog){}
 
-//     public openDialog = () => {
-//         const dialogRef = this.dialog.open(DialogOverview, {
-//             width: '250px',
-//             height: '250px',
-//             data: { weight: weight}
-//         });
-        
-//         dialogRef.afterClosed().subscribe(result => {
-//             console.log('The dialog was closed');
-//             weight = result;
-//         });
-        
-//     }
-// }
+    return new Promise((resolve, reject)=>{
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        setWeight(result)
+        resolve()
+      });
+    })
+  }
+}
 
-// const DialogNew = new Dialog(diag)
+var dialog = null
+const setDialog = (d) => {
+  dialog = d
+}
 
-// export default DialogNew
-
-//export {weight}
+export {Dialog,dialog,setDialog}
