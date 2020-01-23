@@ -11,11 +11,9 @@ class Dialog{
         height: '250px',
         data: { weight: weight}
     });
-
-
+    
     return new Promise((resolve, reject)=>{
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
         setWeight(result)
         resolve()
       });

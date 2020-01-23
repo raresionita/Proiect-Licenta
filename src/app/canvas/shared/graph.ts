@@ -66,6 +66,11 @@ class Graph {
     })
     canvas.renderAll()
   }
+
+  resetGraph = () => {
+    this.selected = []
+    this.updateCirclesColorDefault()
+  }
 }
 
 const GraphVar = new Graph()

@@ -5,6 +5,7 @@ import { resetCanvas } from '../canvas/component/canvas.component';
 import { setAction } from '../canvas/shared/canvas.functions';
 import { MatDialog } from '@angular/material';
 import { Dialog, setDialog } from '../dialog/dialog.functions';
+import GraphVar from '../canvas/shared/graph';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class NavBarComponent{
 
   defaultSelected(){
     setAction(2)
+    GraphVar.resetGraph()
   }
 
 }
