@@ -47,8 +47,7 @@ class EdgeCustom{
     }
 
     calcArrowAngle(x1, y1, x2, y2) {
-      var angle = 0,
-          x, y;
+      var angle = 0,x,y;
   
       x = (x2 - x1);
       y = (y2 - y1);
@@ -80,7 +79,21 @@ class EdgeCustom{
         angle: this.calcArrowAngle(line.x1,line.y1,line.x2,line.y2)
       });
 
-      const directedLines = [line,arrow];
+      const text = new fabric.Text(this.weight.toString(),{
+        fontSize: 30,
+        fontWeight: 'bold',
+        originX: 'center',
+        originY: 'center',
+        left:(line.x1 + line.x2 )/ 2 - 8,
+        top:(line.y1 + line.y2 )/ 2 - 15,
+        strokeWidth: 1,
+        fill: '#000',
+        stroke: 'white'
+      });
+
+      const directedLines = [line,arrow,text];
+
+      
 
       const group = new fabric.Group(directedLines,{
         hasControls: false,
