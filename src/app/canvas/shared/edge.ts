@@ -47,11 +47,12 @@ class EdgeCustom{
     }
 
     calcArrowAngle(x1, y1, x2, y2) {
-      var angle = 0,x,y;
-  
+      var angle = 0,
+          x, y;
+
       x = (x2 - x1);
       y = (y2 - y1);
-  
+
       if (x === 0) {
           angle = (y === 0) ? 0 : (y > 0) ? Math.PI / 2 : Math.PI * 3 / 2;
       } else if (y === 0) {
@@ -59,24 +60,52 @@ class EdgeCustom{
       } else {
           angle = (x < 0) ? Math.atan(y / x) + Math.PI : (y < 0) ? Math.atan(y / x) + (2 * Math.PI) : Math.atan(y / x);
       }
-  
-      return (angle * 180 / Math.PI + 90);
+
+      return (angle * 180 / Math.PI + 90)%360;
+  }
+
+  rtd = (radians) =>
+  {
+    var pi = Math.PI;
+    return radians * (pi/180);
+  }
+
+  fixPosition = (angle,size) => {
+    const x=Math.sin(this.rtd(angle))
+    const y=Math.cos(this.rtd(angle))
+    size += 3
+    return {
+      w : size*x,
+      h : size*y
+    }
   }
 
     createDirectedLine = (cds) => {
+      const size = 20
+      const angle = this.calcArrowAngle(cds[0],cds[1],cds[2],cds[3])
+      const fix = this.fixPosition(angle,20)
+      const x = cds[2]
+      const y = cds[3]
+      cds[2] -= fix.w
+      cds[3] += fix.h
       const line = new fabric.Line(cds , {
         fill: 'blue',
         stroke: 'blue',
         strokeWidth: 3,
-        selectable: false
+        selectable: false,
+        originX: 'center',
+        originY: 'center',
       });
+
       const arrow = new fabric.Triangle({
-        width: 15,
-        height: 20,
+        width: size,
+        height: size,
         fill: 'blue',
-        left: line.x2,
-        top: line.y2,
-        angle: this.calcArrowAngle(line.x1,line.y1,line.x2,line.y2)
+        left: x - fix.w,
+        top: y + fix.h,
+        originX: 'center',
+        originY: 'center',
+        angle: angle,
       });
 
       const text = new fabric.Text(this.weight.toString(),{
@@ -93,14 +122,13 @@ class EdgeCustom{
 
       const directedLines = [line,arrow,text];
 
-      
-
       const group = new fabric.Group(directedLines,{
         hasControls: false,
         hasBorders: false
       });
+
       return group;
-    
+
     }
 }
 
