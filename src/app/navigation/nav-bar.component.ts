@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { canvas, canvasBack } from '../canvas/shared/init-canvas';
+import { clearCanvas } from '../canvas/shared/init-canvas';
 import 'fabric';
 import { resetCanvas } from '../canvas/component/canvas.component';
 import { setAction } from '../canvas/shared/canvas.functions';
@@ -21,10 +21,7 @@ export class NavBarComponent{
   }
 
   confirmClear() {
-    if (confirm('Are you sure?')) {
-      canvas.clear();
-      canvasBack.clear();
-    }
+    clearCanvas()
     resetCanvas()
   }
 

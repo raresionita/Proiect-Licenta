@@ -28,7 +28,6 @@ export class CanvasComponent implements OnInit{
         'mouse:down': this.onMouseDown
       })
 
-
       window.addEventListener('resize', this.onResize,false)
       this.onResize()
     }

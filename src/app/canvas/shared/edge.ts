@@ -14,11 +14,11 @@ class EdgeCustom{
       this.start = s0
       this.end = s1
       this.weight=weight
-      this.line = this.createLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
+      this.line = this.createDirectedLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
     }
 
     update = () => {
-      this.line = this.createLine([this.start.group.left+15,this.start.group.top+15,this.end.group.left+15,this.end.group.top+15])
+      this.line = this.createDirectedLine([this.start.group.left+15,this.start.group.top+15,this.end.group.left+15,this.end.group.top+15])
     }
 
     createLine = (cds) => {
@@ -44,6 +44,50 @@ class EdgeCustom{
         hasBorders: false,
       })
       return group
+    }
+
+    calcArrowAngle(x1, y1, x2, y2) {
+      var angle = 0,
+          x, y;
+  
+      x = (x2 - x1);
+      y = (y2 - y1);
+  
+      if (x === 0) {
+          angle = (y === 0) ? 0 : (y > 0) ? Math.PI / 2 : Math.PI * 3 / 2;
+      } else if (y === 0) {
+          angle = (x > 0) ? 0 : Math.PI;
+      } else {
+          angle = (x < 0) ? Math.atan(y / x) + Math.PI : (y < 0) ? Math.atan(y / x) + (2 * Math.PI) : Math.atan(y / x);
+      }
+  
+      return (angle * 180 / Math.PI + 90);
+  }
+
+    createDirectedLine = (cds) => {
+      const line = new fabric.Line(cds , {
+        fill: 'blue',
+        stroke: 'blue',
+        strokeWidth: 3,
+        selectable: false
+      });
+      const arrow = new fabric.Triangle({
+        width: 15,
+        height: 20,
+        fill: 'blue',
+        left: line.x2,
+        top: line.y2,
+        angle: this.calcArrowAngle(line.x1,line.y1,line.x2,line.y2)
+      });
+
+      const directedLines = [line,arrow];
+
+      const group = new fabric.Group(directedLines,{
+        hasControls: false,
+        hasBorders: false
+      });
+      return group;
+    
     }
 }
 

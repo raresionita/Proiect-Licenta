@@ -47,7 +47,6 @@ class Graph {
         this.selected = []
         this.updateCirclesColorDefault()
       })
-
     }
   }
 

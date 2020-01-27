@@ -11,4 +11,11 @@ const setCanvasBack = (newCanvas:any) => {
   canvasBack.selection = false;
 }
 
-export {canvas,canvasBack,setCanvas,setCanvasBack}
+const clearCanvas = () => {
+  if (confirm('Are you sure?')) {
+    canvas.clear();
+    canvasBack.clear();
+  }
+}
+
+export {canvas,canvasBack,setCanvas,setCanvasBack, clearCanvas}
