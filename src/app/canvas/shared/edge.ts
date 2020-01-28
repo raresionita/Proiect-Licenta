@@ -26,7 +26,9 @@ class EdgeCustom{
         fill: 'blue',
         stroke: 'blue',
         strokeWidth: 3,
-        selectable: false
+        selectable: false,
+        originX: 'center',
+        originY: 'center'
       });
       const text = new fabric.Text(this.weight.toString(),{
         fontSize: 30,
@@ -47,9 +49,7 @@ class EdgeCustom{
     }
 
     calcArrowAngle(x1, y1, x2, y2) {
-      var angle = 0,
-          x, y;
-
+      var angle = 0, x, y;
       x = (x2 - x1);
       y = (y2 - y1);
 
@@ -60,19 +60,16 @@ class EdgeCustom{
       } else {
           angle = (x < 0) ? Math.atan(y / x) + Math.PI : (y < 0) ? Math.atan(y / x) + (2 * Math.PI) : Math.atan(y / x);
       }
-
       return (angle * 180 / Math.PI + 90)%360;
   }
 
-  rtd = (radians) =>
-  {
-    var pi = Math.PI;
-    return radians * (pi/180);
+  radian = (radians) => {
+    return radians * (Math.PI/180);
   }
 
   fixPosition = (angle,size) => {
-    const x=Math.sin(this.rtd(angle))
-    const y=Math.cos(this.rtd(angle))
+    const x=Math.sin(this.radian(angle))
+    const y=Math.cos(this.radian(angle))
     size += 3
     return {
       w : size*x,
