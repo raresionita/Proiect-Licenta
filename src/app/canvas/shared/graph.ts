@@ -66,7 +66,7 @@ class Graph {
     canvas.renderAll()
   }
 
-  resetGraph = () => {
+  resetGraphColorSelected = () => {
     this.selected = []
     this.updateCirclesColorDefault()
   }

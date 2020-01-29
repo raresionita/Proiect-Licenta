@@ -67,7 +67,6 @@ export class CanvasComponent implements OnInit{
       }
       if(actionType == 1){
         Graph.selectCircle(event.target.id)
-
       }
     }
 

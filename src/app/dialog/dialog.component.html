@@ -1,15 +1,12 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Weight</mat-label>
-    <input matInput type="number" [(ngModel)]="data.weight" min=1 max=99
-           onkeypress="return (event.charCode == 8 || event.charCode == 1) ? null : 
-                                      event.charCode > 48 && event.charCode <= 58">
+    <input matInput [(ngModel)]="data.weight" min=1 max=99
+          onkeypress="return (this.value.length==2 && event.keyCode > 48 && event.keyCode <= 58)
+                                         ? false :  event.charCode > 48 && event.charCode <= 58">
   </mat-form-field>
-  
-  
-  
 </div>
 <div mat-dialog-actions>
-  <button>No Weight</button>
+  <!-- <button  mat-button [mat-dialog-close]="data.weight" cdkFocusInitial>No Weight</button> -->
   <button mat-button [mat-dialog-close]="data.weight" cdkFocusInitial>Ok</button>
 </div>

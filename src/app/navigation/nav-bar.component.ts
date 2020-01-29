@@ -27,6 +27,7 @@ export class NavBarComponent{
 
   addVertex(){
     setAction(0)
+    GraphVar.resetGraphColorSelected()
   }
 
   connectVertex(){
@@ -35,7 +36,7 @@ export class NavBarComponent{
 
   defaultSelected(){
     setAction(2)
-    GraphVar.resetGraph()
+    GraphVar.resetGraphColorSelected()
   }
 
 }

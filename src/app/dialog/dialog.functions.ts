@@ -3,13 +3,14 @@ import { DialogOverview } from './dialog.component';
 import { setWeight, weight } from '../canvas/shared/canvas.functions';
 
 class Dialog{
+
   constructor(public dialog:MatDialog){}
 
   openDialog = () => {
     const dialogRef = this.dialog.open(DialogOverview, {
         width: '250px',
         height: '250px',
-        data: { weight: weight}
+        data: { weight: setWeight(weight)}
     });
     
     return new Promise((resolve, reject)=>{
