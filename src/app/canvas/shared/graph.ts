@@ -3,14 +3,14 @@ import { canvas,canvasBack } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { weight } from './canvas.functions';
+import { weight,isDirected } from './canvas.functions';
 
 class Graph {
 
   circles = new Map<number,CircleCustom>()
   selected = []
   edges = []
-  adjacency = new Array()
+  //adjacency = new Array()
 
 
   addCircle = (event,id) => {
@@ -24,8 +24,9 @@ class Graph {
   addEdge = () => {
     const start = this.circles.get(this.selected[0])
     const end = this.circles.get(this.selected[1])
-    const edge = new EdgeCustom(start,end,weight)
+    const edge = new EdgeCustom(start,end,weight,isDirected)
     this.edges.push(edge)
+    console.log(this.edges)
     canvasBack.add(edge.line)
   }
 
@@ -46,6 +47,8 @@ class Graph {
         this.addEdge()
         this.selected = []
         this.updateCirclesColorDefault()
+      }).catch((err)=>{
+        console.log(err)
       })
     }
   }

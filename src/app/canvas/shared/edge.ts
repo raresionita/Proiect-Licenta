@@ -5,20 +5,35 @@ declare const fabric: any;
 class EdgeCustom{
 
     line = null
+    lineWeighted = null
     start = null
     end = null
 
     weight?:any
+    isDirected:boolean
 
-    constructor(s0,s1,weight){
+    constructor(s0,s1,weight,isDirected){
       this.start = s0
       this.end = s1
       this.weight=weight
-      this.line = this.createDirectedLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
+      this.isDirected = isDirected
+
+      if(this.isDirected){
+        this.line = this.createDirectedLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
+      }else{
+        this.line = this.createLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
+      }
+
     }
 
     update = () => {
-      this.line = this.createDirectedLine([this.start.group.left+15,this.start.group.top+15,this.end.group.left+15,this.end.group.top+15])
+      if(this.isDirected){
+        this.line = this.createDirectedLine([this.start.group.left+15,this.start.group.top+15,this.end.group.left+15,this.end.group.top+15])
+      }else{
+        this.line = this.createLine([this.start.group.left+15,this.start.group.top+15,this.end.group.left+15,this.end.group.top+15])
+      }
+
+
     }
 
     createLine = (cds) => {

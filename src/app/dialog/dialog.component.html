@@ -7,6 +7,6 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <!-- <button  mat-button [mat-dialog-close]="data.weight" cdkFocusInitial>No Weight</button> -->
-  <button mat-button [mat-dialog-close]="data.weight" cdkFocusInitial>Ok</button>
+  <button mat-button [mat-dialog-close]="data.weight" (click)="isDirected()"   cdkFocusInitial >Directed</button>
+  <button mat-button [mat-dialog-close]="data.weight" (click)="isUndirected()"  cdkFocusInitial >Undirected</button>
 </div>

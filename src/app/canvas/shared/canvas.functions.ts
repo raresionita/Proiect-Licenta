@@ -2,7 +2,8 @@ import {canvas} from './init-canvas'
 
 var actionType = 0
 var objectSelected = null
-var weight:FunctionStringCallback
+var weight:string
+var isDirected:boolean
 
 const getMousePos = (event) =>{
   var pointer = canvas.getPointer(event.e)
@@ -36,11 +37,15 @@ const setSelected = (val) => {
 
 const setWeight = (val) => {
   if(val == null){
-    val = ' '
+    val = ''
     weight = val
   }else{
     weight = val
   }
 }
 
-export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,setWeight}
+const setDirected = (val) => {
+  isDirected = val
+}
+
+export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,setWeight,isDirected,setDirected}
