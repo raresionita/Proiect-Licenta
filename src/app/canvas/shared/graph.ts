@@ -10,12 +10,13 @@ class Graph {
   circles = new Map<number,CircleCustom>()
   selected = []
   edges = []
-  //adjacency = new Array()
+  adjList = new Map<number,any>()
 
 
   addCircle = (event,id) => {
     var circleCustom = new CircleCustom(event,id)
     this.circles.set(id,circleCustom)
+    this.adjList.set(circleCustom.getId(),[])
     canvas.add(circleCustom.group)
     circleCustom.group.lockMovementX = true
     circleCustom.group.lockMovementY = true
@@ -25,9 +26,28 @@ class Graph {
     const start = this.circles.get(this.selected[0])
     const end = this.circles.get(this.selected[1])
     const edge = new EdgeCustom(start,end,weight,isDirected)
+    if(!isDirected){
+      this.adjList.get(start.getId()).push(end.getId())
+      this.adjList.get(end.getId()).push(start.getId())
+    }else{
+      this.adjList.get(start.getId()).push(end.getId())
+    }
     this.edges.push(edge)
-    console.log(this.edges)
+    this.printList(this.adjList)
     canvasBack.add(edge.line)
+  }
+
+  printList = (adjList) => {
+    var keys = adjList.keys()
+    for(var i of keys){
+      var values = adjList.get(i)
+      var conc = ""
+      for(var j of values){
+        conc += j + " "
+      }
+      console.log(i+ ": [ " + conc + "]")
+    }
+    console.log("----------------------")
   }
 
   selectCircle = (id) => {

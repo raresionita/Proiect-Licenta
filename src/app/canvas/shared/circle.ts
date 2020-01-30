@@ -45,6 +45,10 @@ class CircleCustom{
       fill: '#33C7FF'
     });
   }
+
+  getId = () => {
+    return this.group.id
+  }
 }
 
 export default CircleCustom
