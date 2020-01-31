@@ -5,7 +5,6 @@ declare const fabric: any;
 class EdgeCustom{
 
     line = null
-    lineWeighted = null
     start = null
     end = null
 
@@ -32,8 +31,6 @@ class EdgeCustom{
       }else{
         this.line = this.createLine([this.start.group.left+15,this.start.group.top+15,this.end.group.left+15,this.end.group.top+15])
       }
-
-
     }
 
     createLine = (cds) => {

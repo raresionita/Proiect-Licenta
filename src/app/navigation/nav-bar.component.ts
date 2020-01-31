@@ -30,6 +30,10 @@ export class NavBarComponent{
     GraphVar.resetGraphColorSelected()
   }
 
+  removeObject(){
+    setAction(3)
+  }
+
   connectVertex(){
     setAction(1)
   }

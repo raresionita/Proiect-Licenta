@@ -44,22 +44,16 @@ export class CanvasComponent implements OnInit{
     onMouseDown = (event) => {
       switch(actionType){
         case 0:
-          if(!objectSelected) {
-            Graph.addCircle(event,id++)
-          } else {
-            canvas.discardActiveObject()
-          }
+          (!objectSelected) ? Graph.addCircle(event,id++) : canvas.discardActiveObject()
           break
         case 1:
-          if(!objectSelected){
-            Graph.connect()
-          }else{
-            canvas.discardActiveObject();
-          }
+          (!objectSelected) ? Graph.connect() : canvas.discardActiveObject();
+          break
+        case 3:
+          (!objectSelected) ? Graph.removeObject() : canvas.discardActiveObject()
           break
         }
     }
-
 
     onObjectSelected = (event) => {
       if(actionType != 0){
@@ -67,6 +61,9 @@ export class CanvasComponent implements OnInit{
       }
       if(actionType == 1){
         Graph.selectCircle(event.target.id)
+      }
+      if(actionType == 3){
+        Graph.removeObject()
       }
     }
 

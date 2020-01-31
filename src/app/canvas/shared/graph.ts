@@ -26,15 +26,25 @@ class Graph {
     const start = this.circles.get(this.selected[0])
     const end = this.circles.get(this.selected[1])
     const edge = new EdgeCustom(start,end,weight,isDirected)
+
+    this.updateAdjacencyList(start,end)
+    this.printList(this.adjList)
+
+    this.edges.push(edge)
+    canvasBack.add(edge.line)
+  }
+
+  removeObject = () => {
+    console.log("Object removed")
+  }
+
+  updateAdjacencyList = (start,end) => {
     if(!isDirected){
       this.adjList.get(start.getId()).push(end.getId())
       this.adjList.get(end.getId()).push(start.getId())
     }else{
       this.adjList.get(start.getId()).push(end.getId())
     }
-    this.edges.push(edge)
-    this.printList(this.adjList)
-    canvasBack.add(edge.line)
   }
 
   printList = (adjList) => {
@@ -75,7 +85,6 @@ class Graph {
 
   updateEdges = () => {
     this.edges.forEach(edge => {
-      //if line contains circle
       canvasBack.remove(edge.line)
       edge.update()
       canvasBack.add(edge.line)

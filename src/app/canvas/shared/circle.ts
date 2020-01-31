@@ -17,6 +17,7 @@ class CircleCustom{
   createVertex = (event,id) => {
     this.circle = new fabric.Circle({
       radius: 15, fill: '#33C7FF',
+      strokeWidth:2,stroke: "blue",
       originX: 'center',  originY: 'center'
     });
     this.text = new fabric.Text(id.toString(),{
