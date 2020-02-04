@@ -38,7 +38,6 @@ class EdgeCustom{
         fill: 'blue',
         stroke: 'blue',
         strokeWidth: 3,
-        selectable: false,
         originX: 'center',
         originY: 'center'
       });
@@ -56,6 +55,7 @@ class EdgeCustom{
       const group = new fabric.Group([edge,text],{
         hasControls: false,
         hasBorders: false,
+        selectable: false,
       })
       return group
     }
@@ -101,7 +101,6 @@ class EdgeCustom{
         fill: 'blue',
         stroke: 'blue',
         strokeWidth: 3,
-        selectable: false,
         originX: 'center',
         originY: 'center',
       });
@@ -133,7 +132,8 @@ class EdgeCustom{
 
       const group = new fabric.Group(directedLines,{
         hasControls: false,
-        hasBorders: false
+        hasBorders: false,
+        selectable: false
       });
 
       return group;

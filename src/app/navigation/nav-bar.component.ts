@@ -30,10 +30,6 @@ export class NavBarComponent{
     GraphVar.resetGraphColorSelected()
   }
 
-  removeObject(){
-    setAction(3)
-  }
-
   connectVertex(){
     setAction(1)
   }
@@ -43,6 +39,9 @@ export class NavBarComponent{
     GraphVar.resetGraphColorSelected()
   }
 
+  removeObject(){
+    setAction(3)
+  }
 }
 
 export default NavBarComponent

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import {canvas,canvasBack,setCanvas,setCanvasBack} from '../shared/init-canvas'
+import {canvas,setCanvas} from '../shared/init-canvas'
 import 'fabric';
 import { actionType,objectSelected,setSelected, weight} from '../shared/canvas.functions';
 import Graph from '../shared/graph';
@@ -19,8 +19,7 @@ export class CanvasComponent implements OnInit{
 
     ngOnInit(){
 
-      setCanvas(new fabric.Canvas('canvas1'))
-      setCanvasBack(new fabric.Canvas('canvas2'))
+      setCanvas(new fabric.Canvas('canvas'))
 
       canvas.on({
         'object:selected': this.onObjectSelected,
@@ -37,8 +36,6 @@ export class CanvasComponent implements OnInit{
       const height = this.containerRef.nativeElement.offsetHeight
       canvas.setWidth(width)
       canvas.setHeight(height)
-      canvasBack.setWidth(width)
-      canvasBack.setHeight(height)
     }
 
     onMouseDown = (event) => {
@@ -50,7 +47,7 @@ export class CanvasComponent implements OnInit{
           (!objectSelected) ? Graph.connect() : canvas.discardActiveObject();
           break
         case 3:
-          (!objectSelected) ? Graph.removeObject() : canvas.discardActiveObject()
+          (!objectSelected) ? Graph.removeObject(event.target) : canvas.discardActiveObject()
           break
         }
     }
@@ -63,7 +60,7 @@ export class CanvasComponent implements OnInit{
         Graph.selectCircle(event.target.id)
       }
       if(actionType == 3){
-        Graph.removeObject()
+        Graph.removeObject(event.target)
       }
     }
 

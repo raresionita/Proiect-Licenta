@@ -1,5 +1,5 @@
 
-import { canvas,canvasBack } from './init-canvas';
+import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
@@ -31,11 +31,31 @@ class Graph {
     this.printList(this.adjList)
 
     this.edges.push(edge)
-    canvasBack.add(edge.line)
+    canvas.sendToBack(edge.line)
+   // console.log()
   }
 
-  removeObject = () => {
-    console.log("Object removed")
+  findPosOfEdge = (edge) => {
+    for(var i = 0;i<this.edges.length;i++){
+      if(this.edges[i].line == edge)
+        return i
+    }
+    return -1
+  }
+
+  removeObject = (edgeObject) => {
+    var idx = this.findPosOfEdge(edgeObject)
+    if(idx > -1){
+      this.edges.splice(idx,1)
+      canvas.remove(edgeObject)
+    } else {
+      //CHECK if is circle
+      this.circles.delete(edgeObject)
+      canvas.remove(edgeObject)
+      //DELETE Lines
+    }
+    console.log(this.selectCircle)
+    console.log(this.selected)
   }
 
   updateAdjacencyList = (start,end) => {
@@ -85,9 +105,9 @@ class Graph {
 
   updateEdges = () => {
     this.edges.forEach(edge => {
-      canvasBack.remove(edge.line)
+      canvas.remove(edge.line)
       edge.update()
-      canvasBack.add(edge.line)
+      canvas.sendToBack(edge.line)
     });
   }
 
