@@ -41,6 +41,7 @@ export class NavBarComponent{
 
   removeObject(){
     setAction(3)
+    GraphVar.resetGraphColorSelected()
   }
 }
 

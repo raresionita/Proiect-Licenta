@@ -27,7 +27,7 @@ class Graph {
     const end = this.circles.get(this.selected[1])
     const edge = new EdgeCustom(start,end,weight,isDirected)
 
-    this.updateAdjacencyList(start,end)
+    this.insertAdjacencyList(start,end)
     this.printList(this.adjList)
 
     this.edges.push(edge)
@@ -43,22 +43,44 @@ class Graph {
     return -1
   }
 
-  removeObject = (edgeObject) => {
+  findPosOfVertex = (vertex) => {
+    for(var [key,value] of this.circles){
+      if(value.group == vertex)
+        return key
+    }
+    return -1
+  }
+
+  removeEdge = (edgeObject) => {
     var idx = this.findPosOfEdge(edgeObject)
     if(idx > -1){
       this.edges.splice(idx,1)
       canvas.remove(edgeObject)
-    } else {
-      //CHECK if is circle
-      this.circles.delete(edgeObject)
-      canvas.remove(edgeObject)
-      //DELETE Lines
     }
-    console.log(this.selectCircle)
-    console.log(this.selected)
   }
 
-  updateAdjacencyList = (start,end) => {
+  removeVertex = (vertexObject) => {
+    var idx = this.findPosOfVertex(vertexObject)
+    if(idx > -1){
+      console.log("1")
+      for(var i=0;i<this.edges.length;i++){
+        console.log("2")
+        console.log(this.edges[i])
+        console.log(vertexObject)
+        if(this.edges[i].start == vertexObject.start || this.edges[i].end == vertexObject.start){
+          console.log("3")
+          this.removeEdge(this.edges[i])
+          canvas.remove(this.edges[i])
+          i--
+        }
+      }
+      this.circles.delete(idx)
+      canvas.remove(vertexObject)
+    }
+    
+  }
+
+  insertAdjacencyList = (start,end) => {
     if(!isDirected){
       this.adjList.get(start.getId()).push(end.getId())
       this.adjList.get(end.getId()).push(start.getId())
