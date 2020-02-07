@@ -7,7 +7,7 @@ import { weight,isDirected } from './canvas.functions';
 
 class Graph {
 
-  circles = new Map<number,CircleCustom>()
+  circles = []
   selected = []
   edges = []
   adjList = new Map<number,any>()
@@ -15,7 +15,9 @@ class Graph {
 
   addCircle = (event,id) => {
     var circleCustom = new CircleCustom(event,id)
-    this.circles.set(id,circleCustom)
+    this.circles[id] = circleCustom
+    console.log(this.circles)
+    //this.circles.set(id,circleCustom)
     this.adjList.set(circleCustom.getId(),[])
     canvas.add(circleCustom.group)
     circleCustom.group.lockMovementX = true
@@ -23,16 +25,16 @@ class Graph {
   }
 
   addEdge = () => {
-    const start = this.circles.get(this.selected[0])
-    const end = this.circles.get(this.selected[1])
+    const start = this.circles[this.selected[0]]
+    const end = this.circles[this.selected[1]]
     const edge = new EdgeCustom(start,end,weight,isDirected)
 
     this.insertAdjacencyList(start,end)
-    this.printList(this.adjList)
+    //this.printList(this.adjList)
+    console.log(this.edges)
 
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
-   // console.log()
   }
 
   findPosOfEdge = (edge) => {
@@ -44,15 +46,16 @@ class Graph {
   }
 
   findPosOfVertex = (vertex) => {
-    for(var [key,value] of this.circles){
-      if(value.group == vertex)
-        return key
+    for(var i=0;i<this.circles.length;i++){
+      if(this.circles[i].circle == vertex)
+        return i
     }
     return -1
   }
 
   removeEdge = (edgeObject) => {
     var idx = this.findPosOfEdge(edgeObject)
+    console.log(idx)
     if(idx > -1){
       this.edges.splice(idx,1)
       canvas.remove(edgeObject)
@@ -61,20 +64,16 @@ class Graph {
 
   removeVertex = (vertexObject) => {
     var idx = this.findPosOfVertex(vertexObject)
+    console.log(idx)
     if(idx > -1){
-      console.log("1")
       for(var i=0;i<this.edges.length;i++){
-        console.log("2")
-        console.log(this.edges[i])
-        console.log(vertexObject)
-        if(this.edges[i].start == vertexObject.start || this.edges[i].end == vertexObject.start){
-          console.log("3")
-          this.removeEdge(this.edges[i])
-          canvas.remove(this.edges[i])
+        if(this.edges[i].start.group == vertexObject || this.edges[i].end.group == vertexObject){
+          this.removeEdge(this.edges[i].start.group)
+          canvas.remove(this.edges[i].start.group)
           i--
         }
       }
-      this.circles.delete(idx)
+      this.circles.splice(idx,1)
       canvas.remove(vertexObject)
     }
     
@@ -104,7 +103,7 @@ class Graph {
 
   selectCircle = (id) => {
     if(this.selected.length < 2){
-      const obj = this.circles.get(id)
+      const obj = this.circles[id]
       if(!this.selected.includes(id)){
         obj.colorSelected();
         this.selected.push(id)
