@@ -47,7 +47,7 @@ export class CanvasComponent implements OnInit{
           (!objectSelected) ? Graph.connect() : canvas.discardActiveObject();
           break
         case 3:
-          (!objectSelected) ? Graph.removeVertex(event.target) : canvas.discardActiveObject()
+          (!objectSelected) ? Graph.removeObject(event.target) : canvas.discardActiveObject()
           break
         }
     }
@@ -60,7 +60,8 @@ export class CanvasComponent implements OnInit{
         Graph.selectCircle(event.target.id)
       }
       if(actionType == 3){
-        Graph.removeVertex(event.target)
+        canvas.discardActiveObject()
+        Graph.removeObject(event.target)
       }
     }
 

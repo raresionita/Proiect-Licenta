@@ -15,9 +15,7 @@ class Graph {
 
   addCircle = (event,id) => {
     var circleCustom = new CircleCustom(event,id)
-    //this.circles[id] = circleCustom
     this.circles.set(id,circleCustom)
-    console.log(this.circles)
 
     this.adjList.set(circleCustom.getId(),[])
     canvas.add(circleCustom.group)
@@ -61,21 +59,26 @@ class Graph {
     }
   }
 
-  removeVertex = (vertexObject) => {
+  deleteVertex = (vertexObject) => {
     var idx = this.findPosOfVertex(vertexObject)
-    console.log(idx)
     if(idx > -1){
       for(var i=0;i<this.edges.length;i++){
         if(this.edges[i].start.group == vertexObject || this.edges[i].end.group == vertexObject){
-          this.deleteEdge(this.edges[i])
+          this.deleteEdge(this.edges[i].line)
           canvas.remove(this.edges[i])
-          //i-- //assta face buba
-          //console.log("stop")
+          i--
         }
-        this.circles.delete(idx)
-        canvas.remove(vertexObject)
       }
+      this.circles.delete(idx)
+      canvas.remove(vertexObject)
     }
+  }
+
+  removeObject = (selObject) => {
+    if(selObject._objects[0].type === 'line'){
+      this.deleteEdge(selObject)
+    }
+    this.deleteVertex(selObject)
   }
 
   insertAdjacencyList = (start,end) => {
