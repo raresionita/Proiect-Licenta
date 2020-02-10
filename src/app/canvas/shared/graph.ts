@@ -7,7 +7,7 @@ import { weight,isDirected } from './canvas.functions';
 
 class Graph {
 
-  circles = []
+  circles = new Map<number,any>()
   selected = []
   edges = []
   adjList = new Map<number,any>()
@@ -15,23 +15,23 @@ class Graph {
 
   addCircle = (event,id) => {
     var circleCustom = new CircleCustom(event,id)
-    this.circles[id] = circleCustom
+    //this.circles[id] = circleCustom
+    this.circles.set(id,circleCustom)
     console.log(this.circles)
-    //this.circles.set(id,circleCustom)
+
     this.adjList.set(circleCustom.getId(),[])
     canvas.add(circleCustom.group)
+
     circleCustom.group.lockMovementX = true
     circleCustom.group.lockMovementY = true
   }
 
   addEdge = () => {
-    const start = this.circles[this.selected[0]]
-    const end = this.circles[this.selected[1]]
+    const start = this.circles.get(this.selected[0])
+    const end = this.circles.get(this.selected[1])
     const edge = new EdgeCustom(start,end,weight,isDirected)
 
     this.insertAdjacencyList(start,end)
-    //this.printList(this.adjList)
-    console.log(this.edges)
 
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
@@ -46,16 +46,15 @@ class Graph {
   }
 
   findPosOfVertex = (vertex) => {
-    for(var i=0;i<this.circles.length;i++){
-      if(this.circles[i].circle == vertex)
-        return i
+    for(var [key,value] of this.circles){
+      if(value.group == vertex)
+        return key
     }
     return -1
   }
 
-  removeEdge = (edgeObject) => {
+  deleteEdge = (edgeObject) => {
     var idx = this.findPosOfEdge(edgeObject)
-    console.log(idx)
     if(idx > -1){
       this.edges.splice(idx,1)
       canvas.remove(edgeObject)
@@ -68,15 +67,15 @@ class Graph {
     if(idx > -1){
       for(var i=0;i<this.edges.length;i++){
         if(this.edges[i].start.group == vertexObject || this.edges[i].end.group == vertexObject){
-          this.removeEdge(this.edges[i].start.group)
-          canvas.remove(this.edges[i].start.group)
-          i--
+          this.deleteEdge(this.edges[i])
+          canvas.remove(this.edges[i])
+          //i-- //assta face buba
+          //console.log("stop")
         }
+        this.circles.delete(idx)
+        canvas.remove(vertexObject)
       }
-      this.circles.splice(idx,1)
-      canvas.remove(vertexObject)
     }
-    
   }
 
   insertAdjacencyList = (start,end) => {
@@ -103,7 +102,7 @@ class Graph {
 
   selectCircle = (id) => {
     if(this.selected.length < 2){
-      const obj = this.circles[id]
+      const obj = this.circles.get(id)
       if(!this.selected.includes(id)){
         obj.colorSelected();
         this.selected.push(id)
