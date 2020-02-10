@@ -33,6 +33,7 @@ class Graph {
 
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
+    canvas.discardActiveObject()
   }
 
   findPosOfEdge = (edge) => {
@@ -75,10 +76,11 @@ class Graph {
   }
 
   removeObject = (selObject) => {
-    if(selObject._objects[0].type === 'line'){
+    if(selObject._objects[0].type === 'circle'){
+      this.deleteVertex(selObject)
+    }else if (selObject._objects[0].type === 'line'){
       this.deleteEdge(selObject)
     }
-    this.deleteVertex(selObject)
   }
 
   insertAdjacencyList = (start,end) => {

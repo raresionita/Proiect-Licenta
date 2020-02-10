@@ -60,7 +60,6 @@ export class CanvasComponent implements OnInit{
         Graph.selectCircle(event.target.id)
       }
       if(actionType == 3){
-        canvas.discardActiveObject()
         Graph.removeObject(event.target)
       }
     }
