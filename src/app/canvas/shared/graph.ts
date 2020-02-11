@@ -30,10 +30,10 @@ class Graph {
     const edge = new EdgeCustom(start,end,weight,isDirected)
 
     this.insertAdjacencyList(start,end)
+    this.printList(this.adjList)
 
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
-    canvas.discardActiveObject()
   }
 
   findPosOfEdge = (edge) => {
@@ -71,6 +71,8 @@ class Graph {
         }
       }
       this.circles.delete(idx)
+      this.removeFromAdjacencyList(vertexObject)
+      this.printList(this.adjList)
       canvas.remove(vertexObject)
     }
   }
@@ -89,6 +91,38 @@ class Graph {
       this.adjList.get(end.getId()).push(start.getId())
     }else{
       this.adjList.get(start.getId()).push(end.getId())
+    }
+  }
+
+  removeFromAdjacencyList = (objectRemove) => {
+
+    if(!isDirected){
+      for(var [key,value] of this.adjList){
+        if(key == objectRemove.id){
+          this.adjList.delete(key)
+          break;
+        }
+      }
+      for(var i of this.adjList.keys())
+      {
+        var values = this.adjList.get(i)
+        for(var val of values){
+          console.log(val == objectRemove.id)
+          if(val == objectRemove.id){
+            this.adjList.delete(val)
+            break;
+          }
+        }
+      }
+      
+    }else{
+      for(var [key,value] of this.adjList){
+        if(key == objectRemove.id){
+          this.adjList.delete(key)
+          break;
+        }
+      }
+      console.log("remove direct")
     }
   }
 
