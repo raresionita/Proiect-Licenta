@@ -72,6 +72,7 @@ export class CanvasComponent implements OnInit{
 const resetCanvas = () => {
   Graph.selected = []
   Graph.edges = []
+  Graph.adjList.clear()
   id = 0;
 }
 

@@ -31,7 +31,7 @@ class Graph {
 
     this.insertAdjacencyList(start,end)
     this.printList(this.adjList)
-
+    console.log(edge)
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
   }
@@ -56,6 +56,8 @@ class Graph {
     var idx = this.findPosOfEdge(edgeObject)
     if(idx > -1){
       this.edges.splice(idx,1)
+      this.removeEdgeFromAdjacencyList(edgeObject)
+      this.printList(this.adjList)
       canvas.remove(edgeObject)
     }
   }
@@ -71,7 +73,7 @@ class Graph {
         }
       }
       this.circles.delete(idx)
-      this.removeFromAdjacencyList(vertexObject)
+      this.removeVertexFromAdjacencyList(vertexObject)
       this.printList(this.adjList)
       canvas.remove(vertexObject)
     }
@@ -94,8 +96,20 @@ class Graph {
     }
   }
 
-  removeFromAdjacencyList = (objectRemove) => {
+  removeEdgeFromAdjacencyList = (objectRemove) => {
+    for(var i of this.adjList.keys()){
+      var values = this.adjList.get(i)
+      for(var val of values){
+        if(val == objectRemove.id){
+          values.splice(values.indexOf(val),1)
+          this.adjList.set(i,values)
+          break;
+        }
+      }
+    }
+  }
 
+  removeVertexFromAdjacencyList = (objectRemove) => {
     if(!isDirected){
       for(var [key,value] of this.adjList){
         if(key == objectRemove.id){
@@ -103,18 +117,16 @@ class Graph {
           break;
         }
       }
-      for(var i of this.adjList.keys())
-      {
+      for(var i of this.adjList.keys()){
         var values = this.adjList.get(i)
         for(var val of values){
-          console.log(val == objectRemove.id)
           if(val == objectRemove.id){
-            this.adjList.delete(val)
+            values.splice(values.indexOf(val),1)
+            this.adjList.set(i,values)
             break;
           }
         }
       }
-      
     }else{
       for(var [key,value] of this.adjList){
         if(key == objectRemove.id){
@@ -122,7 +134,16 @@ class Graph {
           break;
         }
       }
-      console.log("remove direct")
+      for(var i of this.adjList.keys()){
+        var values = this.adjList.get(i)
+        for(var val of values){
+          if(val == objectRemove.id){
+            values.splice(values.indexOf(val),1)
+            this.adjList.set(i,values)
+            break;
+          }
+        }
+      }
     }
   }
 
