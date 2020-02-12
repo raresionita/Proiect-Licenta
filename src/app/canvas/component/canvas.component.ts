@@ -61,6 +61,7 @@ export class CanvasComponent implements OnInit{
       }
       if(actionType == 3){
         Graph.removeObject(event.target)
+        canvas.discardActiveObject()
       }
     }
 

@@ -31,7 +31,7 @@ class Graph {
 
     this.insertAdjacencyList(start,end)
     this.printList(this.adjList)
-    console.log(edge)
+    
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
   }
@@ -80,10 +80,10 @@ class Graph {
   }
 
   removeObject = (selObject) => {
-    if(selObject._objects[0].type === 'circle'){
-      this.deleteVertex(selObject)
-    }else if (selObject._objects[0].type === 'line'){
+    if(selObject._objects[0].type === 'line'){
       this.deleteEdge(selObject)
+    }else if (selObject._objects[0].type === 'circle'){
+      this.deleteVertex(selObject)
     }
   }
 
