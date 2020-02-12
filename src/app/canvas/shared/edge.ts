@@ -53,6 +53,8 @@ class EdgeCustom{
         stroke: 'white'
       });
       const group = new fabric.Group([edge,text],{
+        start: this.start,
+        end: this.end,
         hasControls: false,
         hasBorders: false,
         selectable: false,
@@ -131,6 +133,8 @@ class EdgeCustom{
       const directedLines = [line,arrow,text];
 
       const group = new fabric.Group(directedLines,{
+        start: this.start,
+        end: this.end,
         hasControls: false,
         hasBorders: false,
         selectable: false

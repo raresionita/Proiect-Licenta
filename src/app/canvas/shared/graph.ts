@@ -3,21 +3,21 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { weight,isDirected } from './canvas.functions';
+import { weight, isDirected } from './canvas.functions';
 
 class Graph {
 
-  circles = new Map<number,any>()
+  circles = new Map<number, any>()
   selected = []
   edges = []
-  adjList = new Map<number,any>()
+  adjList = new Map<number, any>()
 
 
-  addCircle = (event,id) => {
-    var circleCustom = new CircleCustom(event,id)
-    this.circles.set(id,circleCustom)
+  addCircle = (event, id) => {
+    var circleCustom = new CircleCustom(event, id)
+    this.circles.set(id, circleCustom)
 
-    this.adjList.set(circleCustom.getId(),[])
+    this.adjList.set(circleCustom.getId(), [])
     canvas.add(circleCustom.group)
 
     circleCustom.group.lockMovementX = true
@@ -27,35 +27,43 @@ class Graph {
   addEdge = () => {
     const start = this.circles.get(this.selected[0])
     const end = this.circles.get(this.selected[1])
-    const edge = new EdgeCustom(start,end,weight,isDirected)
+    const edge = new EdgeCustom(start, end, weight, isDirected)
 
-    this.insertAdjacencyList(start,end)
+    this.insertAdjacencyList(start, end)
     this.printList(this.adjList)
-    
+
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
   }
 
   findPosOfEdge = (edge) => {
-    for(var i = 0;i<this.edges.length;i++){
-      if(this.edges[i].line == edge)
+    for (var i = 0; i < this.edges.length; i++) {
+      if (this.edges[i].line == edge)
         return i
     }
     return -1
   }
 
   findPosOfVertex = (vertex) => {
-    for(var [key,value] of this.circles){
-      if(value.group == vertex)
+    for (var [key, value] of this.circles) {
+      if (value.group == vertex)
         return key
     }
     return -1
   }
 
+  deleteEdgeCall = (edgeObject) => {
+    var idx = this.findPosOfEdge(edgeObject)
+    if (idx > -1) {
+      this.edges.splice(idx, 1)
+      canvas.remove(edgeObject)
+    }
+  }
+
   deleteEdge = (edgeObject) => {
     var idx = this.findPosOfEdge(edgeObject)
-    if(idx > -1){
-      this.edges.splice(idx,1)
+    if (idx > -1) {
+      this.edges.splice(idx, 1)
       this.removeEdgeFromAdjacencyList(edgeObject)
       this.printList(this.adjList)
       canvas.remove(edgeObject)
@@ -64,10 +72,10 @@ class Graph {
 
   deleteVertex = (vertexObject) => {
     var idx = this.findPosOfVertex(vertexObject)
-    if(idx > -1){
-      for(var i=0;i<this.edges.length;i++){
-        if(this.edges[i].start.group == vertexObject || this.edges[i].end.group == vertexObject){
-          this.deleteEdge(this.edges[i].line)
+    if (idx > -1) {
+      for (var i = 0; i < this.edges.length; i++) {
+        if (this.edges[i].start.group == vertexObject || this.edges[i].end.group == vertexObject) {
+          this.deleteEdgeCall(this.edges[i].line)
           canvas.remove(this.edges[i])
           i--
         }
@@ -80,66 +88,71 @@ class Graph {
   }
 
   removeObject = (selObject) => {
-    if(selObject._objects[0].type === 'line'){
+    if (selObject._objects[0].type === 'line') {
       this.deleteEdge(selObject)
-    }else if (selObject._objects[0].type === 'circle'){
+    } else if (selObject._objects[0].type === 'circle') {
       this.deleteVertex(selObject)
     }
   }
 
-  insertAdjacencyList = (start,end) => {
-    if(!isDirected){
+  insertAdjacencyList = (start, end) => {
+    if (!isDirected) {
       this.adjList.get(start.getId()).push(end.getId())
       this.adjList.get(end.getId()).push(start.getId())
-    }else{
+    } else {
       this.adjList.get(start.getId()).push(end.getId())
     }
   }
 
   removeEdgeFromAdjacencyList = (objectRemove) => {
-    for(var i of this.adjList.keys()){
-      var values = this.adjList.get(i)
-      for(var val of values){
-        if(val == objectRemove.id){
-          values.splice(values.indexOf(val),1)
-          this.adjList.set(i,values)
-          break;
+    var start = objectRemove.start.group.id;
+    var end = objectRemove.end.group.id;
+
+    var listStart:number[] = this.adjList.get(start);
+    var listEnd:number[] = this.adjList.get(end);
+    listStart = listStart.filter(i => i !== end);
+    listEnd = listEnd.filter(i => i !== start);
+
+    for (var i of this.adjList.keys()) {
+      if (i === start) {
+        this.adjList.set(i, listStart);
+      } else if (i === end) {
+          this.adjList.set(i, listEnd);
         }
-      }
     }
   }
 
   removeVertexFromAdjacencyList = (objectRemove) => {
-    if(!isDirected){
-      for(var [key,value] of this.adjList){
-        if(key == objectRemove.id){
+    if (!isDirected) {
+      for (var [key, value] of this.adjList) {
+        if (key == objectRemove.id) {
           this.adjList.delete(key)
           break;
         }
       }
-      for(var i of this.adjList.keys()){
+      for (var i of this.adjList.keys()) {
         var values = this.adjList.get(i)
-        for(var val of values){
-          if(val == objectRemove.id){
-            values.splice(values.indexOf(val),1)
-            this.adjList.set(i,values)
+        for (var val of values) {
+          if (val == objectRemove.id) {
+            values.splice(values.indexOf(val), 1)
+            this.adjList.set(i, values)
             break;
           }
         }
       }
-    }else{
-      for(var [key,value] of this.adjList){
-        if(key == objectRemove.id){
+    } else {
+      for (var [key, value] of this.adjList) {
+        if (key == objectRemove.id) {
           this.adjList.delete(key)
           break;
         }
       }
-      for(var i of this.adjList.keys()){
+      for (var i of this.adjList.keys()) {
         var values = this.adjList.get(i)
-        for(var val of values){
-          if(val == objectRemove.id){
-            values.splice(values.indexOf(val),1)
-            this.adjList.set(i,values)
+        for (var val of values) {
+          if (val == objectRemove.id) {
+            values.splice(values.indexOf(val), 1)
+            this.adjList.set(i, values)
             break;
           }
         }
@@ -149,21 +162,21 @@ class Graph {
 
   printList = (adjList) => {
     var keys = adjList.keys()
-    for(var i of keys){
+    for (var i of keys) {
       var values = adjList.get(i)
       var conc = ""
-      for(var j of values){
+      for (var j of values) {
         conc += j + " "
       }
-      console.log(i+ ": [ " + conc + "]")
+      console.log(i + ": [ " + conc + "]")
     }
     console.log("----------------------")
   }
 
   selectCircle = (id) => {
-    if(this.selected.length < 2){
+    if (this.selected.length < 2) {
       const obj = this.circles.get(id)
-      if(!this.selected.includes(id)){
+      if (!this.selected.includes(id)) {
         obj.colorSelected();
         this.selected.push(id)
         this.connect()
@@ -173,11 +186,11 @@ class Graph {
 
   connect = () => {
     if (this.selected.length == 2) {
-      dialog.openDialog().then(()=>{
+      dialog.openDialog().then(() => {
         this.addEdge()
         this.selected = []
         this.updateCirclesColorDefault()
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err)
       })
     }

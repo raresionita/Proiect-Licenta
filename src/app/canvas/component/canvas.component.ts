@@ -53,7 +53,7 @@ export class CanvasComponent implements OnInit{
     }
 
     onObjectSelected = (event) => {
-      if(actionType != 0){
+      if(actionType != 0 && actionType != 3){
         setSelected(event.target)
       }
       if(actionType == 1){
