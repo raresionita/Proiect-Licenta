@@ -39,7 +39,7 @@ class EdgeCustom{
         stroke: 'blue',
         strokeWidth: 3,
         originX: 'center',
-        originY: 'center'
+        originY: 'center',
       });
       const text = new fabric.Text(this.weight.toString(),{
         fontSize: 30,
@@ -58,6 +58,7 @@ class EdgeCustom{
         hasControls: false,
         hasBorders: false,
         selectable: false,
+        targetFindTolerance: 2,
       })
       return group
     }
@@ -127,7 +128,8 @@ class EdgeCustom{
         top:(line.y1 + line.y2 )/ 2 - 15,
         strokeWidth: 1,
         fill: '#000',
-        stroke: 'white'
+        stroke: 'white',
+        selectable: false,
       });
 
       const directedLines = [line,arrow,text];
@@ -137,7 +139,8 @@ class EdgeCustom{
         end: this.end,
         hasControls: false,
         hasBorders: false,
-        selectable: false
+        selectable: false,
+        targetFindTolerance: 2,
       });
 
       return group;

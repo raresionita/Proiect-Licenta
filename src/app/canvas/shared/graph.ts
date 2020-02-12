@@ -38,16 +38,18 @@ class Graph {
 
   findPosOfEdge = (edge) => {
     for (var i = 0; i < this.edges.length; i++) {
-      if (this.edges[i].line == edge)
+      if (this.edges[i].line == edge){
         return i
+      }
     }
     return -1
   }
 
   findPosOfVertex = (vertex) => {
     for (var [key, value] of this.circles) {
-      if (value.group == vertex)
+      if (value.group == vertex){
         return key
+      }
     }
     return -1
   }
@@ -194,6 +196,7 @@ class Graph {
         console.log(err)
       })
     }
+    canvas.discardActiveObject()
   }
 
   updateEdges = () => {
