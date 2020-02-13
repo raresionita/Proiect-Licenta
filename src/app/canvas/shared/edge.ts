@@ -1,4 +1,5 @@
 import 'fabric';
+import { setExists } from './canvas.functions';
 
 declare const fabric: any;
 
@@ -10,19 +11,20 @@ class EdgeCustom{
 
     weight?:any
     isDirected:boolean
+    exists:boolean
 
-    constructor(s0,s1,weight,isDirected){
+    constructor(s0,s1,weight,isDirected,exists){
       this.start = s0
       this.end = s1
       this.weight=weight
       this.isDirected = isDirected
+      this.exists = exists
 
       if(this.isDirected){
-        this.line = this.createDirectedLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
+        this.line = this.createDirectedLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])   
       }else{
         this.line = this.createLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
       }
-
     }
 
     update = () => {

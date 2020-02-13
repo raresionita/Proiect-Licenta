@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {canvas,setCanvas} from '../shared/init-canvas'
 import 'fabric';
-import { actionType,objectSelected,setSelected, weight} from '../shared/canvas.functions';
+import { actionType,objectSelected,setSelected} from '../shared/canvas.functions';
 import Graph from '../shared/graph';
 
 declare const fabric: any;

@@ -4,6 +4,7 @@ var actionType = 0
 var objectSelected = null
 var weight:string
 var isDirected:boolean
+var exists:boolean
 
 const getMousePos = (event) =>{
   var pointer = canvas.getPointer(event.e)
@@ -48,4 +49,8 @@ const setDirected = (val) => {
   isDirected = val
 }
 
-export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,setWeight,isDirected,setDirected}
+const setExists = (val) => {
+  exists = val
+}
+
+export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,exists,setExists,setWeight,isDirected,setDirected}

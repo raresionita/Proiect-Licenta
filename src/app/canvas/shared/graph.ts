@@ -3,7 +3,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { weight, isDirected } from './canvas.functions';
+import { exists, weight, isDirected, setExists } from './canvas.functions';
 
 class Graph {
 
@@ -27,13 +27,26 @@ class Graph {
   addEdge = () => {
     const start = this.circles.get(this.selected[0])
     const end = this.circles.get(this.selected[1])
-    const edge = new EdgeCustom(start, end, weight, isDirected)
+    const edge = new EdgeCustom(start, end, weight, isDirected, exists)
 
     this.insertAdjacencyList(start, end)
     this.printList(this.adjList)
 
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
+    console.log(edge)
+    this.replaceIfExists(edge)
+
+  }
+
+  replaceIfExists = (edge) =>{
+    if(!edge.exists){
+      console.log(edge.exists)
+      
+      setExists(true)
+      
+      console.log(edge)
+    }
   }
 
   findPosOfEdge = (edge) => {
@@ -112,6 +125,7 @@ class Graph {
 
     var listStart:number[] = this.adjList.get(start);
     var listEnd:number[] = this.adjList.get(end);
+
     listStart = listStart.filter(i => i !== end);
     listEnd = listEnd.filter(i => i !== start);
 
