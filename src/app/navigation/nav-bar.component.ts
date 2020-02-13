@@ -14,8 +14,6 @@ var json_data:any
     templateUrl: './nav-bar.component.html'
 })
 
-
-
 export class NavBarComponent{
 
   constructor(public dialog: MatDialog){
