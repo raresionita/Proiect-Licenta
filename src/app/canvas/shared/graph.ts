@@ -3,7 +3,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { exists, weight, isDirected, setExists } from './canvas.functions';
+import { weight, isDirected, exists, setExists } from './canvas.functions';
 
 class Graph {
 
@@ -22,6 +22,7 @@ class Graph {
 
     circleCustom.group.lockMovementX = true
     circleCustom.group.lockMovementY = true
+
   }
 
   addEdge = () => {
@@ -29,24 +30,17 @@ class Graph {
     const end = this.circles.get(this.selected[1])
     const edge = new EdgeCustom(start, end, weight, isDirected, exists)
 
+
+    if(exists){
+      this.deleteEdge(exists.line)
+      setExists(null)
+    }
+
     this.insertAdjacencyList(start, end)
     this.printList(this.adjList)
 
     this.edges.push(edge)
     canvas.sendToBack(edge.line)
-    console.log(edge)
-    this.replaceIfExists(edge)
-
-  }
-
-  replaceIfExists = (edge) =>{
-    if(!edge.exists){
-      console.log(edge.exists)
-      
-      setExists(true)
-      
-      console.log(edge)
-    }
   }
 
   findPosOfEdge = (edge) => {
@@ -78,9 +72,9 @@ class Graph {
   deleteEdge = (edgeObject) => {
     var idx = this.findPosOfEdge(edgeObject)
     if (idx > -1) {
+      const obj = this.edges[idx]
       this.edges.splice(idx, 1)
-      this.removeEdgeFromAdjacencyList(edgeObject)
-      this.printList(this.adjList)
+      this.removeEdgeFromAdjacencyListById(obj)
       canvas.remove(edgeObject)
     }
   }
@@ -119,7 +113,10 @@ class Graph {
     }
   }
 
-  removeEdgeFromAdjacencyList = (objectRemove) => {
+  removeEdgeFromAdjacencyListById = (edge) => {
+    const isDirected = edge.isDirected
+    const objectRemove = edge.line
+
     var start = objectRemove.start.group.id;
     var end = objectRemove.end.group.id;
 
@@ -132,7 +129,7 @@ class Graph {
     for (var i of this.adjList.keys()) {
       if (i === start) {
         this.adjList.set(i, listStart);
-      } else if (i === end) {
+      } else if (i === end && (!isDirected)) {
           this.adjList.set(i, listEnd);
         }
     }
@@ -200,8 +197,18 @@ class Graph {
     }
   }
 
+  checkIfLineExist = (a,b) => {
+    for(var i = 0;i<this.edges.length;i++){
+      const e = this.edges[i]
+      if((e.start.getId() == a && e.end.getId() == b) || (e.start.getId() == b && e.end.getId() == a))
+        return e
+    }
+    return null
+  }
+
   connect = () => {
     if (this.selected.length == 2) {
+      setExists(this.checkIfLineExist(this.selected[0],this.selected[1]))
       dialog.openDialog().then(() => {
         this.addEdge()
         this.selected = []

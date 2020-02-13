@@ -8,7 +8,8 @@ import { NavBarComponent } from './navigation/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogOverview } from './dialog/dialog.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule} from '@angular/material';
+import { MaterialModule } from './dialog/material-module';
 
 @NgModule({
   declarations: [
@@ -24,10 +25,11 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MaterialModule
   ],
   exports: [
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
   ],
   entryComponents: [
     DialogOverview,

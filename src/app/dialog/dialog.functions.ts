@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material';
 import { DialogOverview } from './dialog.component';
-import { setWeight, weight } from '../canvas/shared/canvas.functions';
+import { setWeight, weight, getExists} from '../canvas/shared/canvas.functions';
 
 class Dialog{
 
@@ -10,9 +10,10 @@ class Dialog{
     const dialogRef = this.dialog.open(DialogOverview, {
         width: '250px',
         height: '250px',
-        data: { weight: setWeight(weight)}
+        data: { weight: setWeight(weight),
+                exists: getExists()}
     });
-    
+
     return new Promise((resolve, reject)=>{
       dialogRef.afterClosed().subscribe(result => {
         setWeight(result)

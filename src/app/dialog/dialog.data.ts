@@ -1,3 +1,4 @@
 export interface DialogData {
-    weight: number
+    weight: number,
+    exists: boolean
 }

@@ -1,10 +1,11 @@
 import {canvas} from './init-canvas'
+import EdgeCustom from './edge'
 
 var actionType = 0
 var objectSelected = null
 var weight:string
 var isDirected:boolean
-var exists:boolean
+var exists:EdgeCustom;
 
 const getMousePos = (event) =>{
   var pointer = canvas.getPointer(event.e)
@@ -53,4 +54,8 @@ const setExists = (val) => {
   exists = val
 }
 
-export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,exists,setExists,setWeight,isDirected,setDirected}
+const getExists = () => {
+  return exists
+}
+
+export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,exists,setExists,getExists,setWeight,isDirected,setDirected}
