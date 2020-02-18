@@ -227,7 +227,7 @@ class Graph {
     const nrNodes = this.circles.size
     const nrEdges = this.edges.length
     var edgeData,circleData;
-    var data:any = nrNodes + '\n' + nrEdges + '\n'
+    var data = nrNodes + '\n' + nrEdges + '\n'
 
     for(var [key,value] of this.circles){
       var c = this.circles.get(key).group
