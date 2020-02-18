@@ -41,6 +41,7 @@ class Graph {
     this.printList(this.adjList)
 
     this.edges.push(edge)
+    console.log(this.edges)
     canvas.sendToBack(edge.line)
   }
 
@@ -225,7 +226,21 @@ class Graph {
     
     const nrNodes = this.circles.size
     const nrEdges = this.edges.length
-    var data = nrNodes + '\n' + nrEdges;
+    var edgeData,circleData;
+    var data:any = nrNodes + '\n' + nrEdges + '\n'
+
+    for(var [key,value] of this.circles){
+      var c = this.circles.get(key).group
+      circleData = 'left:' + c.left + ' top:' + c.top + ' id:' + c.id + '\n';
+      data += circleData
+    }
+
+    for(var i=0;i<this.edges.length;i++){
+      var e = this.edges[i].line
+      var ewd = this.edges[i]
+      edgeData = 'start:' + e.start.getId() + ' end:' + e.end.getId() + ' left:' + e.left + ' top:' + e.top + ' weight:' + ewd.weight + ' isDirected:' + ewd.isDirected +'\n';
+      data += edgeData;
+    }
 
     const blob = new Blob([data], {type: 'application/octet-stream'});
     saveAs(blob,"test.txt")

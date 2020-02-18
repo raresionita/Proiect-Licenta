@@ -15,12 +15,10 @@ export class DialogOverview{
     ) {}
 
     isDirected(){
-      //setExists(true)
       setDirected(true)
     }
 
     isUndirected(){
-      //setExists(true)
       setDirected(false)
     }
 }

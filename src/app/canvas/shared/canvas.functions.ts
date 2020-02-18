@@ -3,7 +3,7 @@ import EdgeCustom from './edge'
 
 var actionType = 0
 var objectSelected = null
-var weight:string
+var weight:any
 var isDirected:boolean
 var exists:EdgeCustom;
 
@@ -58,4 +58,4 @@ const getExists = () => {
   return exists
 }
 
-export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,exists,setExists,getExists,setWeight,isDirected,setDirected}
+export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected}
