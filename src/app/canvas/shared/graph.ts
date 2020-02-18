@@ -4,6 +4,7 @@ import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
 import { weight, isDirected, exists, setExists } from './canvas.functions';
+import { saveAs } from 'file-saver';
 
 class Graph {
 
@@ -218,6 +219,17 @@ class Graph {
       })
     }
     canvas.discardActiveObject()
+  }
+
+  exportToFile = () => {
+    
+    const nrNodes = this.circles.size
+    const nrEdges = this.edges.length
+    var data = nrNodes + '\n' + nrEdges;
+
+    const blob = new Blob([data], {type: 'application/octet-stream'});
+    saveAs(blob,"test.txt")
+    
   }
 
   updateEdges = () => {

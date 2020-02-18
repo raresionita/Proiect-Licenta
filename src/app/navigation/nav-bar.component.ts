@@ -8,6 +8,7 @@ import { Dialog, setDialog } from '../dialog/dialog.functions';
 import GraphVar from '../canvas/shared/graph';
 import {MessageService} from 'primeng/api';
 
+
 var json_data:any
 
 @Component({
@@ -18,8 +19,7 @@ var json_data:any
 
 export class NavBarComponent{
 
-  uploadedFiles: any[] = [];
-
+  uploadedFiles
   constructor(private messageService: MessageService,public dialog: MatDialog){
     setDialog(new Dialog(dialog))
   }
@@ -69,14 +69,7 @@ export class NavBarComponent{
 
 
   export(){
-    json_data = JSON.stringify(canvas.toDatalessJSON());
-    canvas.clear()
-    resetCanvas()
-
-    const file = new File(["dsada"],"test.txt",{type:'application/octet-stream.txt'})
-    const url = window.URL.createObjectURL(file)
-    window.location.assign(url)
-    //console.log(json_data);
+    GraphVar.exportToFile()
   }
 }
 //https://codepen.io/telember/pen/sDjxt
