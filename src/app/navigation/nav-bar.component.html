@@ -2,7 +2,6 @@
     <div class="col-xl-12 main-title">
             <h4>Github: <a href="https://github.com/raresionita/Licenta">Licenta Traversal Algorithms</a></h4>
     </div>
-    <p-toast [style]="{marginTop: '80px'}"></p-toast>
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12 text-right">
@@ -12,7 +11,8 @@
                         File
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <p-fileUpload #fubauto mode="basic" url="./test.txt"  maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Import"></p-fileUpload>
+                        <input type="file">
+                        <button class="dropdown-item" (click)="import()">Import</button>
                         <button class="dropdown-item" (click)="export()">Export</button>
                       </div>
                     </div>

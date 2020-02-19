@@ -49,23 +49,13 @@ export class NavBarComponent{
   }
 
   import(){
-
-    canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
-      canvas.renderAll();
-       console.log(' this is a callback. invoked when canvas is loaded!xxx ');
-
-      canvas.forEachObject(function(obj){
-        console.log(obj.name);
-        canvas.add(obj);
-      });
-
-
-    });
+    console.log("imported")
+    
   }
 
   onBasicUploadAuto(event) {
-    this.messageService.add({severity: 'info', summary: 'Success', detail: 'File Uploaded with Auto Mode'});
-}
+    GraphVar.importFromFile(event)    
+  }
 
 
   export(){

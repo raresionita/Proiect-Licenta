@@ -238,13 +238,17 @@ class Graph {
     for(var i=0;i<this.edges.length;i++){
       var e = this.edges[i].line
       var ewd = this.edges[i]
-      edgeData = 'start:' + e.start.getId() + ' end:' + e.end.getId() + ' left:' + e.left + ' top:' + e.top + ' weight:' + ewd.weight + ' isDirected:' + ewd.isDirected +'\n';
+      edgeData = 'start:' + e.start.getId() + ' end:' + e.end.getId() + ' weight:' + ewd.weight + ' isDirected:' + ewd.isDirected +'\n';
       data += edgeData;
     }
 
     const blob = new Blob([data], {type: 'application/octet-stream'});
-    saveAs(blob,"test.txt")
+    saveAs(blob,"canvas.txt")
     
+  }
+
+  importFromFile = (event) => {
+    console.log("Imported",event)
   }
 
   updateEdges = () => {
