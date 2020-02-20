@@ -231,7 +231,7 @@ class Graph {
 
     for(var [key,value] of this.circles){
       var c = this.circles.get(key).group
-      circleData = 'left:' + c.left + ' top:' + c.top + ' id:' + c.id + '\n';
+      circleData = c.left + ' ' + c.top + ' ' + c.id + '\n';
       data += circleData
     }
 
@@ -255,9 +255,16 @@ class Graph {
       var reader = new FileReader();
       reader.readAsText(file,"UTF-8")
       reader.onload = (e) => {
-        var data = (reader.result as string).split('\n');
-        console.log(data)
-        console.log(data[3])
+        var lines = (reader.result as string).split('\n');
+        var circlesLength = lines[0]
+        var linesLength:any = lines[1]
+        
+        for(var i=2;i<lines.length-1-linesLength;i++){
+          var left = lines[i].split(" ")[0]
+          var top = lines[i].split(" ")[1]
+          var id = lines[i].split(" ")[2]
+          console.log("left: "+left+" top: " + top + " id: "+id +'\n')
+        }
       }
     }
   }
