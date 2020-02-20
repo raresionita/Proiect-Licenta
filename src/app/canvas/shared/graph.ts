@@ -246,10 +246,22 @@ class Graph {
     saveAs(blob,"canvas.txt")
     
   }
+  
+  
 
-  importFromFile = (event) => {
-    console.log("Imported",event)
+  importFromFile = () => {
+    var file = (<HTMLInputElement>document.getElementById('input')).files[0];
+    if(file){
+      var reader = new FileReader();
+      reader.readAsText(file,"UTF-8")
+      reader.onload = (e) => {
+        var data = reader.result
+        console.log(data)
+      }
+    }
   }
+
+  
 
   updateEdges = () => {
     this.edges.forEach(edge => {
