@@ -255,8 +255,9 @@ class Graph {
       var reader = new FileReader();
       reader.readAsText(file,"UTF-8")
       reader.onload = (e) => {
-        var data = reader.result
+        var data = (reader.result as string).split('\n');
         console.log(data)
+        console.log(data[3])
       }
     }
   }
