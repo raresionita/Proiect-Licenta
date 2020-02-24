@@ -12,25 +12,25 @@ class EdgeCustom{
     isDirected:boolean
     exists:boolean
 
-    constructor(s0,s1,weight,isDirected,exists){
-      this.start = s0
-      this.end = s1
+    constructor(start,end,weight,isDirected,exists){
+      this.start = start
+      this.end = end
       this.weight=weight
       this.isDirected = isDirected
       this.exists = exists
 
       if(this.isDirected){
-        this.line = this.createDirectedLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
+        this.line = this.createDirectedLine([start.getLeft()+15,start.getTop()+15,end.getLeft()+15,end.getTop()+15])
       }else{
-        this.line = this.createLine([s0.group.left+15,s0.group.top+15,s1.group.left+15,s1.group.top+15])
+        this.line = this.createLine([start.getLeft()+15,start.getTop()+15,end.getLeft()+15,end.getTop()+15])
       }
     }
 
     update = () => {
       if(this.isDirected){
-        this.line = this.createDirectedLine([this.start.group.left+15,this.start.group.top+15,this.end.group.left+15,this.end.group.top+15])
+        this.line = this.createDirectedLine([this.start.getLeft()+15,this.start.getTop()+15,this.end.getLeft()+15,this.end.getTop()+15])
       }else{
-        this.line = this.createLine([this.start.group.left+15,this.start.group.top+15,this.end.group.left+15,this.end.group.top+15])
+        this.line = this.createLine([this.start.getLeft()+15,this.start.getTop()+15,this.end.getLeft()+15,this.end.getTop()+15])
       }
     }
 

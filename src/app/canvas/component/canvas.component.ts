@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {canvas,setCanvas} from '../shared/init-canvas'
 import 'fabric';
-import { actionType,objectSelected,setSelected, left, top} from '../shared/canvas.functions';
+import { actionType,objectSelected,setSelected } from '../shared/canvas.functions';
 import Graph from '../shared/graph';
 
 declare const fabric: any;
-var id = 0
+var id = Graph.getLastId()
 
 @Component({
     selector:'app-canvas',
@@ -39,7 +39,7 @@ export class CanvasComponent implements OnInit{
     }
 
     onMouseDown = (event) => {
-      console.log(event)
+      console.log(id)
       switch(actionType){
         case 0:
           (!objectSelected) ? Graph.addCircle(event.pointer.x-15,event.pointer.y-15,id++) : canvas.discardActiveObject()
@@ -74,7 +74,7 @@ const resetCanvas = () => {
   Graph.selected = []
   Graph.edges = []
   Graph.adjList.clear()
-  id = 0;
+  id = Graph.getLastId()
 }
 
 export {resetCanvas}

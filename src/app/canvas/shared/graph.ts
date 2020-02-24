@@ -13,7 +13,6 @@ class Graph {
   edges = []
   adjList = new Map<number, any>()
 
-
   addCircle = (left,top,id) => {
     var circleCustom = new CircleCustom(left,top,id)
     this.circles.set(id, circleCustom)
@@ -268,29 +267,34 @@ class Graph {
           circleCustom.setTop(parseFloat(top))
 
           this.circles.set(parseInt(id),circleCustom)
-          console.log(this.circles)
+          console.log(this.circles.size)
           //ToDo
           //add in adjlist
           canvas.add(circleCustom.group)
         }
 
         for(var i=lines.length-circlesLength;i<lines.length-1;i++){
-          var start = lines[i].split(" ")[0]
-          var end = lines[i].split(" ")[1]
+          var startId = lines[i].split(" ")[0]
+          var endId = lines[i].split(" ")[1]
           var weight = lines[i].split(" ")[2]
           var isDirect = lines[i].split(" ")[3]
 
+          const start = this.circles.get(parseInt(startId))
+          const end = this.circles.get(parseInt(endId))
+
           var edgeCustom = new EdgeCustom(start,end,weight,isDirect,exists)
           this.edges.push(edgeCustom)
-          console.log(edgeCustom)
+          //console.log(this.edges)
           canvas.sendToBack(edgeCustom.line)
-          //console.log("start: "+start+" end: "+end+" weight:"+weight+" isDirected:"+isDirect+'\n')
+          //console.log("start: "+startId+" end: "+endId+" weight:"+weight+" isDirected:"+isDirect+'\n')
         }
       }
     }
   }
 
-  
+  getLastId = () => {
+    return this.circles.size
+  }
 
   updateEdges = () => {
     this.edges.forEach(edge => {
