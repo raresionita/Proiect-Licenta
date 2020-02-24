@@ -14,8 +14,8 @@ class Graph {
   adjList = new Map<number, any>()
 
 
-  addCircle = (event, id) => {
-    var circleCustom = new CircleCustom(event, id)
+  addCircle = (left,top,id) => {
+    var circleCustom = new CircleCustom(left,top,id)
     this.circles.set(id, circleCustom)
 
     this.adjList.set(circleCustom.getId(), [])
@@ -41,7 +41,6 @@ class Graph {
     this.printList(this.adjList)
 
     this.edges.push(edge)
-    console.log(this.edges)
     canvas.sendToBack(edge.line)
   }
 
@@ -238,7 +237,7 @@ class Graph {
     for(var i=0;i<this.edges.length;i++){
       var e = this.edges[i].line
       var ewd = this.edges[i]
-      edgeData = 'start:' + e.start.getId() + ' end:' + e.end.getId() + ' weight:' + ewd.weight + ' isDirected:' + ewd.isDirected +'\n';
+      edgeData = e.start.getId() + ' ' + e.end.getId() + ' ' + ewd.weight + ' ' + ewd.isDirected +'\n';
       data += edgeData;
     }
 
@@ -256,14 +255,36 @@ class Graph {
       reader.readAsText(file,"UTF-8")
       reader.onload = (e) => {
         var lines = (reader.result as string).split('\n');
-        var circlesLength = lines[0]
+        var circlesLength:any = lines[0]
         var linesLength:any = lines[1]
-        
+
         for(var i=2;i<lines.length-1-linesLength;i++){
           var left = lines[i].split(" ")[0]
           var top = lines[i].split(" ")[1]
           var id = lines[i].split(" ")[2]
-          console.log("left: "+left+" top: " + top + " id: "+id +'\n')
+
+          var circleCustom = new CircleCustom(left,top,id)
+          circleCustom.setLeft(parseFloat(left))
+          circleCustom.setTop(parseFloat(top))
+
+          this.circles.set(parseInt(id),circleCustom)
+          console.log(this.circles)
+          //ToDo
+          //add in adjlist
+          canvas.add(circleCustom.group)
+        }
+
+        for(var i=lines.length-circlesLength;i<lines.length-1;i++){
+          var start = lines[i].split(" ")[0]
+          var end = lines[i].split(" ")[1]
+          var weight = lines[i].split(" ")[2]
+          var isDirect = lines[i].split(" ")[3]
+
+          var edgeCustom = new EdgeCustom(start,end,weight,isDirect,exists)
+          this.edges.push(edgeCustom)
+          console.log(edgeCustom)
+          canvas.sendToBack(edgeCustom.line)
+          //console.log("start: "+start+" end: "+end+" weight:"+weight+" isDirected:"+isDirect+'\n')
         }
       }
     }

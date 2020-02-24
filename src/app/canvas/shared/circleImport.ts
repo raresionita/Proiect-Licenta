@@ -2,7 +2,7 @@ import 'fabric';
 
 declare const fabric: any;
 
-class CircleCustom{
+class CircleCustom1{
   circle = null
   text = null
   group = null
@@ -65,4 +65,4 @@ class CircleCustom{
   }
 }
 
-export default CircleCustom
+export default CircleCustom1

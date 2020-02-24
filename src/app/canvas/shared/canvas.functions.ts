@@ -6,6 +6,8 @@ var objectSelected = null
 var weight:any
 var isDirected:boolean
 var exists:EdgeCustom;
+var left:any
+var top:any
 
 const getMousePos = (event) =>{
   var pointer = canvas.getPointer(event.e)
@@ -58,4 +60,4 @@ const getExists = () => {
   return exists
 }
 
-export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected}
+export {actionType,setAction,getMousePos,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,left,top}
