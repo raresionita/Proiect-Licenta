@@ -9,8 +9,8 @@ class EdgeCustom{
     end = null
 
     weight?:any
-    isDirected:boolean
-    exists:boolean
+    isDirected:string
+    exists:any
 
     constructor(start,end,weight,isDirected,exists){
       this.start = start
@@ -19,7 +19,7 @@ class EdgeCustom{
       this.isDirected = isDirected
       this.exists = exists
 
-      if(this.isDirected){
+      if(this.isDirected == "true"){
         this.line = this.createDirectedLine([start.getLeft()+15,start.getTop()+15,end.getLeft()+15,end.getTop()+15])
       }else{
         this.line = this.createLine([start.getLeft()+15,start.getTop()+15,end.getLeft()+15,end.getTop()+15])
@@ -27,7 +27,7 @@ class EdgeCustom{
     }
 
     update = () => {
-      if(this.isDirected){
+      if(this.isDirected == "true"){
         this.line = this.createDirectedLine([this.start.getLeft()+15,this.start.getTop()+15,this.end.getLeft()+15,this.end.getTop()+15])
       }else{
         this.line = this.createLine([this.start.getLeft()+15,this.start.getTop()+15,this.end.getLeft()+15,this.end.getTop()+15])
@@ -151,6 +151,10 @@ class EdgeCustom{
     setDirect = (dir) => {
       this.isDirected = dir
     } 
+
+    getDirect = () => {
+      return this.isDirected
+    }
 }
 
 export default EdgeCustom

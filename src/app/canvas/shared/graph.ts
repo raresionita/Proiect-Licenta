@@ -3,7 +3,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { weight, isDirected, exists, setExists, setId, Id, setDirected } from './canvas.functions';
+import { weight, isDirected, exists, setExists, setId, setDirected } from './canvas.functions';
 import { saveAs } from 'file-saver';
 
 class Graph {
@@ -105,7 +105,7 @@ class Graph {
   }
 
   insertAdjacencyList = (start, end) => {
-    if (!isDirected) {
+    if (isDirected == "false") {
       this.adjList.get(start.getId()).push(end.getId())
       this.adjList.get(end.getId()).push(start.getId())
     } else {
@@ -114,7 +114,7 @@ class Graph {
   }
 
   removeEdgeFromAdjacencyListById = (edge) => {
-    const isDirected = edge.isDirected
+    const isDirected = edge.getDirect()
     const objectRemove = edge.line
 
     var start = objectRemove.start.group.id;
@@ -129,14 +129,14 @@ class Graph {
     for (var i of this.adjList.keys()) {
       if (i === start) {
         this.adjList.set(i, listStart);
-      } else if (i === end && (!isDirected)) {
+      } else if (i === end && (isDirected == "false")) {
           this.adjList.set(i, listEnd);
         }
     }
   }
 
   removeVertexFromAdjacencyList = (objectRemove) => {
-    if (!isDirected) {
+    if (isDirected == "false") {
       for (var [key, value] of this.adjList) {
         if (key == objectRemove.id) {
           this.adjList.delete(key)
@@ -221,7 +221,6 @@ class Graph {
   }
 
   exportToFile = () => {
-    
     const nrNodes = this.circles.size
     const nrEdges = this.edges.length
     var edgeData,circleData;
@@ -260,39 +259,44 @@ class Graph {
         for(var i=2;i<lines.length-1-linesLength;i++){
           var left = lines[i].split(" ")[0]
           var top = lines[i].split(" ")[1]
-          var id = lines[i].split(" ")[2]
+          var id = parseInt(lines[i].split(" ")[2])
 
           var circleCustom = new CircleCustom(left,top,id)
           circleCustom.setLeft(parseFloat(left))
           circleCustom.setTop(parseFloat(top))
 
-          this.circles.set(parseInt(id),circleCustom)
-          //ToDo
-          //add in adjlist
+          this.circles.set(id,circleCustom)
+          this.adjList.set(circleCustom.getId(), [])
+          this.printList(this.adjList)
+
           canvas.add(circleCustom.group)
+
+          circleCustom.group.lockMovementX = true
+          circleCustom.group.lockMovementY = true
         }
         
         setId(this.getLastId())
-        //console.log(Id)
 
         for(var i=lines.length-circlesLength;i<lines.length-1;i++){
-          var startId = lines[i].split(" ")[0]
-          var endId = lines[i].split(" ")[1]
+          var startId = parseInt(lines[i].split(" ")[0])
+          var endId = parseInt(lines[i].split(" ")[1])
           var weight = lines[i].split(" ")[2]
           var isDirect = lines[i].split(" ")[3]
-          console.log(isDirect)
 
-          const start = this.circles.get(parseInt(startId))
-          const end = this.circles.get(parseInt(endId))
+          const start = this.circles.get(startId)
+          const end = this.circles.get(endId)
+          const edgeCustom = new EdgeCustom(start,end,weight,isDirect,exists)
 
-          var edgeCustom = new EdgeCustom(start,end,weight,isDirect,exists)
-          edgeCustom.setDirect(isDirect)
+          this.insertAdjacencyList(start, end)
+          this.printList(this.adjList)
+          
           this.edges.push(edgeCustom)
           canvas.sendToBack(edgeCustom.line)
           //console.log("start: "+startId+" end: "+endId+" weight:"+weight+" isDirected:"+isDirect+'\n')
         }
       }
     }
+    canvas.discardActiveObject()
   }
 
   getLastId = () => {

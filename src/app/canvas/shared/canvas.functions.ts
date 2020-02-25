@@ -4,7 +4,7 @@ import EdgeCustom from './edge'
 var actionType = 0
 var objectSelected = null
 var weight:any
-var isDirected:boolean
+var isDirected:string
 var exists:EdgeCustom
 var Id = 0
 
