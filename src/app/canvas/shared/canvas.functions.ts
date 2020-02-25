@@ -6,6 +6,7 @@ var objectSelected = null
 var weight:any
 var isDirected:boolean
 var exists:EdgeCustom
+var Id = 0
 
 const setAction = (value) => {
   actionType = value
@@ -49,4 +50,12 @@ const getExists = () => {
   return exists
 }
 
-export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected}
+const setId = (val) => {
+  Id = val
+}
+
+const increaseId = () => {
+  return Id++;
+}
+
+export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,Id,setId,increaseId}

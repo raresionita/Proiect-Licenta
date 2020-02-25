@@ -3,7 +3,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { weight, isDirected, exists, setExists } from './canvas.functions';
+import { weight, isDirected, exists, setExists, setId, Id, setDirected } from './canvas.functions';
 import { saveAs } from 'file-saver';
 
 class Graph {
@@ -267,24 +267,27 @@ class Graph {
           circleCustom.setTop(parseFloat(top))
 
           this.circles.set(parseInt(id),circleCustom)
-          console.log(this.circles.size)
           //ToDo
           //add in adjlist
           canvas.add(circleCustom.group)
         }
+        
+        setId(this.getLastId())
+        //console.log(Id)
 
         for(var i=lines.length-circlesLength;i<lines.length-1;i++){
           var startId = lines[i].split(" ")[0]
           var endId = lines[i].split(" ")[1]
           var weight = lines[i].split(" ")[2]
           var isDirect = lines[i].split(" ")[3]
+          console.log(isDirect)
 
           const start = this.circles.get(parseInt(startId))
           const end = this.circles.get(parseInt(endId))
 
           var edgeCustom = new EdgeCustom(start,end,weight,isDirect,exists)
+          edgeCustom.setDirect(isDirect)
           this.edges.push(edgeCustom)
-          //console.log(this.edges)
           canvas.sendToBack(edgeCustom.line)
           //console.log("start: "+startId+" end: "+endId+" weight:"+weight+" isDirected:"+isDirect+'\n')
         }
@@ -293,7 +296,14 @@ class Graph {
   }
 
   getLastId = () => {
-    return this.circles.size
+    var max = 0 
+    for(var [key,value] of this.circles)
+    {
+      if(key > max){
+        max = key
+      }
+    }
+    return max+1
   }
 
   updateEdges = () => {

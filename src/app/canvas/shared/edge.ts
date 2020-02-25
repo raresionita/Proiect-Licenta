@@ -146,6 +146,11 @@ class EdgeCustom{
 
       return group;
     }
+
+
+    setDirect = (dir) => {
+      this.isDirected = dir
+    } 
 }
 
 export default EdgeCustom
