@@ -105,7 +105,7 @@ class Graph {
   }
 
   insertAdjacencyList = (start, end) => {
-    if (isDirected == "false") {
+    if (isDirected === "false") {
       this.adjList.get(start.getId()).push(end.getId())
       this.adjList.get(end.getId()).push(start.getId())
     } else {
@@ -114,7 +114,7 @@ class Graph {
   }
 
   removeEdgeFromAdjacencyListById = (edge) => {
-    const isDirected = edge.getDirect()
+    const isDirected = edge.isDirected
     const objectRemove = edge.line
 
     var start = objectRemove.start.group.id;
@@ -129,14 +129,14 @@ class Graph {
     for (var i of this.adjList.keys()) {
       if (i === start) {
         this.adjList.set(i, listStart);
-      } else if (i === end && (isDirected == "false")) {
+      } else if (i === end && (isDirected === "false")) {
           this.adjList.set(i, listEnd);
         }
     }
   }
 
   removeVertexFromAdjacencyList = (objectRemove) => {
-    if (isDirected == "false") {
+    if (isDirected === "false") {
       for (var [key, value] of this.adjList) {
         if (key == objectRemove.id) {
           this.adjList.delete(key)
@@ -241,10 +241,10 @@ class Graph {
 
     const blob = new Blob([data], {type: 'application/octet-stream'});
     saveAs(blob,"canvas.txt")
-    
+
   }
-  
-  
+
+
 
   importFromFile = () => {
     var file = (<HTMLInputElement>document.getElementById('input')).files[0];
@@ -274,7 +274,7 @@ class Graph {
           circleCustom.group.lockMovementX = true
           circleCustom.group.lockMovementY = true
         }
-        
+
         setId(this.getLastId())
 
         for(var i=lines.length-circlesLength;i<lines.length-1;i++){
@@ -286,10 +286,10 @@ class Graph {
           const start = this.circles.get(startId)
           const end = this.circles.get(endId)
           const edgeCustom = new EdgeCustom(start,end,weight,isDirect,exists)
-
+          setDirected(isDirect)
           this.insertAdjacencyList(start, end)
           this.printList(this.adjList)
-          
+
           this.edges.push(edgeCustom)
           canvas.sendToBack(edgeCustom.line)
           //console.log("start: "+startId+" end: "+endId+" weight:"+weight+" isDirected:"+isDirect+'\n')
@@ -300,7 +300,7 @@ class Graph {
   }
 
   getLastId = () => {
-    var max = 0 
+    var max = 0
     for(var [key,value] of this.circles)
     {
       if(key > max){
