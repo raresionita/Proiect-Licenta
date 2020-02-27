@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { clearCanvas, canvas } from '../canvas/shared/init-canvas';
 import 'fabric';
-import { setAction } from '../canvas/shared/canvas.functions';
+import { setAction, enableBtn } from '../canvas/shared/canvas.functions';
 import { MatDialog } from '@angular/material';
 import { Dialog, setDialog } from '../dialog/dialog.functions';
 import GraphVar from '../canvas/shared/graph';
@@ -19,6 +19,7 @@ export class NavBarComponent{
 
   confirmClear() {
     clearCanvas()
+    enableBtn()
     GraphVar.resetCanvas()
   }
 
@@ -43,8 +44,6 @@ export class NavBarComponent{
 
 
   import(){
-    canvas.clear()
-    GraphVar.resetCanvas()
     GraphVar.importFromFile()
   }
 

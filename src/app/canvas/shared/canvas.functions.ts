@@ -61,7 +61,11 @@ const increaseId = () => {
 const disableBtn = () => {
   (<HTMLInputElement> document.getElementById("input")).disabled = true;
   (<HTMLInputElement> document.getElementById("import")).disabled = true;
-  canvas.discardActiveObject()
 }
 
-export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,Id,setId,increaseId,disableBtn}
+const enableBtn = () => {
+  (<HTMLInputElement> document.getElementById("input")).disabled = false;
+  (<HTMLInputElement> document.getElementById("import")).disabled = false;
+}
+
+export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,Id,setId,increaseId,disableBtn,enableBtn}

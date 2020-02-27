@@ -281,9 +281,16 @@ class Graph {
           circleCustom.group.lockMovementY = true
         }
 
+        var smecherie = 0
+        if(circlesLength == linesLength){
+          smecherie = lines.length-circlesLength-1
+        } else if(circlesLength > linesLength){
+          smecherie = lines.length-circlesLength
+        }
+
         setId(this.getLastId())
 
-        for(var i=lines.length-circlesLength;i<lines.length-1;i++){
+        for(var i=smecherie;i<lines.length-1;i++){
           var startId = parseInt(lines[i].split(" ")[0])
           var endId = parseInt(lines[i].split(" ")[1])
           var weight = lines[i].split(" ")[2]
@@ -303,9 +310,8 @@ class Graph {
       }
     }
     disableBtn()
+    canvas.discardActiveObject()
   }
-
-  
 
   getLastId = () => {
     var max = 0
@@ -341,7 +347,7 @@ class Graph {
   //Algorithms
 
   isCyclicUtil = (i,visited:boolean[],recStack:boolean[]) => {
-    
+
     if(recStack[i]){
       return true
     }
@@ -352,7 +358,7 @@ class Graph {
     visited[i] = true
     recStack[i] = true
 
-    var child:Array<number> = this.adjList.get(i) 
+    var child:Array<number> = this.adjList.get(i)
 
     child.forEach(c => {
       if(this.isCyclicUtil(c,visited,recStack)){
