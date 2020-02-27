@@ -51,6 +51,14 @@ export class NavBarComponent{
   export(){
     GraphVar.exportToFile()
   }
+
+  detectCycle(){
+    if(GraphVar.isCyclic()){
+      console.log("Graph contains cycle")
+    }else{
+      console.log("Graph doesn't contains cycle")
+    }
+  }
 }
 
 export default NavBarComponent

@@ -3,7 +3,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { weight, isDirected, exists, setExists, setId, setDirected } from './canvas.functions';
+import { weight, isDirected, exists, setExists, setId, setDirected, disableBtn } from './canvas.functions';
 import { saveAs } from 'file-saver';
 
 class Graph {
@@ -302,14 +302,10 @@ class Graph {
         }
       }
     }
-    this.disableBtn()
+    disableBtn()
   }
 
-  disableBtn = () => {
-    (<HTMLInputElement> document.getElementById("input")).disabled = true;
-    (<HTMLInputElement> document.getElementById("import")).disabled = true;
-    canvas.discardActiveObject()
-  }
+  
 
   getLastId = () => {
     var max = 0
@@ -341,7 +337,47 @@ class Graph {
     this.selected = []
     this.updateCirclesColorDefault()
   }
+
+  //Algorithms
+
+  isCyclicUtil = (i,visited:boolean[],recStack:boolean[]) => {
+    
+    if(recStack[i]){
+      return true
+    }
+    if(visited[i]){
+      return false
+    }
+
+    visited[i] = true
+    recStack[i] = true
+
+    var child:Array<number> = this.adjList.get(i) 
+
+    child.forEach(c => {
+      if(this.isCyclicUtil(c,visited,recStack)){
+        return true
+      }
+    });
+    recStack[i] = false
+    return false
+  }
+
+  isCyclic = () => {
+    var visited:any[] = [this.circles.size]
+    var recStack:any[] = [this.circles.size]
+
+    for(var i=0;i<this.circles.size;i++){
+      if(this.isCyclicUtil(i,visited,recStack)){
+        return true
+      }
+    }
+    return false
+  }
+
 }
+
+
 
 const GraphVar = new Graph()
 export default GraphVar
