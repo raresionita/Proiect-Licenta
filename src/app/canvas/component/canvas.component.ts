@@ -68,11 +68,3 @@ export class CanvasComponent implements OnInit{
     }
 }
 
-const resetCanvas = () => {
-  Graph.selected = []
-  Graph.edges = []
-  Graph.adjList.clear()
-  setId(0)
-}
-
-export {resetCanvas}

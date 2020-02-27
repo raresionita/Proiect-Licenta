@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { clearCanvas, canvas } from '../canvas/shared/init-canvas';
 import 'fabric';
-import { resetCanvas } from '../canvas/component/canvas.component';
 import { setAction } from '../canvas/shared/canvas.functions';
 import { MatDialog } from '@angular/material';
 import { Dialog, setDialog } from '../dialog/dialog.functions';
@@ -20,7 +19,7 @@ export class NavBarComponent{
 
   confirmClear() {
     clearCanvas()
-    resetCanvas()
+    GraphVar.resetCanvas()
   }
 
   addVertex(){
@@ -44,6 +43,8 @@ export class NavBarComponent{
 
 
   import(){
+    canvas.clear()
+    GraphVar.resetCanvas()
     GraphVar.importFromFile()
   }
 
@@ -51,6 +52,5 @@ export class NavBarComponent{
     GraphVar.exportToFile()
   }
 }
-//https://codepen.io/telember/pen/sDjxt
 
 export default NavBarComponent

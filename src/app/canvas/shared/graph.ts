@@ -244,6 +244,12 @@ class Graph {
 
   }
 
+  resetCanvas = () => {
+    this.selected = []
+    this.edges = []
+    this.adjList.clear()
+    setId(0)
+  }
 
 
   importFromFile = () => {
@@ -287,15 +293,21 @@ class Graph {
           const end = this.circles.get(endId)
           const edgeCustom = new EdgeCustom(start,end,weight,isDirect,exists)
           setDirected(isDirect)
+
           this.insertAdjacencyList(start, end)
           this.printList(this.adjList)
 
           this.edges.push(edgeCustom)
           canvas.sendToBack(edgeCustom.line)
-          //console.log("start: "+startId+" end: "+endId+" weight:"+weight+" isDirected:"+isDirect+'\n')
         }
       }
     }
+    this.disableBtn()
+  }
+
+  disableBtn = () => {
+    (<HTMLInputElement> document.getElementById("input")).disabled = true;
+    (<HTMLInputElement> document.getElementById("import")).disabled = true;
     canvas.discardActiveObject()
   }
 
