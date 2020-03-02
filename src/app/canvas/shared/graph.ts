@@ -249,16 +249,18 @@ class Graph {
     this.selected = []
     this.edges = []
     this.adjList.clear()
+    canvas.clear()
     setId(0)
   }
 
 
   importFromFile = () => {
+    this.resetCanvas()
     var file = (<HTMLInputElement>document.getElementById('input')).files[0];
     if(file){
       var reader = new FileReader();
       reader.readAsText(file,"UTF-8")
-      reader.onload = (e) => {
+      reader.onload = () => {
         var lines = (reader.result as string).split('\n');
         var circlesLength:any = lines[0]
         var linesLength:any = lines[1]
@@ -404,15 +406,19 @@ class Graph {
         this.topologicalSortUtil(i,visited,stack)
       }
     }
-     
+    var val = []
+    var txt = document.getElementById("message")
+    var str = "Topological Sort: "
     while(stack.top !== null || stack.length !== 0){
-      console.log(stack.pop())
+      val.push(stack.pop())
     }
+    val.forEach(i => {
+      str += i + "  "
+    });
+    txt.innerText = str
   }
 
 }
-
-
 
 const GraphVar = new Graph()
 export default GraphVar

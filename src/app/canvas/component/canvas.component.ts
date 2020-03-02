@@ -15,7 +15,7 @@ declare const fabric: any;
 
 export class CanvasComponent implements OnInit{
     @ViewChild('container',{static:true}) containerRef: ElementRef;
-
+  
     ngOnInit(){
 
       setCanvas(new fabric.Canvas('canvas'))
@@ -23,7 +23,8 @@ export class CanvasComponent implements OnInit{
       canvas.on({
         'object:selected': this.onObjectSelected,
         'object:moving': this.onObjectMoving,
-        'mouse:down': this.onMouseDown
+        'mouse:down': this.onMouseDown,
+        //'mouse:wheel': this.onMouseWheel
       })
 
       window.addEventListener('resize', this.onResize,false)
@@ -66,5 +67,24 @@ export class CanvasComponent implements OnInit{
     onObjectMoving = () => {
         Graph.updateEdges()
     }
+
+    // onMouseWheel = (opt) => {
+    //   var delta = opt.e.deltaY
+    //   var pointer = canvas.getPointer(opt.e)
+    //   var zoom = canvas.getZoom()
+    //   zoom = zoom + delta/200
+    //   if(zoom > 10)
+    //     zoom = 10
+    //   if(zoom < 0.01)
+    //     zoom = 0.01
+
+    //   canvas.zoomToPoint({
+    //     x: opt.e.offsetX, 
+    //     y: opt.e.offsetY
+    //   }, zoom);
+
+    //   opt.e.preventDefault();
+    //   opt.e.stopPropagation();
+    // }
 }
 
