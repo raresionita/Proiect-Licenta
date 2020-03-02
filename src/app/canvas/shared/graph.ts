@@ -3,7 +3,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { weight, isDirected, exists, setExists, setId, setDirected, disableBtn } from './canvas.functions';
+import { weight, isDirected, exists, setExists, setId, setDirected, disableBtn, setComponent } from './canvas.functions';
 import { saveAs } from 'file-saver';
 import { Stack } from 'stack-typescript';
 
@@ -406,18 +406,15 @@ class Graph {
         this.topologicalSortUtil(i,visited,stack)
       }
     }
-    var val = []
-    var txt = document.getElementById("message")
-    var str = "Topological Sort: "
+
+    var vals = []
     while(stack.top !== null || stack.length !== 0){
-      val.push(stack.pop())
+      vals.push(stack.pop())
     }
-    val.forEach(i => {
-      str += i + "  "
-    });
-    txt.innerText = str
+    setComponent("message",vals)
   }
 
+  
 }
 
 const GraphVar = new Graph()

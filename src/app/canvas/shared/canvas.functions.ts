@@ -38,6 +38,17 @@ const setWeight = (val) => {
   }
 }
 
+const setComponent = (id,arr) => {
+  var txt = document.getElementById(id)
+  var str = "Topological Sort: "
+
+  arr.forEach(i => {
+    str += i + " "
+  });
+
+  txt.innerText = str
+}
+
 const setDirected = (val) => {
   isDirected = val
 }
@@ -68,4 +79,4 @@ const enableBtn = () => {
   (<HTMLInputElement> document.getElementById("import")).disabled = false;
 }
 
-export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,Id,setId,increaseId,disableBtn,enableBtn}
+export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,Id,setId,increaseId,disableBtn,enableBtn,setComponent}

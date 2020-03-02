@@ -64,11 +64,11 @@ export class NavBarComponent{
   }
 
   stronglyConnected(){
-
+    //ToDo  
   }
 
   shortestPath(){
-    
+    //ToDo
   }
 }
 
