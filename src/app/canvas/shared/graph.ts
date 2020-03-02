@@ -5,6 +5,7 @@ import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
 import { weight, isDirected, exists, setExists, setId, setDirected, disableBtn } from './canvas.functions';
 import { saveAs } from 'file-saver';
+import { Stack } from 'stack-typescript';
 
 class Graph {
 
@@ -346,39 +347,67 @@ class Graph {
 
   //Algorithms
 
-  isCyclicUtil = (i,visited:boolean[],recStack:boolean[]) => {
-
-    if(recStack[i]){
-      return true
-    }
-    if(visited[i]){
-      return false
-    }
-
-    visited[i] = true
-    recStack[i] = true
-
-    var child:Array<number> = this.adjList.get(i)
-
-    child.forEach(c => {
-      if(this.isCyclicUtil(c,visited,recStack)){
+  isCyclicUtil = (v,visited:boolean[],parent) => {
+    visited[v] = true
+    this.adjList.get(v).forEach(i => {
+      console.log(v + ": " + i)
+      if(!visited[i]){
+        if(this.isCyclicUtil(i,visited,v)){
+          return true
+        }
+      }else if( i != parent){
         return true
       }
     });
-    recStack[i] = false
     return false
   }
 
   isCyclic = () => {
     var visited:any[] = [this.circles.size]
-    var recStack:any[] = [this.circles.size]
 
     for(var i=0;i<this.circles.size;i++){
-      if(this.isCyclicUtil(i,visited,recStack)){
-        return true
+      visited[i] = false;
+    }
+
+    for(var u=0;u<this.circles.size;u++){
+      if(!visited[u]){
+        if(this.isCyclicUtil(u,visited,-1)){
+          return true
+        }
       }
     }
+
     return false
+  }
+
+  topologicalSortUtil = (v:number,visited:boolean[],stack:any) =>{
+    visited[v] = true
+
+    this.adjList.get(v).forEach(i => {
+      if(!visited[i]){
+        this.topologicalSortUtil(i,visited,stack)
+      }
+    });
+    stack.push(v)
+  }
+
+  topologicalSort = () => {
+    var stack:Stack<number> = new Stack()
+    var visited:any = [this.circles.size]
+
+    for(var i=0;i<this.circles.size;i++){
+      visited[i] = false
+    }
+
+    for(var i=0;i<this.circles.size;i++){
+      if(visited[i] == false){
+        this.topologicalSortUtil(i,visited,stack)
+      }
+    }
+     
+    while(stack.top !== null || stack.length !== 0){
+      console.log(stack.pop())
+    }
   }
 
 }

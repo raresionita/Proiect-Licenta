@@ -58,6 +58,10 @@ export class NavBarComponent{
       console.log("Graph doesn't contains cycle")
     }
   }
+
+  topologiSort(){
+    GraphVar.topologicalSort()
+  }
 }
 
 export default NavBarComponent
