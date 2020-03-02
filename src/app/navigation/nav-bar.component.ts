@@ -59,8 +59,16 @@ export class NavBarComponent{
     }
   }
 
-  topologiSort(){
+  topologicSort(){
     GraphVar.topologicalSort()
+  }
+
+  stronglyConnected(){
+
+  }
+
+  shortestPath(){
+    
   }
 }
 
