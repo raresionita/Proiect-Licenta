@@ -49,6 +49,11 @@ const setComponent = (id,arr) => {
   txt.innerText = str
 }
 
+const setMessage = (msg) => {
+  var txt = document.getElementById("message")
+  txt.innerText = msg
+}
+
 const setDirected = (val) => {
   isDirected = val
 }
@@ -69,14 +74,22 @@ const increaseId = () => {
   return Id++;
 }
 
+const disableId = (id) => {
+  (<HTMLInputElement> document.getElementById(id)).disabled = true;
+}
+
+const enableId = (id) => {
+  (<HTMLInputElement> document.getElementById(id)).disabled = false;
+}
+
 const disableBtn = () => {
-  (<HTMLInputElement> document.getElementById("input")).disabled = true;
-  (<HTMLInputElement> document.getElementById("import")).disabled = true;
+  disableId("input")
+  disableId("import")
 }
 
 const enableBtn = () => {
-  (<HTMLInputElement> document.getElementById("input")).disabled = false;
-  (<HTMLInputElement> document.getElementById("import")).disabled = false;
+  enableId("input")
+  enableId("import")
 }
 
-export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,Id,setId,increaseId,disableBtn,enableBtn,setComponent}
+export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,Id,setId,increaseId,disableBtn,enableBtn,setComponent,disableId,enableId,setMessage}

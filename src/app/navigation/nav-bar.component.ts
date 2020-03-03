@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { clearCanvas, canvas } from '../canvas/shared/init-canvas';
 import 'fabric';
-import { setAction, enableBtn } from '../canvas/shared/canvas.functions';
+import { setAction, enableBtn, setMessage } from '../canvas/shared/canvas.functions';
 import { MatDialog } from '@angular/material';
 import { Dialog, setDialog } from '../dialog/dialog.functions';
 import GraphVar from '../canvas/shared/graph';
@@ -24,20 +24,24 @@ export class NavBarComponent{
   }
 
   addVertex(){
+    setMessage("Click on canvas to add a new vertex")
     setAction(0)
     GraphVar.resetGraphColorSelected()
   }
 
   connectVertex(){
+    setMessage("Select two vertices to connect")
     setAction(1)
   }
 
   defaultSelected(){
+    setMessage("Select and move objects by mouse")
     setAction(2)
     GraphVar.resetGraphColorSelected()
   }
 
   removeObject(){
+    setMessage("Click on the object to remove")
     setAction(3)
     GraphVar.resetGraphColorSelected()
   }

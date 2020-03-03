@@ -414,7 +414,6 @@ class Graph {
     setComponent("message",vals)
   }
 
-  
 }
 
 const GraphVar = new Graph()
