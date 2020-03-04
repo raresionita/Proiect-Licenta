@@ -349,37 +349,41 @@ class Graph {
 
   //Algorithms
 
-  isCyclicUtil = (v,visited:boolean[],parent) => {
+  isCyclicUtil = (v:number,visited:boolean[],recStack:boolean[]) => {
+
     visited[v] = true
-    this.adjList.get(v).forEach(i => {
-      console.log(v + ": " + i)
-      if(!visited[i]){
-        if(this.isCyclicUtil(i,visited,v)){
-          return true
-        }
-      }else if( i != parent){
+    recStack[v] = true
+    var res:boolean = false
+
+    const children:number[] = this.adjList.get(v)
+
+    for(var c of children){
+      if(visited[c] && recStack[c]){
         return true
       }
-    });
-    return false
+
+      if(!visited[c]){
+        res = this.isCyclicUtil(c,visited,recStack)
+      }
+    }
+
+    recStack[v] = false
+    return res
   }
 
   isCyclic = () => {
     var visited:any[] = [this.circles.size]
+    var recStack:any[] = [this.circles.size]
+    
+    for(var i=0;i<this.circles.size;i++){
+        visited[i] = false
+    }
 
     for(var i=0;i<this.circles.size;i++){
-      visited[i] = false;
+      recStack[i] = false
     }
 
-    for(var u=0;u<this.circles.size;u++){
-      if(!visited[u]){
-        if(this.isCyclicUtil(u,visited,-1)){
-          return true
-        }
-      }
-    }
-
-    return false
+    return this.isCyclicUtil(0,visited,recStack)
   }
 
   topologicalSortUtil = (v:number,visited:boolean[],stack:any) =>{

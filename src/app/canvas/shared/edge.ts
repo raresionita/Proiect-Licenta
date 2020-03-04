@@ -1,5 +1,4 @@
 import 'fabric';
-import { disableId } from './canvas.functions';
 
 declare const fabric: any;
 

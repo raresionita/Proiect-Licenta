@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { clearCanvas, canvas } from '../canvas/shared/init-canvas';
+import { clearCanvas } from '../canvas/shared/init-canvas';
 import 'fabric';
 import { setAction, enableBtn, setMessage } from '../canvas/shared/canvas.functions';
 import { MatDialog } from '@angular/material';
@@ -57,9 +57,9 @@ export class NavBarComponent{
 
   detectCycle(){
     if(GraphVar.isCyclic()){
-      console.log("Graph contains cycle")
+      setMessage("Graph contains cycle")
     }else{
-      console.log("Graph doesn't contains cycle")
+      setMessage("Graph doesn't contains cycle")
     }
   }
 
