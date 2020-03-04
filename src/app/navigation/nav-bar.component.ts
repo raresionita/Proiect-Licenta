@@ -59,7 +59,7 @@ export class NavBarComponent{
     if(GraphVar.isCyclic()){
       setMessage("Graph contains cycle")
     }else{
-      setMessage("Graph doesn't contains cycle")
+      setMessage("Graph doesn't contain cycle")
     }
   }
 
