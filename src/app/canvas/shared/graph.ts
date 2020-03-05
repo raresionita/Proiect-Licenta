@@ -374,7 +374,7 @@ class Graph {
   isCyclic = () => {
     var visited:any[] = [this.circles.size]
     var recStack:any[] = [this.circles.size]
-    
+
     for(var i=0;i<this.circles.size;i++){
         visited[i] = false
     }
@@ -386,12 +386,12 @@ class Graph {
     return this.isCyclicUtil(0,visited,recStack)
   }
 
-  topologicalSortUtil = (v:number,visited:boolean[],stack:any) =>{
+  fillOrder = (v:number,visited:boolean[],stack:any) =>{
     visited[v] = true
 
     this.adjList.get(v).forEach(i => {
       if(!visited[i]){
-        this.topologicalSortUtil(i,visited,stack)
+        this.fillOrder(i,visited,stack)
       }
     });
     stack.push(v)
@@ -407,7 +407,7 @@ class Graph {
 
     for(var i=0;i<this.circles.size;i++){
       if(visited[i] == false){
-        this.topologicalSortUtil(i,visited,stack)
+        this.fillOrder(i,visited,stack)
       }
     }
 
@@ -417,6 +417,65 @@ class Graph {
     }
     setComponent("message",vals)
   }
+
+   
+
+  DFSUtil = (v:number,visited:boolean[]) => {
+    visited[v] = true
+    console.log(v + " ")
+    
+    this.adjList.get(v).forEach(i => {
+      if(!visited[i]){
+        this.DFSUtil(v,visited)
+      }
+    })
+  }
+
+  getTranspose = ():Graph =>{
+    var graph:Graph = new Graph()
+    for(var v=0;v<this.circles.size;v++){
+      const childs:number[] = this.adjList.get(v)
+      childs.forEach(i => {
+        graph.adjList.get(i).add(v)
+        console.log(graph.adjList)
+      });
+    }
+    
+    return graph
+  }
+
+  printSCCs = () => {
+    var stack:Stack<number> = new Stack()
+    var visited:any = [this.circles.size]
+
+    for(var i=0;i<this.circles.size;i++){
+      visited[i] = false
+    }
+
+    for(var i=0;i<this.circles.size;i++){
+      if(visited[i] == false){
+        this.fillOrder(i,visited,stack)
+      }
+    }
+
+    var gr:Graph = this.getTranspose()
+
+    for(var i=0;i<this.circles.size;i++){
+      visited[i] = false
+    }
+
+    while(stack.top !== null || stack.length !== 0){
+      var v = stack.pop()
+
+      if(visited[v] == false){
+        gr.DFSUtil(v,visited)
+        console.log()
+      }
+    }
+
+  }
+
+
 
 }
 

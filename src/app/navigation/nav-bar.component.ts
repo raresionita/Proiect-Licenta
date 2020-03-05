@@ -68,7 +68,8 @@ export class NavBarComponent{
   }
 
   stronglyConnected(){
-    //ToDo  
+    console.log("Strongly connected components: \n")
+    GraphVar.printSCCs() 
   }
 
   shortestPath(){
