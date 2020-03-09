@@ -7,11 +7,15 @@ import { setExists, setId, setDirected, disableBtn } from './canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from './parameters';
 import { TopologicalSort } from './strategy/topologicalSort';
+import { DetectCycle } from './strategy/detectCycle';
 import Context from './strategy/context';
 
 class Graph {
 
-  cn:Context = new Context(new TopologicalSort())
+  ts:Context = new Context(new TopologicalSort())
+  dc:Context = new Context(new DetectCycle())
+  //ts:Context = new Context(new TopologicalSort())
+  //ts:Context = new Context(new TopologicalSort())
 
   addCircle = (left,top,id) => {
     var circleCustom = new CircleCustom(left,top,id)
@@ -418,12 +422,12 @@ class Graph {
   //   setComponent("message",vals)
   // }
 
-   
+
 
   // DFSUtil = (v:number,visited:boolean[]) => {
   //   visited[v] = true
   //   console.log(v + " ")
-    
+
   //   Parameter.adjList.get(v).forEach(i => {
   //     if(!visited[i]){
   //       this.DFSUtil(v,visited)
@@ -440,7 +444,7 @@ class Graph {
   //       //console.log(graph)
   //     });
   //   }
-    
+
   //   //return graph
   // }
 

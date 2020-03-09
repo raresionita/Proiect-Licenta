@@ -1,3 +1,3 @@
 export interface AlgorithmStrategy {
-    algorithmStrategy()
+    algorithmStrategy():any
 }

@@ -17,8 +17,6 @@ import Context from '../canvas/shared/strategy/context';
 
 export class NavBarComponent{
 
-  //cn:Context = new Context(new TopologicalSort())
-
   constructor(public dialog: MatDialog){
     setDialog(new Dialog(dialog))
   }
@@ -62,20 +60,20 @@ export class NavBarComponent{
   }
 
   detectCycle(){
-    // if(GraphVar.isCyclic()){
-    //   setMessage("Graph contains cycle")
-    // }else{
-    //   setMessage("Graph doesn't contain cycle")
-    // }
+    if(GraphVar.dc.Algorithm.algorithmStrategy()){
+      setMessage("Graph contains cycle")
+    }else{
+      setMessage("Graph doesn't contain cycle")
+    }
   }
 
   topologicSort(){
-    GraphVar.cn.Algorithm.algorithmStrategy()
+    GraphVar.ts.Algorithm.algorithmStrategy()
   }
 
   stronglyConnected(){
     // console.log("Strongly connected components: \n")
-    // GraphVar.printSCCs() 
+    // GraphVar.printSCCs()
   }
 
   shortestPath(){

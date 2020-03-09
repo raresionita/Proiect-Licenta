@@ -7,10 +7,10 @@ class Context {
         this.algorithmStrategy = algorithmStrategy
     }
 
-    public get Algorithm() : AlgorithmStrategy {
+    public get Algorithm() : any {
         return this.algorithmStrategy
     }
-         
+
 }
 
 export default Context
