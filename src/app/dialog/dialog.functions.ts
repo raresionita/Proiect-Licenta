@@ -1,6 +1,7 @@
 import { MatDialog } from '@angular/material';
 import { DialogOverview } from './dialog.component';
-import { setWeight, weight, getExists} from '../canvas/shared/canvas.functions';
+import { setWeight, getExists} from '../canvas/shared/canvas.functions';
+import Parameter from '../canvas/shared/parameters';
 
 class Dialog{
 
@@ -10,7 +11,7 @@ class Dialog{
     const dialogRef = this.dialog.open(DialogOverview, {
         width: '250px',
         height: '250px',
-        data: { weight: setWeight(weight),
+        data: { weight: setWeight(Parameter.weight),
                 exists: getExists()}
     });
 

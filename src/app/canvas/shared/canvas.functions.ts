@@ -1,15 +1,8 @@
 import {canvas} from './init-canvas'
-import EdgeCustom from './edge'
-
-var actionType = 0
-var objectSelected = null
-var weight:any
-var isDirected:string
-var exists:EdgeCustom
-var Id = 0
+import Parameter from './parameters';
 
 const setAction = (value) => {
-  actionType = value
+  Parameter.actionType = value
   if(value == 2){
     canvas.getObjects().forEach(element => {
       element.lockMovementX = false
@@ -20,21 +13,21 @@ const setAction = (value) => {
       element.lockMovementX = true
       element.lockMovementY = true
     });
-    objectSelected = null
+    Parameter.objectSelected = null
   }
   canvas.discardActiveObject()
 }
 
 const setSelected = (val) => {
-  objectSelected = val
+  Parameter.objectSelected = val
 }
 
 const setWeight = (val) => {
   if(val == null){
     val = ''
-    weight = val
+    Parameter.weight = val
   }else{
-    weight = val
+    Parameter.weight = val
   }
 }
 
@@ -55,23 +48,23 @@ const setMessage = (msg) => {
 }
 
 const setDirected = (val) => {
-  isDirected = val
+  Parameter.isDirected = val
 }
 
 const setExists = (val) => {
-  exists = val
+  Parameter.exists = val
 }
 
 const getExists = () => {
-  return exists
+  return Parameter.exists
 }
 
 const setId = (val) => {
-  Id = val
+  Parameter.Id = val
 }
 
 const increaseId = () => {
-  return Id++;
+  return Parameter.Id++;
 }
 
 const disableId = (id) => {
@@ -92,4 +85,4 @@ const enableBtn = () => {
   enableId("import")
 }
 
-export {actionType,setAction,objectSelected,setSelected,weight,setWeight,exists,setExists,getExists,isDirected,setDirected,Id,setId,increaseId,disableBtn,enableBtn,setComponent,disableId,enableId,setMessage}
+export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setId,increaseId,disableBtn,enableBtn,setComponent,disableId,enableId,setMessage}

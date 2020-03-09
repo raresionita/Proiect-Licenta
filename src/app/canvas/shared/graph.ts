@@ -3,22 +3,21 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { weight, isDirected, exists, setExists, setId, setDirected, disableBtn, setComponent } from './canvas.functions';
+import { setExists, setId, setDirected, disableBtn } from './canvas.functions';
 import { saveAs } from 'file-saver';
-import { Stack } from 'stack-typescript';
+import Parameter from './parameters';
+import { TopologicalSort } from './strategy/topologicalSort';
+import Context from './strategy/context';
 
 class Graph {
 
-  circles = new Map<number, any>()
-  selected = []
-  edges = []
-  adjList = new Map<number, any>()
+  cn:Context = new Context(new TopologicalSort())
 
   addCircle = (left,top,id) => {
     var circleCustom = new CircleCustom(left,top,id)
-    this.circles.set(id, circleCustom)
+    Parameter.circles.set(id, circleCustom)
 
-    this.adjList.set(circleCustom.getId(), [])
+    Parameter.adjList.set(circleCustom.getId(), [])
     canvas.add(circleCustom.group)
 
     circleCustom.group.lockMovementX = true
@@ -27,26 +26,26 @@ class Graph {
   }
 
   addEdge = () => {
-    const start = this.circles.get(this.selected[0])
-    const end = this.circles.get(this.selected[1])
-    const edge = new EdgeCustom(start, end, weight, isDirected, exists)
+    const start = Parameter.circles.get(Parameter.selected[0])
+    const end = Parameter.circles.get(Parameter.selected[1])
+    const edge = new EdgeCustom(start, end, Parameter.weight, Parameter.isDirected, Parameter.exists)
 
 
-    if(exists){
-      this.deleteEdge(exists.line)
+    if(Parameter.exists){
+      this.deleteEdge(Parameter.exists.line)
       setExists(null)
     }
 
     this.insertAdjacencyList(start, end)
-    this.printList(this.adjList)
+    this.printList(Parameter.adjList)
 
-    this.edges.push(edge)
+    Parameter.edges.push(edge)
     canvas.sendToBack(edge.line)
   }
 
   findPosOfEdge = (edge) => {
-    for (var i = 0; i < this.edges.length; i++) {
-      if (this.edges[i].line == edge){
+    for (var i = 0; i < Parameter.edges.length; i++) {
+      if (Parameter.edges[i].line == edge){
         return i
       }
     }
@@ -54,7 +53,7 @@ class Graph {
   }
 
   findPosOfVertex = (vertex) => {
-    for (var [key, value] of this.circles) {
+    for (var [key, value] of Parameter.circles) {
       if (value.group == vertex){
         return key
       }
@@ -65,7 +64,7 @@ class Graph {
   deleteEdgeCall = (edgeObject) => {
     var idx = this.findPosOfEdge(edgeObject)
     if (idx > -1) {
-      this.edges.splice(idx, 1)
+      Parameter.edges.splice(idx, 1)
       canvas.remove(edgeObject)
     }
   }
@@ -73,8 +72,8 @@ class Graph {
   deleteEdge = (edgeObject) => {
     var idx = this.findPosOfEdge(edgeObject)
     if (idx > -1) {
-      const obj = this.edges[idx]
-      this.edges.splice(idx, 1)
+      const obj = Parameter.edges[idx]
+      Parameter.edges.splice(idx, 1)
       this.removeEdgeFromAdjacencyListById(obj)
       canvas.remove(edgeObject)
     }
@@ -83,16 +82,16 @@ class Graph {
   deleteVertex = (vertexObject) => {
     var idx = this.findPosOfVertex(vertexObject)
     if (idx > -1) {
-      for (var i = 0; i < this.edges.length; i++) {
-        if (this.edges[i].start.group == vertexObject || this.edges[i].end.group == vertexObject) {
-          this.deleteEdgeCall(this.edges[i].line)
-          canvas.remove(this.edges[i])
+      for (var i = 0; i < Parameter.edges.length; i++) {
+        if (Parameter.edges[i].start.group == vertexObject || Parameter.edges[i].end.group == vertexObject) {
+          this.deleteEdgeCall(Parameter.edges[i].line)
+          canvas.remove(Parameter.edges[i])
           i--
         }
       }
-      this.circles.delete(idx)
+      Parameter.circles.delete(idx)
       this.removeVertexFromAdjacencyList(vertexObject)
-      this.printList(this.adjList)
+      this.printList(Parameter.adjList)
       canvas.remove(vertexObject)
     }
   }
@@ -106,11 +105,11 @@ class Graph {
   }
 
   insertAdjacencyList = (start, end) => {
-    if (isDirected === "false") {
-      this.adjList.get(start.getId()).push(end.getId())
-      this.adjList.get(end.getId()).push(start.getId())
+    if (Parameter.isDirected === "false") {
+      Parameter.adjList.get(start.getId()).push(end.getId())
+      Parameter.adjList.get(end.getId()).push(start.getId())
     } else {
-      this.adjList.get(start.getId()).push(end.getId())
+      Parameter.adjList.get(start.getId()).push(end.getId())
     }
   }
 
@@ -121,52 +120,52 @@ class Graph {
     var start = objectRemove.start.group.id;
     var end = objectRemove.end.group.id;
 
-    var listStart:number[] = this.adjList.get(start);
-    var listEnd:number[] = this.adjList.get(end);
+    var listStart:number[] = Parameter.adjList.get(start);
+    var listEnd:number[] = Parameter.adjList.get(end);
 
     listStart = listStart.filter(i => i !== end);
     listEnd = listEnd.filter(i => i !== start);
 
-    for (var i of this.adjList.keys()) {
+    for (var i of Parameter.adjList.keys()) {
       if (i === start) {
-        this.adjList.set(i, listStart);
+        Parameter.adjList.set(i, listStart);
       } else if (i === end && (isDirected === "false")) {
-          this.adjList.set(i, listEnd);
+        Parameter.adjList.set(i, listEnd);
         }
     }
   }
 
   removeVertexFromAdjacencyList = (objectRemove) => {
-    if (isDirected === "false") {
-      for (var [key, value] of this.adjList) {
+    if (Parameter.isDirected === "false") {
+      for (var [key, value] of Parameter.adjList) {
         if (key == objectRemove.id) {
-          this.adjList.delete(key)
+          Parameter.adjList.delete(key)
           break;
         }
       }
-      for (var i of this.adjList.keys()) {
-        var values = this.adjList.get(i)
+      for (var i of Parameter.adjList.keys()) {
+        var values = Parameter.adjList.get(i)
         for (var val of values) {
           if (val == objectRemove.id) {
             values.splice(values.indexOf(val), 1)
-            this.adjList.set(i, values)
+            Parameter.adjList.set(i, values)
             break;
           }
         }
       }
     } else {
-      for (var [key, value] of this.adjList) {
+      for (var [key, value] of Parameter.adjList) {
         if (key == objectRemove.id) {
-          this.adjList.delete(key)
+          Parameter.adjList.delete(key)
           break;
         }
       }
-      for (var i of this.adjList.keys()) {
-        var values = this.adjList.get(i)
+      for (var i of Parameter.adjList.keys()) {
+        var values = Parameter.adjList.get(i)
         for (var val of values) {
           if (val == objectRemove.id) {
             values.splice(values.indexOf(val), 1)
-            this.adjList.set(i, values)
+            Parameter.adjList.set(i, values)
             break;
           }
         }
@@ -188,19 +187,19 @@ class Graph {
   }
 
   selectCircle = (id) => {
-    if (this.selected.length < 2) {
-      const obj = this.circles.get(id)
-      if (!this.selected.includes(id)) {
+    if (Parameter.selected.length < 2) {
+      const obj = Parameter.circles.get(id)
+      if (!Parameter.selected.includes(id)) {
         obj.colorSelected();
-        this.selected.push(id)
+        Parameter.selected.push(id)
         this.connect()
       }
     }
   }
 
   checkIfLineExist = (a,b) => {
-    for(var i = 0;i<this.edges.length;i++){
-      const e = this.edges[i]
+    for(var i = 0;i<Parameter.edges.length;i++){
+      const e = Parameter.edges[i]
       if((e.start.getId() == a && e.end.getId() == b) || (e.start.getId() == b && e.end.getId() == a))
         return e
     }
@@ -208,11 +207,11 @@ class Graph {
   }
 
   connect = () => {
-    if (this.selected.length == 2) {
-      setExists(this.checkIfLineExist(this.selected[0],this.selected[1]))
+    if (Parameter.selected.length == 2) {
+      setExists(this.checkIfLineExist(Parameter.selected[0],Parameter.selected[1]))
       dialog.openDialog().then(() => {
         this.addEdge()
-        this.selected = []
+        Parameter.selected = []
         this.updateCirclesColorDefault()
       }).catch((err) => {
         console.log(err)
@@ -222,20 +221,20 @@ class Graph {
   }
 
   exportToFile = () => {
-    const nrNodes = this.circles.size
-    const nrEdges = this.edges.length
+    const nrNodes = Parameter.circles.size
+    const nrEdges = Parameter.edges.length
     var edgeData,circleData;
     var data = nrNodes + '\n' + nrEdges + '\n'
 
-    for(var [key,value] of this.circles){
-      var c = this.circles.get(key).group
+    for(var [key,value] of Parameter.circles){
+      var c = Parameter.circles.get(key).group
       circleData = c.left + ' ' + c.top + ' ' + c.id + '\n';
       data += circleData
     }
 
-    for(var i=0;i<this.edges.length;i++){
-      var e = this.edges[i].line
-      var ewd = this.edges[i]
+    for(var i=0;i<Parameter.edges.length;i++){
+      var e = Parameter.edges[i].line
+      var ewd = Parameter.edges[i]
       edgeData = e.start.getId() + ' ' + e.end.getId() + ' ' + ewd.weight + ' ' + ewd.isDirected +'\n';
       data += edgeData;
     }
@@ -246,9 +245,9 @@ class Graph {
   }
 
   resetCanvas = () => {
-    this.selected = []
-    this.edges = []
-    this.adjList.clear()
+    Parameter.selected = []
+    Parameter.edges = []
+    Parameter.adjList.clear()
     canvas.clear()
     setId(0)
   }
@@ -274,9 +273,9 @@ class Graph {
           circleCustom.setLeft(parseFloat(left))
           circleCustom.setTop(parseFloat(top))
 
-          this.circles.set(id,circleCustom)
-          this.adjList.set(circleCustom.getId(), [])
-          this.printList(this.adjList)
+          Parameter.circles.set(id,circleCustom)
+          Parameter.adjList.set(circleCustom.getId(), [])
+          this.printList(Parameter.adjList)
 
           canvas.add(circleCustom.group)
 
@@ -299,15 +298,15 @@ class Graph {
           var weight = lines[i].split(" ")[2]
           var isDirect = lines[i].split(" ")[3]
 
-          const start = this.circles.get(startId)
-          const end = this.circles.get(endId)
-          const edgeCustom = new EdgeCustom(start,end,weight,isDirect,exists)
+          const start = Parameter.circles.get(startId)
+          const end = Parameter.circles.get(endId)
+          const edgeCustom = new EdgeCustom(start,end,weight,isDirect,Parameter.exists)
           setDirected(isDirect)
 
           this.insertAdjacencyList(start, end)
-          this.printList(this.adjList)
+          this.printList(Parameter.adjList)
 
-          this.edges.push(edgeCustom)
+          Parameter.edges.push(edgeCustom)
           canvas.sendToBack(edgeCustom.line)
         }
       }
@@ -318,7 +317,7 @@ class Graph {
 
   getLastId = () => {
     var max = 0
-    for(var [key,value] of this.circles)
+    for(var [key,value] of Parameter.circles)
     {
       if(key > max){
         max = key
@@ -328,7 +327,7 @@ class Graph {
   }
 
   updateEdges = () => {
-    this.edges.forEach(edge => {
+    Parameter.edges.forEach(edge => {
       canvas.remove(edge.line)
       edge.update()
       canvas.sendToBack(edge.line)
@@ -336,144 +335,145 @@ class Graph {
   }
 
   updateCirclesColorDefault = () => {
-    this.circles.forEach(circle => {
+    Parameter.circles.forEach(circle => {
       circle.updateColor()
     })
     canvas.renderAll()
   }
 
   resetGraphColorSelected = () => {
-    this.selected = []
+    Parameter.selected = []
     this.updateCirclesColorDefault()
   }
 
+
   //Algorithms
 
-  isCyclicUtil = (v:number,visited:boolean[],recStack:boolean[]) => {
+  // isCyclicUtil = (v:number,visited:boolean[],recStack:boolean[]) => {
 
-    visited[v] = true
-    recStack[v] = true
-    var res:boolean = false
+  //   visited[v] = true
+  //   recStack[v] = true
+  //   var res:boolean = false
 
-    const children:number[] = this.adjList.get(v)
+  //   const children:number[] = Parameter.adjList.get(v)
 
-    for(var c of children){
-      if(visited[c] && recStack[c]){
-        return true
-      }
+  //   for(var c of children){
+  //     if(visited[c] && recStack[c]){
+  //       return true
+  //     }
 
-      if(!visited[c]){
-        res = this.isCyclicUtil(c,visited,recStack)
-      }
-    }
+  //     if(!visited[c]){
+  //       res = this.isCyclicUtil(c,visited,recStack)
+  //     }
+  //   }
 
-    recStack[v] = false
-    return res
-  }
+  //   recStack[v] = false
+  //   return res
+  // }
 
-  isCyclic = () => {
-    var visited:any[] = [this.circles.size]
-    var recStack:any[] = [this.circles.size]
+  // isCyclic = () => {
+  //   var visited:any[] = [Parameter.circles.size]
+  //   var recStack:any[] = [Parameter.circles.size]
 
-    for(var i=0;i<this.circles.size;i++){
-        visited[i] = false
-    }
+  //   for(var i=0;i<Parameter.circles.size;i++){
+  //       visited[i] = false
+  //   }
 
-    for(var i=0;i<this.circles.size;i++){
-      recStack[i] = false
-    }
+  //   for(var i=0;i<Parameter.circles.size;i++){
+  //     recStack[i] = false
+  //   }
 
-    return this.isCyclicUtil(0,visited,recStack)
-  }
+  //   return this.isCyclicUtil(0,visited,recStack)
+  // }
 
-  fillOrder = (v:number,visited:boolean[],stack:any) =>{
-    visited[v] = true
+  // fillOrder = (v:number,visited:boolean[],stack:any) =>{
+  //   visited[v] = true
 
-    this.adjList.get(v).forEach(i => {
-      if(!visited[i]){
-        this.fillOrder(i,visited,stack)
-      }
-    });
-    stack.push(v)
-  }
+  //   Parameter.adjList.get(v).forEach(i => {
+  //     if(!visited[i]){
+  //       this.fillOrder(i,visited,stack)
+  //     }
+  //   });
+  //   stack.push(v)
+  // }
 
-  topologicalSort = () => {
-    var stack:Stack<number> = new Stack()
-    var visited:any = [this.circles.size]
+  // topologicalSort = () => {
+  //   var stack:Stack<number> = new Stack()
+  //   var visited:any = [Parameter.circles.size]
 
-    for(var i=0;i<this.circles.size;i++){
-      visited[i] = false
-    }
+  //   for(var i=0;i<Parameter.circles.size;i++){
+  //     visited[i] = false
+  //   }
 
-    for(var i=0;i<this.circles.size;i++){
-      if(visited[i] == false){
-        this.fillOrder(i,visited,stack)
-      }
-    }
+  //   for(var i=0;i<Parameter.circles.size;i++){
+  //     if(visited[i] == false){
+  //       this.fillOrder(i,visited,stack)
+  //     }
+  //   }
 
-    var vals = []
-    while(stack.top !== null || stack.length !== 0){
-      vals.push(stack.pop())
-    }
-    setComponent("message",vals)
-  }
+  //   var vals = []
+  //   while(stack.top !== null || stack.length !== 0){
+  //     vals.push(stack.pop())
+  //   }
+  //   setComponent("message",vals)
+  // }
 
    
 
-  DFSUtil = (v:number,visited:boolean[]) => {
-    visited[v] = true
-    console.log(v + " ")
+  // DFSUtil = (v:number,visited:boolean[]) => {
+  //   visited[v] = true
+  //   console.log(v + " ")
     
-    this.adjList.get(v).forEach(i => {
-      if(!visited[i]){
-        this.DFSUtil(v,visited)
-      }
-    })
-  }
+  //   Parameter.adjList.get(v).forEach(i => {
+  //     if(!visited[i]){
+  //       this.DFSUtil(v,visited)
+  //     }
+  //   })
+  // }
 
-  getTranspose = ():Graph =>{
-    var graph:Graph = new Graph()
-    for(var v=0;v<this.circles.size;v++){
-      const childs:number[] = this.adjList.get(v)
-      childs.forEach(i => {
-        graph.adjList.get(i).add(v)
-        console.log(graph.adjList)
-      });
-    }
+  // getTranspose = ()://Graph =>{
+  //   //var graph:Graph = new Graph()
+  //   for(var v=0;v<Parameter.circles.size;v++){
+  //     const childs:number[] = Parameter.adjList.get(v)
+  //     childs.forEach(i => {
+  //       Parameter.adjList.set(i,[].push(v))
+  //       //console.log(graph)
+  //     });
+  //   }
     
-    return graph
-  }
+  //   //return graph
+  // }
 
-  printSCCs = () => {
-    var stack:Stack<number> = new Stack()
-    var visited:any = [this.circles.size]
+  // printSCCs = () => {
+  //   var stack:Stack<number> = new Stack()
+  //   var visited:any = [Parameter.circles.size]
 
-    for(var i=0;i<this.circles.size;i++){
-      visited[i] = false
-    }
+  //   for(var i=0;i<Parameter.circles.size;i++){
+  //     visited[i] = false
+  //   }
 
-    for(var i=0;i<this.circles.size;i++){
-      if(visited[i] == false){
-        this.fillOrder(i,visited,stack)
-      }
-    }
+  //   for(var i=0;i<Parameter.circles.size;i++){
+  //     if(visited[i] == false){
+  //       this.fillOrder(i,visited,stack)
+  //     }
+  //   }
 
-    var gr:Graph = this.getTranspose()
+  //   //var gr:Graph = this.getTranspose()
 
-    for(var i=0;i<this.circles.size;i++){
-      visited[i] = false
-    }
+  //   for(var i=0;i<Parameter.circles.size;i++){
+  //     visited[i] = false
+  //   }
 
-    while(stack.top !== null || stack.length !== 0){
-      var v = stack.pop()
+  //   while(stack.top !== null || stack.length !== 0){
+  //     var v = stack.pop()
 
-      if(visited[v] == false){
-        gr.DFSUtil(v,visited)
-        console.log()
-      }
-    }
+  //     if(visited[v] == false){
+  //       //gr.DFSUtil(v,visited)
+  //       console.log()
+  //     }
+  //   }
 
-  }
+  // }
 
 
 

@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {canvas,setCanvas} from '../shared/init-canvas'
 import 'fabric';
-import { actionType,objectSelected,setSelected,increaseId, setId } from '../shared/canvas.functions';
+import { setSelected,increaseId } from '../shared/canvas.functions';
 import Graph from '../shared/graph';
+import Parameter from '../shared/parameters';
 
 declare const fabric: any;
 
@@ -39,27 +40,27 @@ export class CanvasComponent implements OnInit{
     }
 
     onMouseDown = (event) => {
-      switch(actionType){
+      switch(Parameter.actionType){
         case 0:
-          (!objectSelected) ? Graph.addCircle(event.pointer.x-15,event.pointer.y-15,increaseId()) : canvas.discardActiveObject()
+          (!Parameter.objectSelected) ? Graph.addCircle(event.pointer.x-15,event.pointer.y-15,increaseId()) : canvas.discardActiveObject()
           break
         case 1:
-          (!objectSelected) ? Graph.connect() : canvas.discardActiveObject();
+          (!Parameter.objectSelected) ? Graph.connect() : canvas.discardActiveObject();
           break
         case 3:
-          (!objectSelected) ? Graph.removeObject(event.target) : canvas.discardActiveObject()
+          (!Parameter.objectSelected) ? Graph.removeObject(event.target) : canvas.discardActiveObject()
           break
         }
     }
 
     onObjectSelected = (event) => {
-      if(actionType != 0 && actionType != 3){
+      if(Parameter.actionType != 0 && Parameter.actionType != 3){
         setSelected(event.target)
       }
-      if(actionType == 1){
+      if(Parameter.actionType == 1){
         Graph.selectCircle(event.target.id)
       }
-      if(actionType == 3){
+      if(Parameter.actionType == 3){
         Graph.removeObject(event.target)
       }
     }
