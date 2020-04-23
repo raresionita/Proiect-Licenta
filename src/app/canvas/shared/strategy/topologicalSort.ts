@@ -16,13 +16,13 @@ export class TopologicalSort extends DFS implements AlgorithmStrategy{
         });
         stack.push(v)
     }
-    
+
     algorithmStrategy() {
         var stack:Stack<number> = new Stack()
         var visited:any = [Parameter.circles.size]
 
         for(var i=0;i<Parameter.circles.size;i++){
-        visited[i] = false
+          visited[i] = false
         }
 
         for(var i=0;i<Parameter.circles.size;i++){

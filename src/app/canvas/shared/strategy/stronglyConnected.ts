@@ -1,0 +1,63 @@
+import { DFS } from './DFS';
+import { AlgorithmStrategy } from './algorithmStrategy';
+import Parameter from '../parameters';
+import GraphVar from '../graph';
+import { Stack } from 'stack-typescript';
+
+
+export class StronglyConnected extends DFS implements AlgorithmStrategy {
+
+  DFSUtil(v: number, visited: boolean[], stack: any) {
+    visited[v] = true
+
+    Parameter.adjList.get(v).forEach(i => {
+        if(!visited[i]){
+            this.DFSUtil(i,visited,stack)
+        }
+    });
+    stack.push(v)
+  }
+
+  getTranspose = () =>{
+    var graph = GraphVar
+    for(var v=0;v<Parameter.circles.size;v++){
+      for(var i=0;i<Parameter.adjList.get(v).size;i++){
+        //graph.newAdjList.get(i).push(v);
+        graph.insertAdjacencyList(i,v)
+      }
+    }
+    return graph
+  }
+
+  algorithmStrategy() {
+    var stack:Stack<number> = new Stack();
+    var visited:any = [Parameter.circles.size];
+
+    for(var i=0;i<Parameter.circles.size;i++){
+        visited[i] = false;
+    }
+
+    for(var i=0;i<Parameter.circles.size;i++){
+      if(visited[i] == false){
+        this.DFSUtil(i,visited,stack);
+      }
+    }
+
+    var gr = this.getTranspose();
+
+    for(var i=0;i<Parameter.circles.size;i++){
+      visited[i] = false;
+    }
+
+    while(stack.top !== null || stack.length !== 0){
+      var v = stack.top;
+      stack.pop();
+
+
+      if(visited[v] == false){
+        gr.fillOrder(v,visited);
+        console.log();
+      }
+    }
+  }
+}

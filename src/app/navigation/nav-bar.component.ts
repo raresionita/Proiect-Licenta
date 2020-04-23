@@ -7,6 +7,7 @@ import { Dialog, setDialog } from '../dialog/dialog.functions';
 import GraphVar from '../canvas/shared/graph';
 import { TopologicalSort } from '../canvas/shared/strategy/topologicalSort';
 import Context from '../canvas/shared/strategy/context';
+import Parameter from '../canvas/shared/parameters';
 
 @Component({
     selector: 'nav-bar',
@@ -60,7 +61,7 @@ export class NavBarComponent{
   }
 
   detectCycle(){
-    if(GraphVar.dc.Algorithm.algorithmStrategy()){
+    if(GraphVar.detectCycle.Algorithm.algorithmStrategy()){
       setMessage("Graph contains cycle")
     }else{
       setMessage("Graph doesn't contain cycle")
@@ -68,12 +69,13 @@ export class NavBarComponent{
   }
 
   topologicSort(){
-    GraphVar.ts.Algorithm.algorithmStrategy()
+    GraphVar.topologicSort.Algorithm.algorithmStrategy()
   }
 
   stronglyConnected(){
-    // console.log("Strongly connected components: \n")
-    // GraphVar.printSCCs()
+    console.log("Strongly connected components: \n")
+    GraphVar.strongly.Algorithm.algorithmStrategy();
+    //GraphVar.printSCCs();
   }
 
   shortestPath(){

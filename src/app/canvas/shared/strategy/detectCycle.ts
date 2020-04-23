@@ -5,39 +5,36 @@ import Parameter from '../parameters';
 
 export class DetectCycle extends DFS implements AlgorithmStrategy{
 
-    DFSUtil(v: number, visited: boolean[], stack: boolean[]) {
-      visited[v] = true
-      stack[v] = true
-      var res:boolean = false
+  DFSUtil(v: number, visited: boolean[], parent: any) {
+    visited[v] = true
+    var res:boolean = false
 
-      const children:number[] = Parameter.adjList.get(v)
-
-      for(var c of children){
-        if(visited[c] && stack[c]){
-          res = true
+    const children:number[] = Parameter.adjList.get(v)
+    for(var c of children){
+      if(c != parent){
+        if(visited[c]){
+          res = true;
         }
 
         if(!visited[c] && !res){
-          res = this.DFSUtil(c,visited,stack)
+          res = this.DFSUtil(c,visited,v);
         }
       }
-
-      stack[v] = false
-      return res
     }
 
-    algorithmStrategy():boolean {
-      var visited:any[] = [Parameter.circles.size]
-      var recStack:any[] = [Parameter.circles.size]
+    return res;
+  }
 
-      for(var i=0;i<Parameter.circles.size;i++){
-          visited[i] = false
-      }
+  algorithmStrategy() {
 
-      for(var i=0;i<Parameter.circles.size;i++){
-        recStack[i] = false
-      }
+    var visited:any[] = [Parameter.circles.size]
 
-      return this.DFSUtil(0,visited,recStack)
+    for(var i=0;i<Parameter.circles.size;i++){
+      visited[i] = false
     }
+
+    return this.DFSUtil(0,visited,-1);
+  }
+
+
 }

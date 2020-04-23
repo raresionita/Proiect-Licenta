@@ -1,20 +1,22 @@
-
 import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { setExists, setId, setDirected, disableBtn } from './canvas.functions';
+import { setExists, setId, setDirected, disableBtn, setComponent } from './canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from './parameters';
 import { TopologicalSort } from './strategy/topologicalSort';
 import { DetectCycle } from './strategy/detectCycle';
 import Context from './strategy/context';
+import { StronglyConnected } from './strategy/stronglyConnected';
+import { Stack } from 'stack-typescript';
 
 class Graph {
 
-  ts:Context = new Context(new TopologicalSort())
-  dc:Context = new Context(new DetectCycle())
-  //ts:Context = new Context(new TopologicalSort())
+  topologicSort:Context = new Context(new TopologicalSort())
+  detectCycle:Context = new Context(new DetectCycle())
+  strongly:Context = new Context(new StronglyConnected())
+  newAdjList:any = new Map<number, any>()
   //ts:Context = new Context(new TopologicalSort())
 
   addCircle = (left,top,id) => {
@@ -79,6 +81,7 @@ class Graph {
       const obj = Parameter.edges[idx]
       Parameter.edges.splice(idx, 1)
       this.removeEdgeFromAdjacencyListById(obj)
+      this.printList(Parameter.adjList)
       canvas.remove(edgeObject)
     }
   }
@@ -350,135 +353,70 @@ class Graph {
     this.updateCirclesColorDefault()
   }
 
-
-  //Algorithms
-
-  // isCyclicUtil = (v:number,visited:boolean[],recStack:boolean[]) => {
-
-  //   visited[v] = true
-  //   recStack[v] = true
-  //   var res:boolean = false
-
-  //   const children:number[] = Parameter.adjList.get(v)
-
-  //   for(var c of children){
-  //     if(visited[c] && recStack[c]){
-  //       return true
-  //     }
-
-  //     if(!visited[c]){
-  //       res = this.isCyclicUtil(c,visited,recStack)
-  //     }
-  //   }
-
-  //   recStack[v] = false
-  //   return res
-  // }
-
-  // isCyclic = () => {
-  //   var visited:any[] = [Parameter.circles.size]
-  //   var recStack:any[] = [Parameter.circles.size]
-
-  //   for(var i=0;i<Parameter.circles.size;i++){
-  //       visited[i] = false
-  //   }
-
-  //   for(var i=0;i<Parameter.circles.size;i++){
-  //     recStack[i] = false
-  //   }
-
-  //   return this.isCyclicUtil(0,visited,recStack)
-  // }
-
-  // fillOrder = (v:number,visited:boolean[],stack:any) =>{
+  // fillOrder(v: number, visited: boolean[], stack: any) {
   //   visited[v] = true
 
   //   Parameter.adjList.get(v).forEach(i => {
-  //     if(!visited[i]){
-  //       this.fillOrder(i,visited,stack)
-  //     }
+  //       if(!visited[i]){
+  //           this.fillOrder(i,visited,stack)
+  //       }
   //   });
   //   stack.push(v)
   // }
 
-  // topologicalSort = () => {
-  //   var stack:Stack<number> = new Stack()
-  //   var visited:any = [Parameter.circles.size]
-
-  //   for(var i=0;i<Parameter.circles.size;i++){
-  //     visited[i] = false
-  //   }
-
-  //   for(var i=0;i<Parameter.circles.size;i++){
-  //     if(visited[i] == false){
-  //       this.fillOrder(i,visited,stack)
-  //     }
-  //   }
-
-  //   var vals = []
-  //   while(stack.top !== null || stack.length !== 0){
-  //     vals.push(stack.pop())
-  //   }
-  //   setComponent("message",vals)
-  // }
-
-
-
-  // DFSUtil = (v:number,visited:boolean[]) => {
-  //   visited[v] = true
-  //   console.log(v + " ")
-
-  //   Parameter.adjList.get(v).forEach(i => {
-  //     if(!visited[i]){
-  //       this.DFSUtil(v,visited)
-  //     }
-  //   })
-  // }
-
-  // getTranspose = ()://Graph =>{
-  //   //var graph:Graph = new Graph()
+  // getTranspose = (): Graph =>{
+  //   var graph = GraphVar
   //   for(var v=0;v<Parameter.circles.size;v++){
-  //     const childs:number[] = Parameter.adjList.get(v)
-  //     childs.forEach(i => {
-  //       Parameter.adjList.set(i,[].push(v))
-  //       //console.log(graph)
-  //     });
+  //     for(var i=0;i<Parameter.adjList.get(v).size;i++){
+  //       graph.insertAdjacencyList(i,v)
+  //       //graph.addNewEdge(Parameter.adjList[v].get(i),v);
+  //     }
   //   }
-
-  //   //return graph
+  //   return graph
   // }
 
-  // printSCCs = () => {
-  //   var stack:Stack<number> = new Stack()
-  //   var visited:any = [Parameter.circles.size]
+  // printSCCs() {
+  //   var stack:Stack<number> = new Stack();
+  //   var visited:any = [Parameter.circles.size];
 
   //   for(var i=0;i<Parameter.circles.size;i++){
-  //     visited[i] = false
+  //       visited[i] = false;
   //   }
 
   //   for(var i=0;i<Parameter.circles.size;i++){
   //     if(visited[i] == false){
-  //       this.fillOrder(i,visited,stack)
+  //       this.fillOrder(i,visited,stack);
   //     }
   //   }
 
-  //   //var gr:Graph = this.getTranspose()
+  //   var gr:Graph = this.getTranspose();
 
   //   for(var i=0;i<Parameter.circles.size;i++){
-  //     visited[i] = false
+  //     visited[i] = false;
   //   }
 
   //   while(stack.top !== null || stack.length !== 0){
-  //     var v = stack.pop()
+  //     var v = stack.top;
+  //     stack.pop();
 
   //     if(visited[v] == false){
-  //       //gr.DFSUtil(v,visited)
-  //       console.log()
+  //       gr.DFSUtil(v,visited);
+  //       console.log();
   //     }
   //   }
-
   // }
 
+  fillOrder(v: number, visited: boolean[]) {
+    visited[v] = true;
+
+    console.log(v + " ");
+
+    Parameter.adjList.get(v).forEach(i => {
+      if(!visited[i]){
+        this.fillOrder(i,visited);
+      }
+    });
+  }
 
 
 }
