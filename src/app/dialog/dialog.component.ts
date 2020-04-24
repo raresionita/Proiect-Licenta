@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from './dialog.data';
-import { setDirected } from '../canvas/shared/canvas.functions';
+import { setDirected, setSelectDirected, setSelectUndirected, disableBtn } from '../canvas/shared/canvas.functions';
 
 @Component({
     selector:'dialog-component',
@@ -16,9 +16,15 @@ export class DialogOverview{
 
     isDirected(){
       setDirected("true")
+      setSelectUndirected("false")
+      disableBtn("undirectedBtn")
     }
 
     isUndirected(){
       setDirected("false")
+      setSelectDirected("false")
+      disableBtn("directedBtn")
+      disableBtn("topologicBtn")
+      disableBtn("stronglyBtn")
     }
 }

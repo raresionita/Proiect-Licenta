@@ -3,7 +3,7 @@ import { DFS } from './DFS';
 import Parameter from '../parameters';
 
 
-export class DetectCycle extends DFS implements AlgorithmStrategy{
+export class DetectCycleUndirected extends DFS implements AlgorithmStrategy{
 
   DFSUtil(v: number, visited: boolean[], parent: any) {
     visited[v] = true

@@ -21,26 +21,27 @@
                         Algorithms
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                        <button class="dropdown-item" (click)="detectCycle()">Detect Cycle</button>
-                        <button class="dropdown-item" (click)="topologicSort()">Topological Sort</button>
-                        <button class="dropdown-item" (click)="stronglyConnected()">Strongly Connected</button>
-                        <button class="dropdown-item" (click)="shortestPath()">Shortest Path</button>
+                        <button class="dropdown-item" (click)="detectCycleUndirected()" id="undirectedBtn">Detect Cycle Undirected</button>
+                        <button class="dropdown-item" (click)="detectCycleDirected()" id="directedBtn">Detect Cycle Directed</button>
+                        <button class="dropdown-item" (click)="topologicSort()" id="topologicBtn">Topological Sort</button>
+                        <button class="dropdown-item" (click)="stronglyConnected()" id="stronglyBtn">Strongly Connected</button>
+                        <button class="dropdown-item" (click)="shortestPath()" id="shortestBtn">Shortest Path</button>
                       </div>
                     </div>
                   </div>
 
                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       <label class="btn btn-outline-primary active" (click)="addVertex()">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Add Vertex
+                        <input type="radio" > Add Vertex
                       </label>
                       <label class="btn btn-outline-danger" (click)="removeObject()">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Remove Object
+                        <input type="radio" > Remove Object
                       </label>
                       <label class="btn btn-outline-primary" (click)="defaultSelected()">
-                        <input type="radio" name="options" id="option1" autocomplete="off"> Default
+                        <input type="radio" > Default
                       </label>
                       <label class="btn btn-outline-primary" (click)="connectVertex()">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Connect Vertex
+                        <input type="radio" > Connect Vertex
                       </label>
                   </div>
                   <button data-toggle="tooltip" data-placement="bottom" title="Clean Canvas" type="button" class="btn btn-outline-danger" (click)="confirmClear();" >
@@ -48,7 +49,6 @@
             </div>
         </div>
     </div>
-
 
 </div>
 <hr>

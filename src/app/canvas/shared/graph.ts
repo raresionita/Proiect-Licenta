@@ -2,22 +2,22 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { setExists, setId, setDirected, disableBtn, setComponent } from './canvas.functions';
+import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected } from './canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from './parameters';
 import { TopologicalSort } from './strategy/topologicalSort';
-import { DetectCycle } from './strategy/detectCycle';
 import Context from './strategy/context';
+import { DetectCycleUndirected } from './strategy/detectCycleUndirected';
+import { DetectCycleDirected } from './strategy/detectCycleDirected';
 import { StronglyConnected } from './strategy/stronglyConnected';
-import { Stack } from 'stack-typescript';
 
 class Graph {
 
   topologicSort:Context = new Context(new TopologicalSort())
-  detectCycle:Context = new Context(new DetectCycle())
+  detectCycleUndirected:Context = new Context(new DetectCycleUndirected())
+  detectCycleDirected:Context = new Context(new DetectCycleDirected())
   strongly:Context = new Context(new StronglyConnected())
-  newAdjList:any = new Map<number, any>()
-  //ts:Context = new Context(new TopologicalSort())
+  //shortestPath:Context = new Context(new ShortestPath())
 
   addCircle = (left,top,id) => {
     var circleCustom = new CircleCustom(left,top,id)
@@ -255,6 +255,8 @@ class Graph {
     Parameter.selected = []
     Parameter.edges = []
     Parameter.adjList.clear()
+    Parameter.selectDirected = null
+    Parameter.selectUndirected = null
     canvas.clear()
     setId(0)
   }
@@ -310,6 +312,16 @@ class Graph {
           const edgeCustom = new EdgeCustom(start,end,weight,isDirect,Parameter.exists)
           setDirected(isDirect)
 
+          if(Parameter.isDirected == "true"){
+            setSelectUndirected("false")
+            disableBtn("undirectedBtn")
+          }else{
+            setSelectDirected("false")
+            disableBtn("directedBtn")
+            disableBtn("topologicBtn")
+            disableBtn("stronglyBtn")
+          }
+
           this.insertAdjacencyList(start, end)
           this.printList(Parameter.adjList)
 
@@ -318,7 +330,7 @@ class Graph {
         }
       }
     }
-    disableBtn()
+    disableBtn("import")
     canvas.discardActiveObject()
   }
 
@@ -353,59 +365,6 @@ class Graph {
     this.updateCirclesColorDefault()
   }
 
-  // fillOrder(v: number, visited: boolean[], stack: any) {
-  //   visited[v] = true
-
-  //   Parameter.adjList.get(v).forEach(i => {
-  //       if(!visited[i]){
-  //           this.fillOrder(i,visited,stack)
-  //       }
-  //   });
-  //   stack.push(v)
-  // }
-
-  // getTranspose = (): Graph =>{
-  //   var graph = GraphVar
-  //   for(var v=0;v<Parameter.circles.size;v++){
-  //     for(var i=0;i<Parameter.adjList.get(v).size;i++){
-  //       graph.insertAdjacencyList(i,v)
-  //       //graph.addNewEdge(Parameter.adjList[v].get(i),v);
-  //     }
-  //   }
-  //   return graph
-  // }
-
-  // printSCCs() {
-  //   var stack:Stack<number> = new Stack();
-  //   var visited:any = [Parameter.circles.size];
-
-  //   for(var i=0;i<Parameter.circles.size;i++){
-  //       visited[i] = false;
-  //   }
-
-  //   for(var i=0;i<Parameter.circles.size;i++){
-  //     if(visited[i] == false){
-  //       this.fillOrder(i,visited,stack);
-  //     }
-  //   }
-
-  //   var gr:Graph = this.getTranspose();
-
-  //   for(var i=0;i<Parameter.circles.size;i++){
-  //     visited[i] = false;
-  //   }
-
-  //   while(stack.top !== null || stack.length !== 0){
-  //     var v = stack.top;
-  //     stack.pop();
-
-  //     if(visited[v] == false){
-  //       gr.DFSUtil(v,visited);
-  //       console.log();
-  //     }
-  //   }
-  // }
-
   fillOrder(v: number, visited: boolean[]) {
     visited[v] = true;
 
@@ -417,7 +376,6 @@ class Graph {
       }
     });
   }
-
 
 }
 

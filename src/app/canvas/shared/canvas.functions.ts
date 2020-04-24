@@ -31,9 +31,9 @@ const setWeight = (val) => {
   }
 }
 
-const setComponent = (id,arr) => {
+const setComponent = (id,arr,alg:string) => {
   var txt = document.getElementById(id)
-  var str = "Topological Sort: "
+  var str = alg;
 
   arr.forEach(i => {
     str += i + " "
@@ -59,6 +59,22 @@ const getExists = () => {
   return Parameter.exists
 }
 
+const setSelectDirected = (val) => {
+  Parameter.selectDirected = val
+}
+
+const getSelectDirected= () => {
+  return Parameter.selectDirected
+}
+
+const setSelectUndirected = (val) => {
+  Parameter.selectUndirected = val
+}
+
+const getSelectUndirected= () => {
+  return Parameter.selectUndirected
+}
+
 const setId = (val) => {
   Parameter.Id = val
 }
@@ -75,14 +91,41 @@ const enableId = (id) => {
   (<HTMLInputElement> document.getElementById(id)).disabled = false;
 }
 
-const disableBtn = () => {
-  disableId("input")
-  disableId("import")
+const disableBtn = (str:string) => {
+  switch(str){
+    case "import":
+      disableId("input")
+      disableId("import")
+      break;
+    case "directedBtn":
+      disableId("directedBtn")
+      break;
+    case "undirectedBtn":
+      disableId("undirectedBtn")
+      break;
+    case "topologicBtn":
+      disableId("topologicBtn")
+      break;
+    case "stronglyBtn":
+      disableId("stronglyBtn")
+      break;
+    case "shortestBtn":
+      disableId("shortestBtn")
+      break
+    default:
+      console.log("No match")
+  }
 }
 
 const enableBtn = () => {
   enableId("input")
   enableId("import")
+  enableId("directedBtn")
+  enableId("undirectedBtn")
+  enableId("topologicBtn")
+  enableId("stronglyBtn")
+  enableId("shortestBtn")
+
 }
 
-export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setId,increaseId,disableBtn,enableBtn,setComponent,disableId,enableId,setMessage}
+export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setId,increaseId,disableBtn,enableBtn,setComponent,disableId,enableId,setMessage,setSelectDirected,getSelectDirected,setSelectUndirected,getSelectUndirected}

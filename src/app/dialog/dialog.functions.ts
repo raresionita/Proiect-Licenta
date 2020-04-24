@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material';
 import { DialogOverview } from './dialog.component';
-import { setWeight, getExists} from '../canvas/shared/canvas.functions';
+import { setWeight, getExists, getSelectDirected, getSelectUndirected} from '../canvas/shared/canvas.functions';
 import Parameter from '../canvas/shared/parameters';
 
 class Dialog{
@@ -12,7 +12,9 @@ class Dialog{
         width: '250px',
         height: '250px',
         data: { weight: setWeight(Parameter.weight),
-                exists: getExists()}
+                exists: getExists(),
+                selectDir: getSelectDirected(),
+                selectUndir: getSelectUndirected()}
     });
 
     return new Promise((resolve, reject)=>{

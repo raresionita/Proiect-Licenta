@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { clearCanvas } from '../canvas/shared/init-canvas';
 import 'fabric';
-import { setAction, enableBtn, setMessage } from '../canvas/shared/canvas.functions';
+import { setAction, enableBtn, setMessage, disableId, disableBtn } from '../canvas/shared/canvas.functions';
 import { MatDialog } from '@angular/material';
 import { Dialog, setDialog } from '../dialog/dialog.functions';
 import GraphVar from '../canvas/shared/graph';
@@ -60,8 +60,16 @@ export class NavBarComponent{
     GraphVar.exportToFile()
   }
 
-  detectCycle(){
-    if(GraphVar.detectCycle.Algorithm.algorithmStrategy()){
+  detectCycleUndirected(){
+    if(GraphVar.detectCycleUndirected.Algorithm.algorithmStrategy()){
+      setMessage("Graph contains cycle")
+    }else{
+      setMessage("Graph doesn't contain cycle")
+    }
+  }
+
+  detectCycleDirected(){
+    if(GraphVar.detectCycleDirected.Algorithm.algorithmStrategy()){
       setMessage("Graph contains cycle")
     }else{
       setMessage("Graph doesn't contain cycle")
@@ -75,7 +83,6 @@ export class NavBarComponent{
   stronglyConnected(){
     console.log("Strongly connected components: \n")
     GraphVar.strongly.Algorithm.algorithmStrategy();
-    //GraphVar.printSCCs();
   }
 
   shortestPath(){

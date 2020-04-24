@@ -1,4 +1,6 @@
 export interface DialogData {
     weight: number,
-    exists: boolean
+    exists: boolean,
+    selectDir: boolean
+    selectUndir: boolean
 }

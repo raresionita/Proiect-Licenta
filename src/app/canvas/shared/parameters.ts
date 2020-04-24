@@ -4,6 +4,8 @@ class Parameters{
     actionType = 0
     Id = 0
     objectSelected = null
+    selectDirected:boolean = null
+    selectUndirected:boolean = null
     weight:any
     isDirected:string
     exists:EdgeCustom

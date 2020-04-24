@@ -10,6 +10,6 @@
   </mat-radio-group>
 </div>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data.weight" (click)="isDirected()"  id="directed" cdkFocusInitial >Directed</button>
-  <button mat-button [mat-dialog-close]="data.weight" (click)="isUndirected()" id="undirected" cdkFocusInitial >Undirected</button>
+  <button mat-button [mat-dialog-close]="data.weight" (click)="isDirected()"  id="directed" *ngIf="!data.selectDir">Directed</button>
+  <button mat-button [mat-dialog-close]="data.weight" (click)="isUndirected()" id="undirected" *ngIf="!data.selectUndir">Undirected</button>
 </div>

@@ -35,7 +35,7 @@ export class TopologicalSort extends DFS implements AlgorithmStrategy{
         while(stack.top !== null || stack.length !== 0){
             vals.push(stack.pop())
         }
-        setComponent("message",vals)
+        setComponent("message",vals,"Topological Sort: ")
     }
 
 }
