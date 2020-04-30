@@ -19,7 +19,7 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
     stack.push(v)
   }
 
-  getTranspose = () =>{
+  getTranspose(){
     var graph = GraphVar //circular dependency to solve
     for(var v=0;v<Parameter.circles.size;v++){
       for(var i=0;i<Parameter.adjList.get(v).size;i++){
@@ -43,7 +43,7 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
       }
     }
 
-    var gr = this.getTranspose()
+    var gr:any =  this.getTranspose()
 
     for(var i=0;i<Parameter.circles.size;i++){
       visited[i] = false;
