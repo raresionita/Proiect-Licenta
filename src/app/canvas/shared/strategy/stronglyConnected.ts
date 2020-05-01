@@ -49,16 +49,14 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
       visited[i] = false;
     }
 
-    var vals = []
     while(stack.top !== null || stack.length !== 0){
       var v = stack.pop();
 
-      vals.push(v);
       if(visited[v] == false){
         gr.fillOrder(v,visited);
       }
+      setComponent("message",gr.vals,"Strongly connected: ")
     }
-    setComponent("message",vals,"Strongly connected: ")
 
   }
 }

@@ -39,8 +39,8 @@ const setComponent = (id,arr,alg:string) => {
   arr.forEach(i => {
     str += i + " "
   });
-
   txt.innerText = str
+
 }
 
 const setMessage = (msg) => {

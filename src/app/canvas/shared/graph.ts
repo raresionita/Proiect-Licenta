@@ -2,7 +2,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected } from './canvas.functions';
+import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent } from './canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from './parameters';
 import { TopologicalSort } from './strategy/topologicalSort';
@@ -365,16 +365,18 @@ class Graph {
     this.updateCirclesColorDefault()
   }
 
+  vals = [];
   fillOrder(v: number, visited: boolean[]) {
     visited[v] = true;
 
-    console.log(v + " ");
-
-    Parameter.adjList.get(v).forEach(i => {
-      if(!visited[i]){
-        this.fillOrder(i,visited);
-      }
-    });
+    if(!this.vals.includes(v)){
+      this.vals.push(v);
+      Parameter.adjList.get(v).forEach(i => {
+        if(!visited[i]){
+          this.fillOrder(i,visited);
+        }
+      });
+    }
   }
 
 }

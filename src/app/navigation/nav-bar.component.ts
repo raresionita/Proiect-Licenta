@@ -81,7 +81,6 @@ export class NavBarComponent{
   }
 
   stronglyConnected(){
-    console.log("Strongly connected components: \n")
     GraphVar.strongly.Algorithm.algorithmStrategy();
   }
 
