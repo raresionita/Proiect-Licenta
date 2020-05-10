@@ -83,10 +83,6 @@ export class NavBarComponent{
   stronglyConnected(){
     GraphVar.strongly.Algorithm.algorithmStrategy();
   }
-
-  shortestPath(){
-    //ToDo
-  }
 }
 
 export default NavBarComponent
