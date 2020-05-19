@@ -147,10 +147,9 @@ class EdgeCustom{
       return group;
     }
 
-
     setDirect = (dir) => {
       this.isDirected = dir
-    } 
+    }
 
     getDirect = () => {
       return this.isDirected

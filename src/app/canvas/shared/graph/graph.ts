@@ -5,11 +5,11 @@ import { dialog } from 'src/app/dialog/dialog.functions';
 import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent } from './canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from './parameters';
-import { TopologicalSort } from './strategy/topologicalSort';
-import Context from './strategy/context';
-import { DetectCycleUndirected } from './strategy/detectCycleUndirected';
-import { DetectCycleDirected } from './strategy/detectCycleDirected';
-import { StronglyConnected } from './strategy/stronglyConnected';
+import { TopologicalSort } from '../strategy/topologicalSort';
+import Context from '../strategy/context';
+import { DetectCycleUndirected } from '../strategy/detectCycleUndirected';
+import { DetectCycleDirected } from '../strategy/detectCycleDirected';
+import { StronglyConnected } from '../strategy/stronglyConnected';
 
 class Graph {
 
@@ -17,7 +17,6 @@ class Graph {
   detectCycleUndirected:Context = new Context(new DetectCycleUndirected())
   detectCycleDirected:Context = new Context(new DetectCycleDirected())
   strongly:Context = new Context(new StronglyConnected())
-  //shortestPath:Context = new Context(new ShortestPath())
 
   addCircle = (left,top,id) => {
     var circleCustom = new CircleCustom(left,top,id)
@@ -35,7 +34,6 @@ class Graph {
     const start = Parameter.circles.get(Parameter.selected[0])
     const end = Parameter.circles.get(Parameter.selected[1])
     const edge = new EdgeCustom(start, end, Parameter.weight, Parameter.isDirected, Parameter.exists)
-
 
     if(Parameter.exists){
       this.deleteEdge(Parameter.exists.line)

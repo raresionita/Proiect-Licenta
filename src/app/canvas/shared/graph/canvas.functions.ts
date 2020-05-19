@@ -1,6 +1,5 @@
 import {canvas} from './init-canvas'
 import Parameter from './parameters';
-import GraphVar from './graph';
 
 const setAction = (value) => {
   Parameter.actionType = value

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from './dialog.data';
-import { setDirected, setSelectDirected, setSelectUndirected, disableBtn } from '../canvas/shared/canvas.functions';
+import { setDirected, setSelectDirected, setSelectUndirected, disableBtn } from '../canvas/shared/graph/canvas.functions';
 
 @Component({
     selector:'dialog-component',

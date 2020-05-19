@@ -1,6 +1,6 @@
 import { AlgorithmStrategy } from "./algorithmStrategy";
 import { DFS } from './DFS';
-import Parameter from '../parameters';
+import Parameter from '../graph/parameters';
 
 
 export class DetectCycleUndirected extends DFS implements AlgorithmStrategy{

@@ -1,7 +1,7 @@
 import { MatDialog } from '@angular/material';
 import { DialogOverview } from './dialog.component';
-import { setWeight, getExists, getSelectDirected, getSelectUndirected} from '../canvas/shared/canvas.functions';
-import Parameter from '../canvas/shared/parameters';
+import { setWeight, getExists, getSelectDirected, getSelectUndirected} from '../canvas/shared/graph/canvas.functions';
+import Parameter from '../canvas/shared/graph/parameters';
 
 class Dialog{
 

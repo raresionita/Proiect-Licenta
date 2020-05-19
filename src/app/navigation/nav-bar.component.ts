@@ -1,20 +1,15 @@
 import { Component } from "@angular/core";
-import { clearCanvas } from '../canvas/shared/init-canvas';
+import { clearCanvas } from '../canvas/shared/graph/init-canvas';
 import 'fabric';
-import { setAction, enableBtn, setMessage, disableId, disableBtn } from '../canvas/shared/canvas.functions';
+import { setAction, enableBtn, setMessage } from '../canvas/shared/graph/canvas.functions';
 import { MatDialog } from '@angular/material';
 import { Dialog, setDialog } from '../dialog/dialog.functions';
-import GraphVar from '../canvas/shared/graph';
-import { TopologicalSort } from '../canvas/shared/strategy/topologicalSort';
-import Context from '../canvas/shared/strategy/context';
-import Parameter from '../canvas/shared/parameters';
+import GraphVar from '../canvas/shared/graph/graph';
 
 @Component({
     selector: 'nav-bar',
     templateUrl: './nav-bar.component.html',
 })
-
-
 
 export class NavBarComponent{
 
