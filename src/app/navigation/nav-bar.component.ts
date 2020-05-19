@@ -23,9 +23,9 @@ export class NavBarComponent{
   }
 
   confirmClear() {
+    GraphVar.resetCanvas()
     clearCanvas()
     enableBtn()
-    GraphVar.resetCanvas()
   }
 
   addVertex(){

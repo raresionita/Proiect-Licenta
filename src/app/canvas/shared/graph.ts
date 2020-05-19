@@ -257,8 +257,8 @@ class Graph {
     Parameter.adjList.clear()
     Parameter.selectDirected = null
     Parameter.selectUndirected = null
-    canvas.clear()
     setId(0)
+    canvas.clear()
   }
 
 
