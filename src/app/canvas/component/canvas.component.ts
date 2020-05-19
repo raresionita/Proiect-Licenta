@@ -3,7 +3,7 @@ import {canvas,setCanvas} from '../shared/graph/init-canvas'
 import 'fabric';
 import { setSelected,increaseId } from '../shared/graph/canvas.functions';
 import Graph from '../shared/graph/graph';
-import Parameter from '../shared/graph/parameters';
+import Parameter from '../shared/parameters';
 
 declare const fabric: any;
 

@@ -1,4 +1,4 @@
-import EdgeCustom from "./edge"
+import EdgeCustom from "./graph/edge"
 
 class Parameters{
     actionType = 0

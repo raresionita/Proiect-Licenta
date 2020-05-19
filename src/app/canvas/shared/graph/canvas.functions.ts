@@ -1,5 +1,5 @@
 import {canvas} from './init-canvas'
-import Parameter from './parameters';
+import Parameter from '../parameters';
 
 const setAction = (value) => {
   Parameter.actionType = value

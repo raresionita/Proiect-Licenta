@@ -1,5 +1,5 @@
 import { DFS } from './DFS'
-import Parameter from '../graph/parameters'
+import Parameter from '../parameters'
 import { AlgorithmStrategy } from './algorithmStrategy'
 
 

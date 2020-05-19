@@ -1,6 +1,6 @@
 import { DFS } from './DFS';
 import { AlgorithmStrategy } from './algorithmStrategy';
-import Parameter from '../graph/parameters';
+import Parameter from '../parameters';
 import { setComponent } from '../graph/canvas.functions';
 import { Stack } from 'stack-typescript';
 
