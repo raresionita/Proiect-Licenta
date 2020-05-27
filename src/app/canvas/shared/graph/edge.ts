@@ -38,7 +38,7 @@ class EdgeCustom{
       const edge = new fabric.Line(cds , {
         fill: 'blue',
         stroke: 'blue',
-        strokeWidth: 3,
+        strokeWidth: 2.5,
         originX: 'center',
         originY: 'center',
       });
@@ -94,7 +94,7 @@ class EdgeCustom{
   }
 
     createDirectedLine = (cds) => {
-      const size = 20
+      const size = 17
       const angle = this.calcArrowAngle(cds[0],cds[1],cds[2],cds[3])
       const fix = this.fixPosition(angle,20)
       const x = cds[2]
@@ -104,7 +104,7 @@ class EdgeCustom{
       const line = new fabric.Line(cds , {
         fill: 'blue',
         stroke: 'blue',
-        strokeWidth: 3,
+        strokeWidth: 2.5,
         originX: 'center',
         originY: 'center',
       });

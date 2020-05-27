@@ -14,11 +14,10 @@ class CircleCustom{
   createVertex = (left,top,id) => {
     this.circle = new fabric.Circle({
       radius: 15, fill: '#33C7FF',
-      strokeWidth:2,stroke: "blue",
       originX: 'center',  originY: 'center'
     });
     this.text = new fabric.Text(id.toString(),{
-      fontSize: 20, fill: '#FFDA33',
+      fontSize: 20, fill: '#000000',
       originX: 'center', originY: 'center'
     })
     this.group = new fabric.Group([this.circle,this.text], {
