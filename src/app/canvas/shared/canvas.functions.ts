@@ -31,15 +31,17 @@ const setWeight = (val) => {
   }
 }
 
-const setComponent = (id,arr,alg:string) => {
+const setComponent = (id,arr,alg:string,space:boolean) => {
   var txt = document.getElementById(id)
   var str = alg;
 
+  if(space==true){
+    arr.push('\n');
+  }
   arr.forEach(i => {
     str += i + " "
   });
   txt.innerText = str
-
 }
 
 const setMessage = (msg) => {

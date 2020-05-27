@@ -2,7 +2,6 @@ import { DFS } from './DFS';
 import { AlgorithmStrategy } from './algorithmStrategy';
 import Parameter from '../parameters';
 import { Stack } from 'stack-typescript';
-import { setComponent } from '../canvas.functions';
 import GraphVar from '../graph/graph';
 
 
@@ -20,7 +19,7 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
   }
 
   getTranspose(){
-    var graph = GraphVar //circular dependency to solve
+    var graph = GraphVar
     for(var v=0;v<Parameter.circles.size;v++){
       for(var i=0;i<Parameter.adjList.get(v).size;i++){
         graph.insertAdjacencyList(i,v)
@@ -55,7 +54,6 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
       if(visited[v] == false){
         gr.fillOrder(v,visited);
       }
-      setComponent("message",gr.vals,"Strongly connected: ")
     }
 
   }

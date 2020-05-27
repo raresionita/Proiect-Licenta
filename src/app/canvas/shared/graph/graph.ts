@@ -2,7 +2,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected } from '../canvas.functions';
+import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent } from '../canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from '../parameters';
 import { TopologicalSort } from '../strategy/topologicalSort';
@@ -368,17 +368,21 @@ class Graph {
   vals = [];
   fillOrder(v: number, visited: boolean[]) {
     visited[v] = true;
-
+    console.log(v + " ")
+    setComponent("message",this.vals,"Strongly connected: ",false)
     if(!this.vals.includes(v)){
       this.vals.push(v);
       Parameter.adjList.get(v).forEach(i => {
         if(!visited[i]){
           this.fillOrder(i,visited);
+        }else{
+          console.log("\n")
+          setComponent("message",this.vals,"Strongly connected: ",true)
         }
       });
     }
+    setComponent("message",this.vals,"Strongly connected: ",false) //afiseaza ce a ramas
   }
-
 }
 
 const GraphVar = new Graph()
