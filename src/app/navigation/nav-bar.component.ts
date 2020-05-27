@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { clearCanvas } from '../canvas/shared/graph/init-canvas';
 import 'fabric';
-import { setAction, enableBtn, setMessage } from '../canvas/shared/graph/canvas.functions';
+import { setAction, enableBtn, setMessage } from '../canvas/shared/canvas.functions';
 import { MatDialog } from '@angular/material';
 import { Dialog, setDialog } from '../dialog/dialog.functions';
 import GraphVar from '../canvas/shared/graph/graph';

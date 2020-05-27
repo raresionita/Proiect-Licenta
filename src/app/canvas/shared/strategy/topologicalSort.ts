@@ -1,7 +1,7 @@
 import { DFS } from './DFS';
 import { AlgorithmStrategy } from './algorithmStrategy';
 import Parameter from '../parameters';
-import { setComponent } from '../graph/canvas.functions';
+import { setComponent } from '../canvas.functions';
 import { Stack } from 'stack-typescript';
 
 export class TopologicalSort extends DFS implements AlgorithmStrategy{

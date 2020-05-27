@@ -2,7 +2,7 @@ import { DFS } from './DFS';
 import { AlgorithmStrategy } from './algorithmStrategy';
 import Parameter from '../parameters';
 import { Stack } from 'stack-typescript';
-import { setComponent } from '../graph/canvas.functions';
+import { setComponent } from '../canvas.functions';
 import GraphVar from '../graph/graph';
 
 

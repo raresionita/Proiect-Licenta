@@ -2,7 +2,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected } from './canvas.functions';
+import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected } from '../canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from '../parameters';
 import { TopologicalSort } from '../strategy/topologicalSort';
@@ -295,6 +295,8 @@ class Graph {
           smecherie = lines.length-circlesLength-1
         } else if(circlesLength > linesLength){
           smecherie = lines.length-circlesLength
+        }else{
+          smecherie = lines.length-linesLength-1
         }
 
         setId(this.getLastId())

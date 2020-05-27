@@ -12,19 +12,19 @@
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <input type='file' id="input">
-                        <button class="dropdown-item" (click)="import()" id="import">Import</button>
-                        <button class="dropdown-item" (click)="export()">Export</button>
+                        <button class="dropdown-item" (click)="import()" id="import">Read</button>
+                        <button class="dropdown-item" (click)="export()">Write</button>
                       </div>
                     </div>
                     <div class="dropdown dropdown-btn">
                       <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Algorithms
+                        Analyze Graph
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                        <button class="dropdown-item" (click)="detectCycleUndirected()" id="undirectedBtn">Detect Cycle Undirected</button>
-                        <button class="dropdown-item" (click)="detectCycleDirected()" id="directedBtn">Detect Cycle Directed</button>
-                        <button class="dropdown-item" (click)="topologicSort()" id="topologicBtn">Topological Sort</button>
-                        <button class="dropdown-item" (click)="stronglyConnected()" id="stronglyBtn">Strongly Connected</button>
+                        <button class="dropdown-item" (click)="detectCycleUndirected()" id="undirectedBtn">Detect Cycle in Undirected Graph</button>
+                        <button class="dropdown-item" (click)="detectCycleDirected()" id="directedBtn">Detect Cycle in Directed Graph</button>
+                        <button class="dropdown-item" (click)="topologicSort()" id="topologicBtn">Detect Topological Sort</button>
+                        <button class="dropdown-item" (click)="stronglyConnected()" id="stronglyBtn">Detect Strongly Connected Components</button>
                       </div>
                     </div>
                   </div>

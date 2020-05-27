@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {canvas,setCanvas} from '../shared/graph/init-canvas'
 import 'fabric';
-import { setSelected,increaseId } from '../shared/graph/canvas.functions';
+import { setSelected,increaseId } from '../shared/canvas.functions';
 import Graph from '../shared/graph/graph';
 import Parameter from '../shared/parameters';
 
