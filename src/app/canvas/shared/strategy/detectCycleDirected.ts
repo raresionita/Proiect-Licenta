@@ -26,39 +26,23 @@ export class DetectCycleDirected extends DFS implements AlgorithmStrategy{
     return res
   }
 
-  visited:any[] = [Parameter.circles.size]
-  recStack:any[] = [Parameter.circles.size]
-
-  init(){
-    for(var i=0;i<Parameter.circles.size;i++){
-      this.visited[i] = false
-    }
-
-    for(var i=0;i<Parameter.circles.size;i++){
-      this.recStack[i] = false
-    }
-  }
-
   algorithmStrategy():boolean {
+    var visited:any[] = [Parameter.circles.size]
+    var recStack:any[] = [Parameter.circles.size]
     for(var i=0;i<Parameter.circles.size;i++){
-        this.visited[i] = false
+        visited[i] = false
     }
 
     for(var i=0;i<Parameter.circles.size;i++){
-      this.recStack[i] = false
+      recStack[i] = false
     }
 
-    var hasCycle = null;
-
     for(var i=0;i<Parameter.circles.size;i++){
-      if(i==0){
-        hasCycle = this.DFSUtil(0,this.visited,this.recStack)
-      }else{
-        this.init()
-        hasCycle = this.DFSUtil(i,this.visited,this.recStack)
+      if(this.DFSUtil(i,visited,recStack)){
+        return true
       }
     }
-    return hasCycle;
+    return false
   }
 
 }

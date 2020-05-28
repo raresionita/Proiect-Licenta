@@ -5,7 +5,8 @@ import { setDirected, setSelectDirected, setSelectUndirected, disableBtn } from 
 
 @Component({
     selector:'dialog-component',
-    templateUrl: './dialog.component.html'
+    templateUrl: './dialog.component.html',
+    styleUrls: ['./dialog.component.css']
 })
 
 export class DialogOverview{
@@ -13,6 +14,10 @@ export class DialogOverview{
         public dialogRef:MatDialogRef<DialogOverview>,
         @Inject(MAT_DIALOG_DATA) public data?: DialogData
     ) {}
+
+    // closeDialog() {
+    //   this.dialogRef.close();
+    // }
 
     isDirected(){
       setDirected("true")
