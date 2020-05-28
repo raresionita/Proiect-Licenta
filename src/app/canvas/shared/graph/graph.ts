@@ -291,11 +291,11 @@ class Graph {
         }
 
         var smecherie = 0
-        if(circlesLength == linesLength){
+        if(+circlesLength == +linesLength){
           smecherie = lines.length-circlesLength-1
-        } else if(circlesLength > linesLength){
+        } else if(+circlesLength > +linesLength){
           smecherie = lines.length-circlesLength
-        }else{
+        }else if(+circlesLength < +linesLength){
           smecherie = lines.length-linesLength-1
         }
 
