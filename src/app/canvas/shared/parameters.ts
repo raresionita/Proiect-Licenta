@@ -8,6 +8,7 @@ class Parameters{
     selectUndirected:boolean = null
     weight:any
     isDirected:string
+    isBidirected:string
     exists:EdgeCustom
     selected = []
     edges = []

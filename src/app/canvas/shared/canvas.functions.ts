@@ -53,6 +53,10 @@ const setDirected = (val) => {
   Parameter.isDirected = val
 }
 
+const setBidirected = (val) => {
+  Parameter.isBidirected = val
+}
+
 const setExists = (val) => {
   Parameter.exists = val
 }
@@ -130,4 +134,4 @@ const enableBtn = () => {
 
 }
 
-export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setId,increaseId,disableBtn,enableBtn,setComponent,disableId,enableId,setMessage,setSelectDirected,getSelectDirected,setSelectUndirected,getSelectUndirected}
+export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setBidirected,setId,increaseId,disableBtn,enableBtn,setComponent,disableId,enableId,setMessage,setSelectDirected,getSelectDirected,setSelectUndirected,getSelectUndirected}

@@ -2,7 +2,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent } from '../canvas.functions';
+import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent, setBidirected } from '../canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from '../parameters';
 import { TopologicalSort } from '../strategy/topologicalSort';
@@ -33,7 +33,7 @@ class Graph {
   addEdge = () => {
     const start = Parameter.circles.get(Parameter.selected[0])
     const end = Parameter.circles.get(Parameter.selected[1])
-    const edge = new EdgeCustom(start, end, Parameter.weight, Parameter.isDirected, Parameter.exists)
+    const edge = new EdgeCustom(start, end, Parameter.weight, Parameter.isDirected, Parameter.isBidirected, Parameter.exists)
 
     if(Parameter.exists){
       this.deleteEdge(Parameter.exists.line)
@@ -110,10 +110,10 @@ class Graph {
   }
 
   insertAdjacencyList = (start, end) => {
-    if (Parameter.isDirected === "false") {
+    if (Parameter.isDirected === "false" || Parameter.isBidirected === "true") {
       Parameter.adjList.get(start.getId()).push(end.getId())
       Parameter.adjList.get(end.getId()).push(start.getId())
-    } else {
+    }else {
       Parameter.adjList.get(start.getId()).push(end.getId())
     }
   }
@@ -240,7 +240,7 @@ class Graph {
     for(var i=0;i<Parameter.edges.length;i++){
       var e = Parameter.edges[i].line
       var ewd = Parameter.edges[i]
-      edgeData = e.start.getId() + ' ' + e.end.getId() + ' ' + ewd.weight + ' ' + ewd.isDirected +'\n';
+      edgeData = e.start.getId() + ' ' + e.end.getId() + ' ' + ewd.weight + ' ' + ewd.isDirected + ' ' + ewd.isBidirected +'\n';
       data += edgeData;
     }
 
@@ -290,29 +290,31 @@ class Graph {
           circleCustom.group.lockMovementY = true
         }
 
-        var smecherie = 0
+        var startReadLine = 0
         if(+circlesLength == +linesLength){
-          smecherie = lines.length-circlesLength-1
+          startReadLine = lines.length-circlesLength-1
         } else if(+circlesLength > +linesLength){
-          smecherie = lines.length-circlesLength
+          startReadLine = lines.length-linesLength-1
         }else if(+circlesLength < +linesLength){
-          smecherie = lines.length-linesLength-1
+          startReadLine = lines.length-linesLength-1
         }
 
         setId(this.getLastId())
 
-        for(var i=smecherie;i<lines.length-1;i++){
+        for(var i=startReadLine;i<lines.length-1;i++){
           var startId = parseInt(lines[i].split(" ")[0])
           var endId = parseInt(lines[i].split(" ")[1])
           var weight = lines[i].split(" ")[2]
           var isDirect = lines[i].split(" ")[3]
+          var isBidirect = lines[i].split(" ")[4]
 
           const start = Parameter.circles.get(startId)
           const end = Parameter.circles.get(endId)
-          const edgeCustom = new EdgeCustom(start,end,weight,isDirect,Parameter.exists)
+          const edgeCustom = new EdgeCustom(start,end,weight,isDirect,isBidirect,Parameter.exists)
           setDirected(isDirect)
+          setBidirected(isBidirect)
 
-          if(Parameter.isDirected == "true"){
+          if(Parameter.isDirected == "true" || Parameter.isBidirected == "true"){
             setSelectUndirected("false")
             disableBtn("undirectedBtn")
           }else{
