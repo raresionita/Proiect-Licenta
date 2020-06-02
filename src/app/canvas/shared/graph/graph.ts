@@ -106,6 +106,8 @@ class Graph {
       this.deleteEdge(selObject)
     } else if (selObject._objects[0].type === 'circle') {
       this.deleteVertex(selObject)
+    }else{
+      this.deleteEdge(selObject)
     }
   }
 
@@ -136,7 +138,7 @@ class Graph {
         Parameter.adjList.set(i, listStart);
       } else if (i === end && (isDirected === "false")) {
         Parameter.adjList.set(i, listEnd);
-        }
+      }
     }
   }
 
