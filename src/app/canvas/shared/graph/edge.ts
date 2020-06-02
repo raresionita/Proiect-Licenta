@@ -33,10 +33,10 @@ class EdgeCustom{
     update = () => {
       if(this.isDirected == "true"){
         this.line = this.createDirectedLine([this.start.getLeft()+15,this.start.getTop()+15,this.end.getLeft()+15,this.end.getTop()+15])
-      }else if(this.isDirected == "false"){
-        this.line = this.createLine([this.start.getLeft()+15,this.start.getTop()+15,this.end.getLeft()+15,this.end.getTop()+15])
       }else if(this.isBidirected == "true"){
         this.line = this.createBidirectedLine([this.start.getLeft()+15,this.start.getTop()+15,this.end.getLeft()+15,this.end.getTop()+15])
+      }else if(this.isDirected == "false"){
+        this.line = this.createLine([this.start.getLeft()+15,this.start.getTop()+15,this.end.getLeft()+15,this.end.getTop()+15])
       }
     }
 
