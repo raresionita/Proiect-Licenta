@@ -252,6 +252,7 @@ class Graph {
   }
 
   resetCanvas = () => {
+    Parameter.circles.clear()
     Parameter.selected = []
     Parameter.edges = []
     Parameter.adjList.clear()

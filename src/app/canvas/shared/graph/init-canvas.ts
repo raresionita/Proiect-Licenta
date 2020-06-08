@@ -10,6 +10,7 @@ const setCanvas = (newCanvas:any) => {
 const clearCanvas = () => {
   if (confirm('Are you sure?')) {
     canvas.clear();
+    window.location.reload();
   }
 }
 
