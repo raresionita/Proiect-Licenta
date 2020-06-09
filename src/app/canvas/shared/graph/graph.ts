@@ -111,6 +111,9 @@ class Graph {
       }
     } else if (selObject._objects[0].type === 'circle') {
       this.deleteVertex(selObject)
+      if(Parameter.edges.length === 0){
+        enableDialog();
+      }
     }else{
       this.deleteEdge(selObject)
       if(Parameter.edges.length === 0){

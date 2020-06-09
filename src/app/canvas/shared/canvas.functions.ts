@@ -136,7 +136,6 @@ const enableDialog = () => {
   enableId("undirectedBtn")
   enableId("topologicBtn")
   enableId("stronglyBtn")
-  enableId("shortestBtn")
 }
 
 export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setBidirected,setId,increaseId,disableBtn,enableBtn,enableDialog,setComponent,disableId,enableId,setMessage,setSelectDirected,getSelectDirected,setSelectUndirected,getSelectUndirected}
