@@ -115,9 +115,6 @@ const disableBtn = (str:string) => {
     case "stronglyBtn":
       disableId("stronglyBtn")
       break;
-    case "shortestBtn":
-      disableId("shortestBtn")
-      break
     default:
       console.log("No match")
   }
@@ -130,8 +127,16 @@ const enableBtn = () => {
   enableId("undirectedBtn")
   enableId("topologicBtn")
   enableId("stronglyBtn")
-  enableId("shortestBtn")
-
 }
 
-export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setBidirected,setId,increaseId,disableBtn,enableBtn,setComponent,disableId,enableId,setMessage,setSelectDirected,getSelectDirected,setSelectUndirected,getSelectUndirected}
+const enableDialog = () => {
+  setSelectUndirected(false);
+  setSelectDirected(false);
+  enableId("directedBtn")
+  enableId("undirectedBtn")
+  enableId("topologicBtn")
+  enableId("stronglyBtn")
+  enableId("shortestBtn")
+}
+
+export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setBidirected,setId,increaseId,disableBtn,enableBtn,enableDialog,setComponent,disableId,enableId,setMessage,setSelectDirected,getSelectDirected,setSelectUndirected,getSelectUndirected}

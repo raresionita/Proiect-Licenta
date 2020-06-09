@@ -2,7 +2,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent, setBidirected } from '../canvas.functions';
+import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent, setBidirected, enableDialog } from '../canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from '../parameters';
 import { TopologicalSort } from '../strategy/topologicalSort';
@@ -82,6 +82,8 @@ class Graph {
       this.printList(Parameter.adjList)
       canvas.remove(edgeObject)
     }
+
+
   }
 
   deleteVertex = (vertexObject) => {
@@ -104,10 +106,16 @@ class Graph {
   removeObject = (selObject) => {
     if (selObject._objects[0].type === 'line') {
       this.deleteEdge(selObject)
+      if(Parameter.edges.length === 0){
+        enableDialog();
+      }
     } else if (selObject._objects[0].type === 'circle') {
       this.deleteVertex(selObject)
     }else{
       this.deleteEdge(selObject)
+      if(Parameter.edges.length === 0){
+        enableDialog();
+      }
     }
   }
 
