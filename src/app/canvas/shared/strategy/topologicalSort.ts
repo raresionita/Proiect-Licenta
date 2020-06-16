@@ -25,9 +25,11 @@ export class TopologicalSort extends DFS implements AlgorithmStrategy{
           visited[i] = false
         }
 
+        var keys = Array.from(Parameter.circles.keys());
         for(var i=0;i<Parameter.circles.size;i++){
-            if(visited[i] == false){
-                this.DFSUtil(i,visited,stack)
+            var idx = keys[i];
+            if(visited[idx] == false){
+                this.DFSUtil(idx,visited,stack)
             }
         }
 

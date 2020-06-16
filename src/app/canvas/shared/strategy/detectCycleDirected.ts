@@ -37,8 +37,10 @@ export class DetectCycleDirected extends DFS implements AlgorithmStrategy{
       recStack[i] = false
     }
 
+    var keys = Array.from(Parameter.circles.keys());
     for(var i=0;i<Parameter.circles.size;i++){
-      if(this.DFSUtil(i,visited,recStack)){
+      var idx = keys[i];
+      if(this.DFSUtil(idx,visited,recStack)){
         return true
       }
     }
