@@ -10,11 +10,12 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
   DFSUtil(v: number, visited: boolean[], stack: any) {
     visited[v] = true
 
-    Parameter.adjList.get(v).forEach(i => {
-        if(!visited[i]){
-            this.DFSUtil(i,visited,stack)
-        }
-    });
+    const children:number[] = Parameter.adjList.get(v)
+    for(var c of children){
+      if(!visited[c]){
+        this.DFSUtil(c,visited,stack)
+      }
+    }
     stack.push(v)
   }
 
@@ -23,7 +24,7 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
     var key = Array.from(Parameter.circles.keys());
     for(var v=0;v<Parameter.circles.size;v++){
       var id = key[v]
-      for(var i=0;i<Parameter.adjList.get(id).size;i++){
+      for(var i=id;i<Parameter.adjList.get(id).size;i++){
         graph.insertAdjacencyList(i,id)
       }
     }
