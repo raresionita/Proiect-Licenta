@@ -2,7 +2,7 @@ import { DFS } from './DFS';
 import { AlgorithmStrategy } from './algorithmStrategy';
 import Parameter from '../parameters';
 import { Stack } from 'stack-typescript';
-import GraphVar from '../graph/graph';
+import { Graph } from '../graph/graph';
 
 
 export class StronglyConnected extends DFS implements AlgorithmStrategy {
@@ -10,21 +10,20 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
   DFSUtil(v: number, visited: boolean[], stack: any) {
     visited[v] = true
 
-    const children:number[] = Parameter.adjList.get(v)
-    for(var c of children){
-      if(!visited[c]){
-        this.DFSUtil(c,visited,stack)
+    Parameter.adjList.get(v).forEach((i:number) => {
+      if(!visited[i]){
+        this.DFSUtil(i,visited,stack)
       }
-    }
+    });
     stack.push(v)
   }
 
   getTranspose(){
-    var graph = GraphVar
+    var graph = new Graph()
     var key = Array.from(Parameter.circles.keys());
     for(var v=0;v<Parameter.circles.size;v++){
       var id = key[v]
-      for(var i=id;i<Parameter.adjList.get(id).size;i++){
+      for(var i=0; i<Parameter.adjList.get(id).size;i++){
         graph.insertAdjacencyList(i,id)
       }
     }
@@ -32,14 +31,15 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
   }
 
   algorithmStrategy() {
-    var stack:Stack<number> = new Stack();
-    var visited:any = [Parameter.circles.size];
-
-    for(var i=0;i<Parameter.circles.size;i++){
-        visited[i] = false;
-    }
+    var stack = new Stack();
+    var visited = new Array()
 
     var keys = Array.from(Parameter.circles.keys());
+    for(var i=0;i<Parameter.circles.size;i++){
+      var idx = keys[i]
+      visited[idx] = false;
+    }
+
     for(var i=0;i<Parameter.circles.size;i++){
       var idx = keys[i];
       if(visited[idx] == false){
@@ -50,11 +50,12 @@ export class StronglyConnected extends DFS implements AlgorithmStrategy {
     var gr:any =  this.getTranspose()
 
     for(var i=0;i<Parameter.circles.size;i++){
-      visited[i] = false;
+      var idx = keys[i]
+      visited[idx] = false;
     }
 
     while(stack.top !== null || stack.length !== 0){
-      var v = stack.pop();
+      var v = stack.pop() as number
 
       if(visited[v] == false){
         gr.fillOrder(v,visited);

@@ -11,7 +11,7 @@ import { DetectCycleUndirected } from '../strategy/detectCycleUndirected';
 import { DetectCycleDirected } from '../strategy/detectCycleDirected';
 import { StronglyConnected } from '../strategy/stronglyConnected';
 
-class Graph {
+export class Graph {
 
   topologicSort:Context = new Context(new TopologicalSort())
   detectCycleUndirected:Context = new Context(new DetectCycleUndirected())
@@ -384,11 +384,10 @@ class Graph {
   vals = [];
   fillOrder(v: number, visited: boolean[]) {
     visited[v] = true;
-    console.log(v + " ")
     setComponent("message",this.vals,"Strongly connected: ",false)
     if(!this.vals.includes(v)){
       this.vals.push(v);
-      Parameter.adjList.get(v).forEach(i => {
+      Parameter.adjList.get(v).forEach((i: number) => {
         if(!visited[i]){
           this.fillOrder(i,visited);
         }else{
@@ -401,5 +400,6 @@ class Graph {
   }
 }
 
-const GraphVar = new Graph()
-export default GraphVar
+//const GraphVar = new Graph()
+//export default GraphVar
+//export default Graph

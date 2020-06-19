@@ -4,7 +4,8 @@ import 'fabric';
 import { setAction, enableBtn, setMessage } from '../canvas/shared/canvas.functions';
 import { MatDialog } from '@angular/material';
 import { Dialog, setDialog } from '../dialog/dialog.functions';
-import GraphVar from '../canvas/shared/graph/graph';
+import { Graph } from '../canvas/shared/graph/graph';
+//import GraphVar from '../canvas/shared/graph/graph';
 
 @Component({
     selector: 'nav-bar',
@@ -12,13 +13,14 @@ import GraphVar from '../canvas/shared/graph/graph';
 })
 
 export class NavBarComponent{
+  Graph = new Graph()
 
   constructor(public dialog: MatDialog){
     setDialog(new Dialog(dialog))
   }
 
   confirmClear() {
-    GraphVar.resetCanvas()
+    this.Graph.resetCanvas()
     clearCanvas()
     enableBtn()
   }
@@ -26,7 +28,7 @@ export class NavBarComponent{
   addVertex(){
     setMessage("Click on canvas to add a new vertex")
     setAction(0)
-    GraphVar.resetGraphColorSelected()
+    this.Graph.resetGraphColorSelected()
   }
 
   connectVertex(){
@@ -37,26 +39,26 @@ export class NavBarComponent{
   defaultSelected(){
     setMessage("Select and move objects by mouse")
     setAction(2)
-    GraphVar.resetGraphColorSelected()
+    this.Graph.resetGraphColorSelected()
   }
 
   removeObject(){
     setMessage("Click on the object to remove")
     setAction(3)
-    GraphVar.resetGraphColorSelected()
+    this.Graph.resetGraphColorSelected()
   }
 
 
   import(){
-    GraphVar.importFromFile()
+    this.Graph.importFromFile()
   }
 
   export(){
-    GraphVar.exportToFile()
+    this.Graph.exportToFile()
   }
 
   detectCycleUndirected(){
-    if(GraphVar.detectCycleUndirected.Algorithm.algorithmStrategy()){
+    if(this.Graph.detectCycleUndirected.Algorithm.algorithmStrategy()){
       setMessage("Graph contains cycle")
     }else{
       setMessage("Graph doesn't contain cycle")
@@ -64,7 +66,7 @@ export class NavBarComponent{
   }
 
   detectCycleDirected(){
-    if(GraphVar.detectCycleDirected.Algorithm.algorithmStrategy()){
+    if(this.Graph.detectCycleDirected.Algorithm.algorithmStrategy()){
       setMessage("Graph contains cycle")
     }else{
       setMessage("Graph doesn't contain cycle")
@@ -72,11 +74,11 @@ export class NavBarComponent{
   }
 
   topologicSort(){
-    GraphVar.topologicSort.Algorithm.algorithmStrategy()
+    this.Graph.topologicSort.Algorithm.algorithmStrategy()
   }
 
   stronglyConnected(){
-    GraphVar.strongly.Algorithm.algorithmStrategy();
+    this.Graph.strongly.Algorithm.algorithmStrategy();
   }
 }
 

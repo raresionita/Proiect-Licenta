@@ -27,8 +27,8 @@ export class DetectCycleDirected extends DFS implements AlgorithmStrategy{
   }
 
   algorithmStrategy():boolean {
-    var visited:any[] = [Parameter.circles.size]
-    var recStack:any[] = [Parameter.circles.size]
+    var visited = new Array()
+    var recStack = new Array()
     for(var i=0;i<Parameter.circles.size;i++){
         visited[i] = false
     }

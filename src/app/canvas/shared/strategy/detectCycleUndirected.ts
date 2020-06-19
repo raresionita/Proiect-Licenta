@@ -26,14 +26,28 @@ export class DetectCycleUndirected extends DFS implements AlgorithmStrategy{
   }
 
   algorithmStrategy() {
+    var visited = new Array();
+    var res:boolean = false
 
-    var visited:any[] = [Parameter.circles.size]
+    var keys = Array.from(Parameter.circles.keys());
 
     for(var i=0;i<Parameter.circles.size;i++){
-      visited[i] = false
+      var idx = keys[i]
+      visited[idx] = false
     }
 
-    return this.DFSUtil(0,visited,-1);
+    for(var i=0;i<Parameter.circles.size;i++){
+      var idx = keys[i];
+      if(this.DFSUtil(idx,visited,-1)){
+        res = true
+      }else{
+        res = false
+        for(var j in visited)
+          visited[j] = false
+      }
+    }
+
+    return res
   }
 
 

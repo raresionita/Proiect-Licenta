@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {canvas,setCanvas} from '../shared/graph/init-canvas'
 import 'fabric';
 import { setSelected,increaseId } from '../shared/canvas.functions';
-import Graph from '../shared/graph/graph';
+//import Graph from '../shared/graph/graph';
 import Parameter from '../shared/parameters';
+import { Graph } from '../shared/graph/graph';
 
 declare const fabric: any;
 
@@ -15,6 +16,7 @@ declare const fabric: any;
 
 
 export class CanvasComponent implements OnInit{
+    Graph = new Graph()
     @ViewChild('container',{static:true}) containerRef: ElementRef;
 
     ngOnInit(){
@@ -41,13 +43,13 @@ export class CanvasComponent implements OnInit{
     onMouseDown = (event) => {
       switch(Parameter.actionType){
         case 0:
-          (!Parameter.objectSelected) ? Graph.addCircle(event.pointer.x-15,event.pointer.y-15,increaseId()) : canvas.discardActiveObject()
+          (!Parameter.objectSelected) ? this.Graph.addCircle(event.pointer.x-15,event.pointer.y-15,increaseId()) : canvas.discardActiveObject()
           break
         case 1:
-          (!Parameter.objectSelected) ? Graph.connect() : canvas.discardActiveObject();
+          (!Parameter.objectSelected) ? this.Graph.connect() : canvas.discardActiveObject();
           break
         case 3:
-          (!Parameter.objectSelected) ? Graph.removeObject(event.target) : canvas.discardActiveObject()
+          (!Parameter.objectSelected) ? this.Graph.removeObject(event.target) : canvas.discardActiveObject()
           break
         }
     }
@@ -57,15 +59,15 @@ export class CanvasComponent implements OnInit{
         setSelected(event.target)
       }
       if(Parameter.actionType == 1){
-        Graph.selectCircle(event.target.id)
+        this.Graph.selectCircle(event.target.id)
       }
       if(Parameter.actionType == 3){
-        Graph.removeObject(event.target)
+        this.Graph.removeObject(event.target)
       }
     }
 
     onObjectMoving = () => {
-        Graph.updateEdges()
+        this.Graph.updateEdges()
     }
 }
 
