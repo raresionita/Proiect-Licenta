@@ -2,7 +2,7 @@ import { canvas } from './init-canvas';
 import CircleCustom from './circle'
 import EdgeCustom from './edge';
 import { dialog } from 'src/app/dialog/dialog.functions';
-import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent, setBidirected, enableDialog } from '../canvas.functions';
+import { setExists, setId, setDirected, disableBtn, setSelectDirected, setSelectUndirected, setComponent, setBidirected, enableDialog, enableBtn, enableId, disabled } from '../canvas.functions';
 import { saveAs } from 'file-saver';
 import Parameter from '../parameters';
 import { TopologicalSort } from '../strategy/topologicalSort';
@@ -331,7 +331,10 @@ export class Graph {
           if(Parameter.isDirected == "true" || Parameter.isBidirected == "true"){
             setSelectUndirected("false")
             disableBtn("undirectedBtn")
-          }else{
+            disabled("directedBtn")
+            disabled("topologicBtn")
+            disabled("stronglyBtn")
+          }else if (Parameter.isDirected == "false" || Parameter.isBidirected == "false"){
             setSelectDirected("false")
             disableBtn("directedBtn")
             disableBtn("topologicBtn")

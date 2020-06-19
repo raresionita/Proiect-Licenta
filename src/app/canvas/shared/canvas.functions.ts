@@ -97,6 +97,12 @@ const enableId = (id) => {
   (<HTMLInputElement> document.getElementById(id)).disabled = false;
 }
 
+const disabled = (id) => {
+  if((<HTMLInputElement> document.getElementById(id)).disabled == true){
+    (<HTMLInputElement> document.getElementById(id)).disabled = false;
+  }
+}
+
 const disableBtn = (str:string) => {
   switch(str){
     case "import":
@@ -138,4 +144,4 @@ const enableDialog = () => {
   enableId("stronglyBtn")
 }
 
-export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setBidirected,setId,increaseId,disableBtn,enableBtn,enableDialog,setComponent,disableId,enableId,setMessage,setSelectDirected,getSelectDirected,setSelectUndirected,getSelectUndirected}
+export {setAction,setSelected,setWeight,setExists,getExists,setDirected,setBidirected,setId,increaseId,disableBtn,disabled,enableBtn,enableDialog,setComponent,disableId,enableId,setMessage,setSelectDirected,getSelectDirected,setSelectUndirected,getSelectUndirected}
