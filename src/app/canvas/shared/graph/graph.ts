@@ -331,7 +331,7 @@ export class Graph {
           if(Parameter.isDirected == "true" || Parameter.isBidirected == "true"){
             setSelectUndirected("false")
             disableBtn("undirectedBtn")
-            disabled("directedBtn")
+            disabled("directedBtn") //if disabled, enable it
             disabled("topologicBtn")
             disabled("stronglyBtn")
           }else if (Parameter.isDirected == "false" || Parameter.isBidirected == "false"){
