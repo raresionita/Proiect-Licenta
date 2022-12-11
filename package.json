@@ -27,7 +27,7 @@
     "@types/fabric": "^3.6.0",
     "bootstrap": "^4.4.1",
     "dt": "0.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fabric": "^3.6.1",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
